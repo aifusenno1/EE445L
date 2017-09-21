@@ -1,0 +1,1 @@
+.\alarm.o: Alarm.c
