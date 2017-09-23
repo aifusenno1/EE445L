@@ -28,7 +28,7 @@
 
 // PF2 is an output for debugging
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 
 #include "SysTick.h"
 #include "PLL.h"
