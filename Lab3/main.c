@@ -61,6 +61,33 @@ int main(){
 	ST7735_FillScreen(ST7735_BLACK);
 	drawHands(time);
 	
+	
+	//temp clock numbers
+	ST7735_SetCursor(10,6);
+	ST7735_OutUDec(12);
+	ST7735_SetCursor(14,7);
+	ST7735_OutUDec(1);
+	ST7735_SetCursor(16,8);
+	ST7735_OutUDec(2);
+	ST7735_SetCursor(17,10);
+	ST7735_OutUDec(3);
+	ST7735_SetCursor(16,12);
+	ST7735_OutUDec(4);
+	ST7735_SetCursor(14,13);
+	ST7735_OutUDec(5);
+	ST7735_SetCursor(11,14);
+	ST7735_OutUDec(6);
+	ST7735_SetCursor(7,13);
+	ST7735_OutUDec(7);
+	ST7735_SetCursor(5,12);
+	ST7735_OutUDec(8);
+	ST7735_SetCursor(4,10);
+	ST7735_OutUDec(9);
+	ST7735_SetCursor(4,8);
+	ST7735_OutUDec(10);	
+	ST7735_SetCursor(6,7);
+	ST7735_OutUDec(11);
+	
 	//ST7735_DrawBitmap(4, 159, clock1, 120, 120);
 	while(1){
 		
@@ -75,6 +102,7 @@ int main(){
 			alarm = checkForAlarm(time);
 		}
 		if((time % 60) == 0){
+			eraseHands(time-60);
 			drawHands(time);
 		}
 		if(alarm){

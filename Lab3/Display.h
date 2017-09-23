@@ -11,5 +11,7 @@
 
 void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
 
+void eraseHands(int time);
+
 void drawHands(int time);
 
