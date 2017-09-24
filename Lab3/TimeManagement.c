@@ -12,14 +12,13 @@ int handleTime(int flag, int time){
 	if(secFlag){
 		newTime++;
 		secFlag = 0;
-			
-		int hour = (newTime / 3600) % 12;
-		int minute = (newTime / 60) % 60;
-		int second = (newTime % 60);
 		
 		if(newTime == 12 * 3600){
 			newTime = 0;
 		}
+		int hour = (newTime / 3600) % 12;
+		int minute = (newTime / 60) % 60;
+		int second = (newTime % 60);
 			
 		ST7735_SetCursor(0,0);
 		
@@ -28,26 +27,20 @@ int handleTime(int flag, int time){
 		}
 		else if( hour < 10){
 			ST7735_OutUDec(0);
-			ST7735_OutUDec((newTime / 3600)% 12);
 		}
-		else{
-		  ST7735_OutUDec((newTime / 3600)% 12);
-		}
+		  ST7735_OutUDec(hour);
 		
 		ST7735_OutChar(':');
 		if(minute < 10){
 			ST7735_OutUDec(0);
 		}
-		ST7735_OutUDec((newTime / 60) % 60);
+		ST7735_OutUDec(minute);
 		
 		ST7735_OutChar(':');
 		if(second < 10){
 			ST7735_OutUDec(0);
 		}
-		ST7735_OutUDec(newTime % 60);
-		
-		
-		
+		ST7735_OutUDec(second);
 }
 	return newTime;
 }
