@@ -1,6 +1,6 @@
 /*
 
-PF0: botton
+PF4: botton
 */
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
@@ -97,9 +97,9 @@ int main(){
 				ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2] == 1?ST7735_YELLOW:ST7735_WHITE);
 				break;
 			case 3:
-				ST7735_DrawString(6,6,stages[2].options[0], stages[2].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
-				ST7735_DrawString(6,8,stages[2].options[1], stages[2].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
-				ST7735_DrawString(6,10,stages[2].options[2], stages[2].color[2] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,8,stages[2].options[0], stages[2].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,9,stages[2].options[1], stages[2].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
+			  
 				break;
 			case 4:
 				break;
