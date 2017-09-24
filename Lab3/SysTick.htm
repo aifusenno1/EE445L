@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\SysTick.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\SysTick.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sat Sep 23 21:47:26 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sat Sep 23 21:50:09 2017
 <BR><P>
 <H3>Maximum Stack Usage =        288 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; drawHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
+__rt_entry_main &rArr; main &rArr; eraseHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
 <P>
 <H3>
 Functions with no stack information
@@ -680,7 +680,7 @@ Global Symbols
 
 <P><STRONG><a name="[89]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
 <BR><BR>[Stack]<UL><LI>Max Depth = 288 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; drawHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; eraseHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1028,8 +1028,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bc]"></a>eraseHands</STRONG> (Thumb, 356 bytes, Stack size 80 bytes, display.o(i.eraseHands))
-<BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = eraseHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
+<P><STRONG><a name="[bc]"></a>eraseHands</STRONG> (Thumb, 380 bytes, Stack size 88 bytes, display.o(i.eraseHands))
+<BR><BR>[Stack]<UL><LI>Max Depth = 288<LI>Call Chain = eraseHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sin
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cos
@@ -1037,6 +1037,7 @@ Global Symbols
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_4Line
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1064,7 +1065,7 @@ Global Symbols
 
 <P><STRONG><a name="[8a]"></a>main</STRONG> (Thumb, 422 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 288 + Unknown Stack Size
-<LI>Call Chain = main &rArr; drawHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
+<LI>Call Chain = main &rArr; eraseHands &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playAlarm
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handleTime
@@ -1213,6 +1214,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eraseHands
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drawHands
 </UL>
 
