@@ -1,3 +1,7 @@
+/*
+
+PF0: botton
+*/
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
 #include "PLL.h"
@@ -7,6 +11,10 @@
 #include "Display.h"
 #include "Alarm.h"
 #include "Button.h"
+
+#define PF3                     (*((volatile uint32_t *)0x40025020))
+#define PF2                     (*((volatile uint32_t *)0x40025010))
+#define PF1                     (*((volatile uint32_t *)0x40025008))
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -21,16 +29,16 @@ typedef struct stage_t {
 	int time[3];
 	uint8_t timeLen;
 	uint8_t totalLen;     // concat options with time
-	uint8_t highlighted;  // -1 for none highlighted, otherwise index (out of totalLen)
+	uint8_t highlight[5];  // 1 for highlighted
 } stage;
 
 static int count = 0;
 static int secFlag = 0;
-stage stage1 = {1, {}, 0, {}, 0, 0, -1};  // stage 1: clock display
-stage stage2 = {2, {"Set Clock", "Set Alarm", "Exit"}, 3, {}, 0, 2, 0};				 // stage 2: select menu
-stage stage3 = {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2};									// stage 3: set time
-stage stage4 = {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2};									// stage 4: set alarm
-uint8_t curState = 1;
+stage stage1 = {1, {"\n"}, 0, {'\n'}, 0, 0, {'\n'}};  // stage 1: clock display
+stage stage2 = {2, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, {1,0,0}};				 // stage 2: select menu
+stage stage3 = {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, {0,0,1,0,0}};									// stage 3: set time
+stage stage4 = {4, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, {0,0,1,0,0}};									// stage 4: set alarm
+uint8_t curStage = 1;
 
 // Interrupt service routine
 // Executed every 12.5ns*(period)
@@ -46,14 +54,8 @@ int main(){
 
 	SYSCTL_RCGCGPIO_R |= 0x20;  // activate port F
 	PLL_Init(Bus80MHz);                   // 80 MHz
-  
+  PortF_Init();
 	ST7735_InitR(INITR_REDTAB);
-  GPIO_PORTF_DIR_R |= 0x04;   // make PF2 out (built-in blue LED)
-  GPIO_PORTF_AFSEL_R &= ~0x04;// disable alt funct on PF2
-  GPIO_PORTF_DEN_R |= 0x04;   // enable digital I/O on PF2
-                              // configure PF2 as GPIO
-  GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
-  GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF  
 	
 	long sr;
   sr = StartCritical();
@@ -64,7 +66,7 @@ int main(){
                               // enable SysTick with core clock and interrupts
   NVIC_ST_CTRL_R = 0x07;
   EndCritical(sr);
-	EdgeCounter_Init();
+	EdgeInterrupt_Init();
 	
   EnableInterrupts();
 	
@@ -78,27 +80,33 @@ int main(){
 	while(1){
 		
 		int tempTime = time;
-    GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R^0x04; // toggle PF2
+    //GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R^0x04; // toggle PF2
 		WaitForInterrupt();
-		time = handleTime(secFlag, time);
-		if(time != tempTime){ // if time changed, reset flag, check alarm
-			secFlag = 0;
-			alarm = checkForAlarm(time);
-		}
-		switch (stage) {
+		time = updateTime(secFlag, time);
+		
+		switch (curStage) {
 			case 1:
-				
+				if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
+					outputTime(time);	
+					secFlag = 0;
+			  	alarm = checkForAlarm(time);
+		     }
+				if((time % 60) == 0){ // every minute, erase hand and draw again
+					eraseHands(time-60);
+					drawHands(time);
+				}
+				break;
 			case 2:
-				
+				ST7735_DrawString(6,6,stage2.options[0], stage2.highlight[0] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,8,stage2.options[1], stage2.highlight[1] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,10,stage2.options[2], stage2.highlight[2] == 1?ST7735_YELLOW:ST7735_WHITE);
+				break;
 			case 3:
-				
+				break;
 			case 4:
-			
-		}
-		if((time % 60) == 0){ // every minute, erase hand and draw again
-			eraseHands(time-60);
-			drawHands(time);
-		}
+				break;
+		}		
+		
 		if(alarm){
 			playAlarm();
 		}

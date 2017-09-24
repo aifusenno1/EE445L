@@ -5,20 +5,19 @@
 
 #include "TimeManagement.h"
 
-int handleTime(int flag, int time){
-	int newTime = time;
-	int secFlag = flag;
+int updateTime(int flag, int time) {
+	if (flag) return ++time;
+	else return time;
+}
+
+void outputTime(int time){
 	
-	if(secFlag){
-		newTime++;
-		secFlag = 0;
-		
-		if(newTime == 12 * 3600){
-			newTime = 0;
+		if(time == 12 * 3600){
+			time = 0;
 		}
-		int hour = (newTime / 3600) % 12;
-		int minute = (newTime / 60) % 60;
-		int second = (newTime % 60);
+		int hour = (time / 3600) % 12;
+		int minute = (time / 60) % 60;
+		int second = (time % 60);
 			
 		ST7735_SetCursor(0,0);
 		
@@ -41,7 +40,6 @@ int handleTime(int flag, int time){
 			ST7735_OutUDec(0);
 		}
 		ST7735_OutUDec(second);
-}
-	return newTime;
+
 }
 

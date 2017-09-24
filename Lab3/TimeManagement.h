@@ -9,5 +9,6 @@
 #include "SysTick.h"
 #include "ST7735.h"
 
-int handleTime(int flag, int time);
+int updateTime(int flag, int time);
 
+void outputTime(int time);

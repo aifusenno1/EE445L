@@ -13,3 +13,4 @@
 .\button.o: SysTick.h
 .\button.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\math.h
 .\button.o: Alarm.h
+.\button.o: main.h
