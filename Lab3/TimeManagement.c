@@ -3,11 +3,7 @@
 // TimeManagement.c
 // takes care of time stepping
 
-#include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
-#include "PLL.h"
-#include "SysTick.h"
-#include "ST7735.h"
+#include "TimeManagement.h"
 
 int handleTime(int flag, int time){
 	int newTime = time;

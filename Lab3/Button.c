@@ -1,6 +1,6 @@
 
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 #include "PLL.h"
 #include "SysTick.h"
 #include "ST7735.h"

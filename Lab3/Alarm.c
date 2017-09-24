@@ -3,6 +3,8 @@
 // Alarm.c
 // determines whether the alarm needs to go off or not
 
+#include "Alarm.h"
+
 static int alarmTime = (13 * 3600);
 
 int setAlarm(int time){
