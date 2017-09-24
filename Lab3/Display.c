@@ -74,27 +74,24 @@ void eraseHands(int time){
 	double minuteY = MINUTELENGTH * sin(PI * minuteAngle / 180);
 	double minuteX = MINUTELENGTH * cos(PI * minuteAngle / 180);
 	
-		ST7735_4Line(CENTERX, CENTERY, CENTERX+(int)hourX, CENTERY - (int)hourY, ST7735_BLACK);
-		ST7735_4Line(CENTERX, CENTERY, CENTERX+(int)minuteX, CENTERY - (int)minuteY, ST7735_BLACK);
+	ST7735_4Line(CENTERX, CENTERY, CENTERX+(int)hourX, CENTERY - (int)hourY, ST7735_BLACK);
+	ST7735_4Line(CENTERX, CENTERY, CENTERX+(int)minuteX, CENTERY - (int)minuteY, ST7735_BLACK);
 	
 }
 
+/*
+Input: time, in seconds
+*/
 void drawHands(int time){
-  double hourAngle = 0;
-	double minuteAngle = 0;
+	double minuteAngle = -((((time / 60)%60) * 6)-90); // 6 degrees per minue, -90 to offset from a unity circle (since we using sin and cos to get x and y)
+	double hourAngle = -(((time / 60)%720 / 2.0)-90);        // get minutes and then divide by 2 for degrees: 720 minutes in 12 Hours / 360 degrees = 2 minutes/degree
 	
-	hourAngle = -(((time / 60) / 2)-90);  // get minutes and then divide by 2 for degrees:: 720 minutes in 12 Hours / 360 degrees = 2 minutes/degree
-	minuteAngle = -((((time / 60)%60) * 6)-90);
-	
-	double hourY = HOURLENGTH * sin(PI * hourAngle / 180);
+	double hourY = HOURLENGTH * sin(PI * hourAngle / 180);  // convert to radians; sin and cos to get the values of x and y on the unity circle
 	double hourX = HOURLENGTH * cos(PI * hourAngle / 180);
 	double minuteY = MINUTELENGTH * sin(PI * minuteAngle / 180);
 	double minuteX = MINUTELENGTH * cos(PI * minuteAngle / 180);
 
 	ST7735_4Line(CENTERX, CENTERY, CENTERX+(int)hourX, CENTERY - (int)hourY, ST7735_BLUE);
-
 	ST7735_4Line(CENTERX, CENTERY, CENTERX+(int)minuteX, CENTERY - (int)minuteY, ST7735_WHITE);
-
-	
 }
 
