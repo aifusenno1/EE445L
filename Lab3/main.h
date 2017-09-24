@@ -1,5 +1,15 @@
 
 
-
+typedef struct stage_t {
+	uint8_t stageNum;
+	char *options[3];
+	uint8_t optionsLen;
+	int time[3];
+	uint8_t timeLen;
+	uint8_t totalLen;     // concat options with time
+	int8_t  highlight;   // index (out of total)l; -1 for none
+	uint8_t color[5];  // 1 for highlighted
+} stage;
 
 extern uint8_t curStage;
+extern stage stages[4];

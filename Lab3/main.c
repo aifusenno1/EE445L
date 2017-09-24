@@ -11,6 +11,7 @@ PF0: botton
 #include "Display.h"
 #include "Alarm.h"
 #include "Button.h"
+#include "main.h"
 
 #define PF3                     (*((volatile uint32_t *)0x40025020))
 #define PF2                     (*((volatile uint32_t *)0x40025010))
@@ -22,22 +23,16 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
-typedef struct stage_t {
-	uint8_t stageNum;
-	char *options[3];
-	uint8_t optionsLen;
-	int time[3];
-	uint8_t timeLen;
-	uint8_t totalLen;     // concat options with time
-	uint8_t highlight[5];  // 1 for highlighted
-} stage;
 
 static int count = 0;
 static int secFlag = 0;
-stage stage1 = {1, {"\n"}, 0, {'\n'}, 0, 0, {'\n'}};  // stage 1: clock display
-stage stage2 = {2, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, {1,0,0}};				 // stage 2: select menu
-stage stage3 = {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, {0,0,1,0,0}};									// stage 3: set time
-stage stage4 = {4, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, {0,0,1,0,0}};									// stage 4: set alarm
+
+stage stages[4] = {
+	{0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}},  													// stage 1: clock display
+	{1, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, 0, {1,0,0}},   // stage 2: select menu
+	{2, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}},               // stage 3: set time
+	{3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}}		              // stage 4: set alarm
+	};
 uint8_t curStage = 1;
 
 // Interrupt service routine
@@ -97,11 +92,14 @@ int main(){
 				}
 				break;
 			case 2:
-				ST7735_DrawString(6,6,stage2.options[0], stage2.highlight[0] == 1?ST7735_YELLOW:ST7735_WHITE);
-				ST7735_DrawString(6,8,stage2.options[1], stage2.highlight[1] == 1?ST7735_YELLOW:ST7735_WHITE);
-				ST7735_DrawString(6,10,stage2.options[2], stage2.highlight[2] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,8,stages[1].options[1], stages[1].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2] == 1?ST7735_YELLOW:ST7735_WHITE);
 				break;
 			case 3:
+				ST7735_DrawString(6,6,stages[2].options[0], stages[2].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,8,stages[2].options[1], stages[2].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
+				ST7735_DrawString(6,10,stages[2].options[2], stages[2].color[2] == 1?ST7735_YELLOW:ST7735_WHITE);
 				break;
 			case 4:
 				break;
