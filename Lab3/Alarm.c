@@ -5,7 +5,7 @@
 
 #include "Alarm.h"
 
-static int alarmTime = (13 * 3600);
+int alarmTime = (13 * 3600);
 
 int setAlarm(int time){
 	alarmTime = time;

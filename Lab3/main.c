@@ -30,7 +30,7 @@ char sec[]={0,0,'\0'};
 char min[]={0,0,'\0'};
 char hour[]={0,0,'\0'};
 int time = 6*3600;
-int alarm = 100;
+int alarm = 0;
 
 stage stages[4] = {
    {0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display

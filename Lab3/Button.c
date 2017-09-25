@@ -18,7 +18,7 @@
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
 extern stage stages[4];
-extern int time, alarm;
+extern int time, alarmTime;
 extern char sec[2], min[2], hour[2];
 
 
@@ -69,9 +69,9 @@ void GPIOPortF_Handler(void){
             }
             else if (stages[1].highlight == 1) {
                curStage = 3;
-							 getSeconds(alarm, sec);  // with exactly 2 digits
-               getMinutes(alarm, min);  // with exactly 2 digits
-               getHours(alarm, hour);  // with exactly 2 digits   
+							 getSeconds(alarmTime, sec);  // with exactly 2 digits
+               getMinutes(alarmTime, min);  // with exactly 2 digits
+               getHours(alarmTime, hour);  // with exactly 2 digits   
             }
             else if (stages[1].highlight == 2) {
                curStage = 0;
