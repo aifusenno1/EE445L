@@ -33,6 +33,8 @@ char min[]={0,0,'\0'};
 char hour[]={0,0,'\0'};
 int time = 6*3600;
 int alarm = 0;
+static int numToggle = 0;
+static int inAlarm = 0;
 
 stage stages[4] = {
    {0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display
@@ -50,6 +52,20 @@ void SysTick_Handler(void){
       count = 0;
       secFlag = 1;
    }
+	 if(alarm | inAlarm){
+		 if(numToggle < 50){
+			 PF2 ^= 0x04;
+		 }
+		 if(numToggle == 50){
+			 PF2 &= ~0x04;
+		 }
+		 if(numToggle == 100){
+			 numToggle = 0;
+		 }
+		 inAlarm = 1;
+		 numToggle++;
+	 }
+	 
 }
 
 int main(){
@@ -70,7 +86,7 @@ int main(){
    NVIC_ST_CTRL_R = 0x07;
    EndCritical(sr);
    EdgeInterrupt_Init();
-	 Timer2_Init();	 
+	 //Timer2_Init();	 
    
    EnableInterrupts();
    
@@ -85,7 +101,7 @@ int main(){
       WaitForInterrupt();
       
       time = updateTime(secFlag, time);
-		  //checkForAlarm(time);
+		  alarm = checkForAlarm(time);
 		  if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
 				secFlag = 0;
          }
@@ -131,12 +147,7 @@ int main(){
          ST7735_DrawString(12,6,sec,stages[3].color[4]);
          break;
       }		
-      EndCritical(sr);
-      
-      if(alarm){
-         alarmOn();
-      }
-      
+      EndCritical(sr);  
       
       
       
