@@ -435,6 +435,26 @@
               <FileType>1</FileType>
               <FilePath>.\Display.c</FilePath>
             </File>
+            <File>
+              <FileName>Alarm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Alarm.c</FilePath>
+            </File>
+            <File>
+              <FileName>Button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Button.c</FilePath>
+            </File>
+            <File>
+              <FileName>SysTick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SysTick.c</FilePath>
+            </File>
+            <File>
+              <FileName>SysTickTestMain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SysTickTestMain.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
