@@ -194,7 +194,11 @@
       <Focus>0</Focus>
       <ColumnNumber>53</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+<<<<<<< HEAD
       <TopLine>286</TopLine>
+=======
+      <TopLine>285</TopLine>
+>>>>>>> fe0344f3f91e858797e69b0dd841e75cd3994c5c
       <CurrentLine>294</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup.s</PathWithFileName>
@@ -210,7 +214,11 @@
       <Focus>0</Focus>
       <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+<<<<<<< HEAD
       <TopLine>13</TopLine>
+=======
+      <TopLine>12</TopLine>
+>>>>>>> fe0344f3f91e858797e69b0dd841e75cd3994c5c
       <CurrentLine>19</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\PLL.c</PathWithFileName>
@@ -226,8 +234,13 @@
       <Focus>0</Focus>
       <ColumnNumber>33</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+<<<<<<< HEAD
       <TopLine>81</TopLine>
       <CurrentLine>102</CurrentLine>
+=======
+      <TopLine>23</TopLine>
+      <CurrentLine>33</CurrentLine>
+>>>>>>> fe0344f3f91e858797e69b0dd841e75cd3994c5c
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -288,10 +301,17 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
+<<<<<<< HEAD
       <ColumnNumber>18</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>13</TopLine>
       <CurrentLine>28</CurrentLine>
+=======
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>1</TopLine>
+      <CurrentLine>9</CurrentLine>
+>>>>>>> fe0344f3f91e858797e69b0dd841e75cd3994c5c
       <bDave2>0</bDave2>
       <PathWithFileName>.\Alarm.c</PathWithFileName>
       <FilenameWithoutPath>Alarm.c</FilenameWithoutPath>
@@ -304,10 +324,15 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>27</ColumnNumber>
+      <ColumnNumber>50</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+<<<<<<< HEAD
       <TopLine>52</TopLine>
       <CurrentLine>68</CurrentLine>
+=======
+      <TopLine>11</TopLine>
+      <CurrentLine>28</CurrentLine>
+>>>>>>> fe0344f3f91e858797e69b0dd841e75cd3994c5c
       <bDave2>0</bDave2>
       <PathWithFileName>.\Button.c</PathWithFileName>
       <FilenameWithoutPath>Button.c</FilenameWithoutPath>
@@ -323,7 +348,11 @@
       <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>38</TopLine>
+<<<<<<< HEAD
       <CurrentLine>52</CurrentLine>
+=======
+      <CurrentLine>44</CurrentLine>
+>>>>>>> fe0344f3f91e858797e69b0dd841e75cd3994c5c
       <bDave2>0</bDave2>
       <PathWithFileName>.\SysTick.c</PathWithFileName>
       <FilenameWithoutPath>SysTick.c</FilenameWithoutPath>
