@@ -67,18 +67,21 @@ void GPIOPortF_Handler(void){
                // make the initial time display current time
                getSeconds(time, sec);  // with exactly 2 digits
                getMinutes(time, min);  // with exactly 2 digits
-               getHours(time, hour);  // with exactly 2 digits               
+               getHours(time, hour);  // with exactly 2 digits  
+							 ST7735_FillScreen(ST7735_BLACK);   // clear the screen							
             }
             else if (stages[1].highlight == 1) {
                curStage = 3;
 							 getSeconds(alarmTime, sec);  // with exactly 2 digits
                getMinutes(alarmTime, min);  // with exactly 2 digits
-               getHours(alarmTime, hour);  // with exactly 2 digits   
+               getHours(alarmTime, hour);  // with exactly 2 digits
+               ST7735_FillScreen(ST7735_BLACK);   // clear the screen							
             }
             else if (stages[1].highlight == 2) {
                curStage = 0;
+							 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
+							 drawFace();
             }
-            //ST7735_FillScreen(ST7735_BLACK);   // clear the screen
             break;
             
             case 2:
