@@ -19,7 +19,8 @@ volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
 extern stage stages[4];
 extern int time;
-extern char *sec, *min, *hour;
+extern char sec[2], min[2], hour[2];
+
 
 static void Timer0Arm(void){
    TIMER0_CTL_R = 0x00000000;    // 1) disable TIMER0A during setup
@@ -61,10 +62,9 @@ void GPIOPortF_Handler(void){
             if (stages[1].highlight == 0){
                curStage = 2;
                // make the initial time display current time
-               sec = getSeconds(time);  // with exactly 2 digits
-               min = getMinutes(time);  // with exactly 2 digits
-               hour = getHours(time);  // with exactly 2 digits
-               
+               getSeconds(time, sec);  // with exactly 2 digits
+               getMinutes(time, min);  // with exactly 2 digits
+               getHours(time, hour);  // with exactly 2 digits               
             }
             else if (stages[1].highlight == 1) {
                curStage = 3;

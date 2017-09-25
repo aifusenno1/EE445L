@@ -4,6 +4,7 @@
 // takes care of time stepping
 
 #include "TimeManagement.h"
+#include "ST7735.h"
 
 int updateTime(int flag, int time) {
    if (flag) return ((time+1)%(3600*12));
@@ -43,9 +44,8 @@ void outputTime(int time){
 }
 
 /* return a string of two digits */
-char *getSeconds(int time) {
+void getSeconds(int time, char secStr[2]) {
    int sec = time%60;
-   static char secStr[2] = "";
    if (sec < 10) {
       secStr[0] = '0';
       secStr[1] = 48 + sec;
@@ -53,11 +53,11 @@ char *getSeconds(int time) {
       secStr[0] = 48 + sec/10;
       secStr[1] = 48 + sec%10;
    }
-   return secStr;
+
 }
-char *getMinutes(int time) {
-   int min = time/60%60;
-   static char minStr[2] = "";
+
+void getMinutes(int time, char minStr[2]) {
+   int min = (time/60)%60;
    if (min < 10) {
       minStr[0] = '0';
       minStr[1] = 48 + min;
@@ -65,18 +65,14 @@ char *getMinutes(int time) {
       minStr[0] = 48 + min/10;
       minStr[1] = 48 + min%10;
    }
-   return minStr;
 }
-char *getHours(int time) {
-   int hour = time/3600%12;
-   static char hourStr[2] = "";
+void getHours(int time, char hourStr[2]) {
+   int hour = (time/3600)%12;
    if (hour < 10) {
       hourStr[0] = '0';
       hourStr[1] = 48 + hour;
    } else {
       hourStr[0] = 48 + hour/10;
       hourStr[1] = 48 + hour%10;
-   }
-   return hourStr;
-   
+   }   
 }

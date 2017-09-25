@@ -26,7 +26,10 @@ void WaitForInterrupt(void);  // low power mode
 
 static int count = 0;
 static int secFlag = 0;
-char *sec, *min, *hour;
+char sec[]={0,0,'\0'};
+char min[]={0,0,'\0'};
+char hour[]={0,0,'\0'};
+int time = 6*3600;
 
 stage stages[4] = {
 	{0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display
@@ -66,7 +69,6 @@ int main(){
 	
   EnableInterrupts();
 	
-	int time = 11 * 3600 + (30 * 60);
 	int alarm = 0;
 	ST7735_FillScreen(ST7735_BLACK);
 	drawHands(time);
@@ -80,7 +82,7 @@ int main(){
 
 		time = updateTime(secFlag, time);
 
-//		sr = StartCritical();
+		sr = StartCritical();
 		switch (curStage) {
 			case 0:
 				if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
@@ -101,12 +103,24 @@ int main(){
 			case 2:
 				ST7735_DrawString(6,8,stages[2].options[0], stages[2].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
 				ST7735_DrawString(6,9,stages[2].options[1], stages[2].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
-			  
+			ST7735_SetCursor(3, 5);
+			  ST7735_OutString(hour);
+			ST7735_OutString(":");
+			ST7735_OutString(min);
+			ST7735_OutString(":");
+			  ST7735_OutString(sec);
+
+//			  ST7735_DrawString(10,20,hour, ST7735_WHITE);
+//		   	ST7735_DrawString(10,20,":", ST7735_WHITE);
+
+//			  ST7735_DrawString(10,20,min, ST7735_WHITE);
+//			  ST7735_DrawString(10,20,hour, ST7735_WHITE);
+
 				break;
 			case 3:
 				break;
 		}		
-//		EndCritical(sr);
+		EndCritical(sr);
 
 		if(alarm){
 			playAlarm();
