@@ -69,7 +69,6 @@ void alarmOff(void){
 
 int checkForAlarm(int time){
 	if(time == alarmTime){
-		alarmOn();
 		return 1;
 	}
 	return 0;
