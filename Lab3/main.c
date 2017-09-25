@@ -60,7 +60,7 @@ int main(){
    long sr;
    sr = StartCritical();
    NVIC_ST_CTRL_R = 0;         // disable SysTick during setup
-   NVIC_ST_RELOAD_R = 7999;// reload value
+   NVIC_ST_RELOAD_R = 799999;// reload value
    NVIC_ST_CURRENT_R = 0;      // any write to current clears it
    NVIC_SYS_PRI3_R = (NVIC_SYS_PRI3_R&0x00FFFFFF)|0x40000000; // priority 2
    // enable SysTick with core clock and interrupts
@@ -83,13 +83,14 @@ int main(){
       
       time = updateTime(secFlag, time);
 		  //checkForAlarm(time);
-		  
+		  if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
+				secFlag = 0;
+         }
       sr = StartCritical();
       switch (curStage) {
          case 0:
          if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
             outputTime(time);	
-            secFlag = 0;
          }
          if((time % 60) == 0){ // every minute, erase hand and draw again
             eraseHands(time-60);
@@ -100,6 +101,7 @@ int main(){
          ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0]);
          ST7735_DrawString(6,8,stages[1].options[1], stages[1].color[1]);
          ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2]);
+
          break;
          case 2:
          ST7735_DrawString(8,8,stages[2].options[0], stages[2].color[0]);
