@@ -12,6 +12,8 @@ PF1: button
 #include "Alarm.h"
 #include "Button.h"
 #include "main.h"
+#include "ADCSWTrigger.h"
+
 
 #define PF3                     (*((volatile uint32_t *)0x40025020))
 #define PF2                     (*((volatile uint32_t *)0x40025010))
@@ -54,6 +56,7 @@ int main(){
    
    SYSCTL_RCGCGPIO_R |= 0x20;  // activate port F
    PLL_Init(Bus80MHz);                   // 80 MHz
+	 ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
    PortF_Init();
    ST7735_InitR(INITR_REDTAB);
    
