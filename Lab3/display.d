@@ -1,9 +1,9 @@
 .\display.o: Display.c
 .\display.o: Display.h
-.\display.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdint.h
-.\display.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\display.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\display.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
 .\display.o: tm4c123gh6pm.h
 .\display.o: PLL.h
 .\display.o: SysTick.h
 .\display.o: ST7735.h
-.\display.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\math.h
+.\display.o: C:\Keil\ARM\ARMCC\bin\..\include\math.h
