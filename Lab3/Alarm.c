@@ -4,7 +4,7 @@
 // determines whether the alarm needs to go off or not
 
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 #include "Alarm.h"
 #include "ST7735.h"
 #define PF2                     (*((volatile uint32_t *)0x40025010))
