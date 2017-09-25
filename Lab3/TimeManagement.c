@@ -23,6 +23,8 @@ void outputTime(int time){
 	 }
    else if( hour < 10){
       ST7735_OutUDec(0);
+		  ST7735_OutUDec(hour);
+
    } else {
 		    ST7735_OutUDec(hour);
 	 }
