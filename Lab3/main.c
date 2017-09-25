@@ -60,20 +60,21 @@ int main(){
    long sr;
    sr = StartCritical();
    NVIC_ST_CTRL_R = 0;         // disable SysTick during setup
-   NVIC_ST_RELOAD_R = 7999;// reload value
+   NVIC_ST_RELOAD_R = 799999;// reload value
    NVIC_ST_CURRENT_R = 0;      // any write to current clears it
    NVIC_SYS_PRI3_R = (NVIC_SYS_PRI3_R&0x00FFFFFF)|0x40000000; // priority 2
    // enable SysTick with core clock and interrupts
    NVIC_ST_CTRL_R = 0x07;
    EndCritical(sr);
    EdgeInterrupt_Init();
+	 Timer2_Init();	 
    
    EnableInterrupts();
    
    ST7735_FillScreen(ST7735_BLACK);
+	 drawFace();
    drawHands(time);
    
-   //  ST7735_DrawBitmap(4, 159, cal, 120, 160);
    while(1){
       
       int tempTime = time;
@@ -81,6 +82,8 @@ int main(){
       WaitForInterrupt();
       
       time = updateTime(secFlag, time);
+		  //checkForAlarm(time);
+		  
       sr = StartCritical();
       switch (curStage) {
          case 0:
@@ -126,7 +129,7 @@ int main(){
       EndCritical(sr);
       
       if(alarm){
-         playAlarm();
+         alarmOn();
       }
       
       

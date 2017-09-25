@@ -17,7 +17,7 @@ void outputTime(int time){
    int minute = (time / 60) % 60;
    int second = (time % 60);
    
-   ST7735_SetCursor(0,0);
+   ST7735_SetCursor(6,2);
    
 	 if(hour == 0) {
 		  ST7735_OutUDec(12);

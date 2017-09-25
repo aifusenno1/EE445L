@@ -11,10 +11,10 @@
 #include "ST7735.h"
 #include <math.h>
 
-#define HOURLENGTH 20
-#define MINUTELENGTH 30
-#define CENTERX 64
-#define CENTERY 102
+#define HOURLENGTH 15
+#define MINUTELENGTH 20
+#define CENTERX 61
+#define CENTERY 100
 #define PI 3.14159
 
 //************* ST7735_Line********************************************
@@ -34,6 +34,8 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 
 /* draws the 4 surrounding pixels of a given point, making the line thicker */
 void ST7735_4Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+
+void drawFace(void);
 
 void eraseHands(int time);
 
