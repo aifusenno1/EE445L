@@ -62,6 +62,8 @@ void GPIOPortF_Handler(void){
             case 1:
             if (stages[1].highlight == 0){
                curStage = 2;
+							ST7735_SetCursor(0,0);
+							ST7735_OutUDec(time);
                // make the initial time display current time
                getSeconds(time, sec);  // with exactly 2 digits
                getMinutes(time, min);  // with exactly 2 digits
@@ -76,7 +78,7 @@ void GPIOPortF_Handler(void){
             else if (stages[1].highlight == 2) {
                curStage = 0;
             }
-            ST7735_FillScreen(ST7735_BLACK);   // clear the screen
+            //ST7735_FillScreen(ST7735_BLACK);   // clear the screen
             break;
             
             case 2:
