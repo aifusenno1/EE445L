@@ -14,3 +14,4 @@
 .\main.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\math.h
 .\main.o: Alarm.h
 .\main.o: Button.h
+.\main.o: main.h

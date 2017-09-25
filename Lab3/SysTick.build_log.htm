@@ -9,13 +9,26 @@ Project File Date:  09/21/2017
 <h2>Output:</h2>
 Build target 'SysTick'
 compiling main.c...
+compiling TimeManagement.c...
 linking...
-Program Size: Code=9848 RO-data=2376 RW-data=224 ZI-data=1136  
+Program Size: Code=10484 RO-data=2372 RW-data=264 ZI-data=1136  
 ".\SysTick.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Allen Pan\\Desktop\\EE445L\\Lab3\\SysTick.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-Programming Done.
-Verify OK.
+king...
+Program Size: Code=10476 RO-data=2372 RW-data=264 ZI-data=1136  
+".\SysTick.axf" - 0 Error(s), 2 Warning(s).
+rm.c...
+compiling Button.c...
+TimeManagement.h(18): warning:  #1-D: last line of file ends without a newline
+  char *getHours(int time);
+Button.c(61): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+                 min = getMinutes(time);  // with exactly 2 digits
+Button.c: 1 warning, 1 error
+compiling SysTick.c...
+compiling SysTickTestMain.c...
+".\SysTick.axf" - 1 Error(s), 3 Warning(s).
+Target not created

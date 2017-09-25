@@ -12,3 +12,7 @@
 int updateTime(int flag, int time);
 
 void outputTime(int time);
+
+char *getMinutes(int time);
+char *getSeconds(int time);
+char *getHours(int time);

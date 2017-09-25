@@ -1,6 +1,6 @@
 /*
-
-PF4: botton
+PF4: button
+PF1: button
 */
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
@@ -26,14 +26,15 @@ void WaitForInterrupt(void);  // low power mode
 
 static int count = 0;
 static int secFlag = 0;
+char *sec, *min, *hour;
 
 stage stages[4] = {
-	{0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}},  													// stage 1: clock display
-	{1, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, 0, {1,0,0}},   // stage 2: select menu
-	{2, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}},               // stage 3: set time
-	{3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}}		              // stage 4: set alarm
+	{0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display
+	{1, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, 0, {1,0,0}, 0},   // stage 1: select menu
+	{2, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}, 0},               // stage 2: set time
+	{3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}, 0}		              // stage 3: set alarm
 	};
-uint8_t curStage = 1;
+uint8_t curStage = 0;
 
 // Interrupt service routine
 // Executed every 12.5ns*(period)
@@ -65,22 +66,23 @@ int main(){
 	
   EnableInterrupts();
 	
-	int time = 3 * 3600 + (30 * 60);
+	int time = 11 * 3600 + (30 * 60);
 	int alarm = 0;
-	
 	ST7735_FillScreen(ST7735_BLACK);
 	drawHands(time);
-	
+
 //  ST7735_DrawBitmap(4, 159, cal, 120, 160);
 	while(1){
 		
 		int tempTime = time;
     //GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R^0x04; // toggle PF2
 		WaitForInterrupt();
+
 		time = updateTime(secFlag, time);
-		
+
+//		sr = StartCritical();
 		switch (curStage) {
-			case 1:
+			case 0:
 				if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
 					outputTime(time);	
 					secFlag = 0;
@@ -91,20 +93,21 @@ int main(){
 					drawHands(time);
 				}
 				break;
-			case 2:
+			case 1:
 				ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
 				ST7735_DrawString(6,8,stages[1].options[1], stages[1].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
 				ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2] == 1?ST7735_YELLOW:ST7735_WHITE);
 				break;
-			case 3:
+			case 2:
 				ST7735_DrawString(6,8,stages[2].options[0], stages[2].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
 				ST7735_DrawString(6,9,stages[2].options[1], stages[2].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
 			  
 				break;
-			case 4:
+			case 3:
 				break;
 		}		
-		
+//		EndCritical(sr);
+
 		if(alarm){
 			playAlarm();
 		}
