@@ -30,12 +30,13 @@ char sec[]={0,0,'\0'};
 char min[]={0,0,'\0'};
 char hour[]={0,0,'\0'};
 int time = 6*3600;
+int alarm = 100;
 
 stage stages[4] = {
    {0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display
-   {1, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, 0, {1,0,0}, 0},   // stage 1: select menu
-   {2, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}, 0},               // stage 2: set time
-   {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {0,0,1,0,0}, 0}		              // stage 3: set alarm
+   {1, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, 0, {ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0},   // stage 1: select menu
+   {2, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0},               // stage 2: set time
+   {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0}		              // stage 3: set alarm
 };
 uint8_t curStage = 0;
 
@@ -69,7 +70,6 @@ int main(){
    
    EnableInterrupts();
    
-   int alarm = 0;
    ST7735_FillScreen(ST7735_BLACK);
    drawHands(time);
    
@@ -81,14 +81,12 @@ int main(){
       WaitForInterrupt();
       
       time = updateTime(secFlag, time);
-      
       sr = StartCritical();
       switch (curStage) {
          case 0:
          if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
             outputTime(time);	
             secFlag = 0;
-            alarm = checkForAlarm(time);
          }
          if((time % 60) == 0){ // every minute, erase hand and draw again
             eraseHands(time-60);
@@ -96,28 +94,33 @@ int main(){
          }
          break;
          case 1:
-         ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
-         ST7735_DrawString(6,8,stages[1].options[1], stages[1].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
-         ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2] == 1?ST7735_YELLOW:ST7735_WHITE);
+         ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0]);
+         ST7735_DrawString(6,8,stages[1].options[1], stages[1].color[1]);
+         ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2]);
          break;
          case 2:
-         ST7735_DrawString(7,8,stages[2].options[0], stages[2].color[0] == 1?ST7735_YELLOW:ST7735_WHITE);
-         ST7735_DrawString(7,10,stages[2].options[1], stages[2].color[1] == 1?ST7735_YELLOW:ST7735_WHITE);
+         ST7735_DrawString(8,8,stages[2].options[0], stages[2].color[0]);
+         ST7735_DrawString(8,10,stages[2].options[1], stages[2].color[1]);
          ST7735_SetCursor(6, 6);
-         ST7735_OutString(hour);
-         ST7735_OutString(":");
-         ST7735_OutString(min);
-         ST7735_OutString(":");
-         ST7735_OutString(sec);
+
+         ST7735_DrawString(6,6,hour,stages[2].color[2]);
+         ST7735_DrawString(8,6,":",ST7735_WHITE);
+         ST7735_DrawString(9,6,min,stages[2].color[3]);
+         ST7735_DrawString(11,6,":",ST7735_WHITE);
+         ST7735_DrawString(12,6,sec,stages[2].color[4]);
          
-         //			  ST7735_DrawString(10,20,hour, ST7735_WHITE);
-         //		   	ST7735_DrawString(10,20,":", ST7735_WHITE);
-         
-         //			  ST7735_DrawString(10,20,min, ST7735_WHITE);
-         //			  ST7735_DrawString(10,20,hour, ST7735_WHITE);
          
          break;
          case 3:
+				 ST7735_DrawString(8,8,stages[3].options[0], stages[3].color[0]);
+         ST7735_DrawString(8,10,stages[3].options[1], stages[3].color[1]);
+         ST7735_SetCursor(6, 6);
+
+         ST7735_DrawString(6,6,hour,stages[3].color[2]);
+         ST7735_DrawString(8,6,":",ST7735_WHITE);
+         ST7735_DrawString(9,6,min,stages[3].color[3]);
+         ST7735_DrawString(11,6,":",ST7735_WHITE);
+         ST7735_DrawString(12,6,sec,stages[3].color[4]);
          break;
       }		
       EndCritical(sr);

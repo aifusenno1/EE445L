@@ -18,7 +18,7 @@
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
 extern stage stages[4];
-extern int time;
+extern int time, alarm;
 extern char sec[2], min[2], hour[2];
 
 
@@ -50,7 +50,7 @@ void Timer0A_Handler(void){
 
 void GPIOPortF_Handler(void){
    if (GPIO_PORTF_RIS_R&0x10) { // PF4 is pressed
-		  GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
+      GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
       if(last4){    // 0x10 means it was previously released; negative logic
          PF3 ^= 0x08;
          switch (curStage) {
@@ -58,6 +58,7 @@ void GPIOPortF_Handler(void){
             curStage  = 1;
             ST7735_FillScreen(ST7735_BLACK);   // clear the screen
             break;
+            
             case 1:
             if (stages[1].highlight == 0){
                curStage = 2;
@@ -68,15 +69,58 @@ void GPIOPortF_Handler(void){
             }
             else if (stages[1].highlight == 1) {
                curStage = 3;
+							 getSeconds(alarm, sec);  // with exactly 2 digits
+               getMinutes(alarm, min);  // with exactly 2 digits
+               getHours(alarm, hour);  // with exactly 2 digits   
             }
             else if (stages[1].highlight == 2) {
                curStage = 0;
             }
             ST7735_FillScreen(ST7735_BLACK);   // clear the screen
             break;
+            
             case 2:
+            if (stages[2].highlight >= 2 && stages[2].highlight <= 4) {
+               if (stages[2].selected == 1) {
+                  stages[2].selected = 0;
+                  stages[2].color[stages[2].highlight] = ST7735_YELLOW;
+               }
+               else if (stages[2].selected == 0) {
+                  stages[2].selected = 1;
+                  stages[2].color[stages[2].highlight] = ST7735_BLUE;
+               }
+            }
+            else if (stages[2].highlight == 0) {  // save
+               curStage = 1;
+               ST7735_FillScreen(ST7735_BLACK);
+            }
+            else if (stages[2].highlight == 1) {
+               curStage = 1;
+               ST7735_FillScreen(ST7735_BLACK);
+               
+            }
+            
             break;
             case 3:
+            if (stages[3].highlight >= 2 && stages[3].highlight <= 4) {
+               if (stages[3].selected == 1) {
+                  stages[3].selected = 0;
+                  stages[3].color[stages[3].highlight] = ST7735_YELLOW;
+               }
+               else if (stages[3].selected == 0) {
+                  stages[3].selected = 1;
+                  stages[3].color[stages[3].highlight] = ST7735_BLUE;
+               }
+            }
+            else if (stages[3].highlight == 0) {  // save
+               curStage = 1;
+               ST7735_FillScreen(ST7735_BLACK);
+            }
+            else if (stages[3].highlight == 1) {
+               curStage = 1;
+               ST7735_FillScreen(ST7735_BLACK);
+               
+            }
             break;
          }
       }
@@ -86,8 +130,8 @@ void GPIOPortF_Handler(void){
    }
    
    if (GPIO_PORTF_RIS_R&0x01) { 
-		  GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
-		 
+      GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
+      
       if(last0){    // 0x01 means it was previously released; negative logic
          PF3 ^= 0x08;
          switch (curStage) {
@@ -95,15 +139,23 @@ void GPIOPortF_Handler(void){
             // alarm
             break;
             case 1:
+            stages[1].color[stages[1].highlight] = ST7735_WHITE;
             stages[1].highlight = (stages[1].highlight+1)%3;
-            stages[1].color[0] = stages[1].highlight == 0?1:0;
-            stages[1].color[1] = stages[1].highlight == 1?1:0;
-            stages[1].color[2] = stages[1].highlight == 2?1:0;
+            stages[1].color[stages[1].highlight] = ST7735_YELLOW;
             
             break;
             case 2:
+            if (stages[2].selected) break; // in edit mode, button function disabled
+            stages[2].color[stages[2].highlight] = ST7735_WHITE;
+            stages[2].highlight = (stages[2].highlight+1)%5;
+            stages[2].color[stages[2].highlight] = ST7735_YELLOW;
+            
             break;
             case 3:
+            if (stages[3].selected) break; // in edit mode, button function disabled
+            stages[3].color[stages[3].highlight] = ST7735_WHITE;
+            stages[3].highlight = (stages[3].highlight+1)%5;
+            stages[3].color[stages[3].highlight] = ST7735_YELLOW;
             break;
          }
       }
