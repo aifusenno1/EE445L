@@ -37,6 +37,7 @@ extern uint32_t h,m,s; // time as numbers
 extern char hour[],min[],sec[];
 extern int time;
 extern int alarm, inAlarm;
+int lastTimePressed, timeInactive;
 static int numToggle = 0;
 uint32_t ADCvalue;
 
@@ -111,6 +112,8 @@ int main(){
 	 outputTime(time);	
    drawFace();
    drawHands(time);
+	 lastTimePressed = time;
+	 timeInactive = 0;
    
    while(1){
       
@@ -123,6 +126,8 @@ int main(){
       if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
          secFlag = 0;
       }
+			timeInactive = time - lastTimePressed;
+			
       sr = StartCritical();
       switch (curStage) {
          case 0:
@@ -135,12 +140,28 @@ int main(){
          }
          break;
          case 1:
+				 if(timeInactive >= 7){
+						curStage = 0; 
+						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
+						 drawFace();
+						 drawHands(time);
+					 outputTime(time);
+					  break;
+				   }
          ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0]);
          ST7735_DrawString(6,8,stages[1].options[1], stages[1].color[1]);
          ST7735_DrawString(6,10,stages[1].options[2], stages[1].color[2]);
          
          break;
          case 2:
+				 if(timeInactive >= 7){
+						curStage = 0; 
+						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
+						 drawFace();
+						 drawHands(time);
+					 outputTime(time);
+					  break;
+				   }
          ADCvalue = ADC0_InSeq3();
          if (stages[2].selected) {
             if (stages[2].highlight == 2) { // hour: 1-12
@@ -187,6 +208,14 @@ int main(){
          break;
 				 
          case 3:
+					 if(timeInactive >= 7){
+						curStage = 0; 
+						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
+						 drawFace();
+						 drawHands(time);
+						 outputTime(time);
+					  break;
+				   }
 					 ADCvalue = ADC0_InSeq3();
 					 if (stages[3].selected) {
             if (stages[3].highlight == 2) { // hour: 1-12

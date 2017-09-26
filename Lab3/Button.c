@@ -18,7 +18,7 @@
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
 extern stage stages[4];
-extern int time, alarmTime, inAlarm;
+extern int time, alarmTime, inAlarm, lastTimePressed;
 extern char sec[2], min[2], hour[2];
 extern uint32_t h,m,s;
 
@@ -49,6 +49,7 @@ void Timer0A_Handler(void){
 }
 
 void GPIOPortF_Handler(void){
+	 lastTimePressed = time;
    if (GPIO_PORTF_RIS_R&0x10) { // PF4 is pressed
       GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
       if(last4){    // 0x10 means it was previously released; negative logic
