@@ -18,7 +18,7 @@
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
 extern stage stages[4];
-extern int time, alarmTime;
+extern int time, alarmTime, alarm, inAlarm;
 extern char sec[2], min[2], hour[2];
 
 
@@ -141,22 +141,22 @@ void GPIOPortF_Handler(void){
          PF3 ^= 0x08;
          switch (curStage) {
             case 0: 
+						inAlarm = 0;
             // alarm
             break;
-						
             case 1:
             stages[1].color[stages[1].highlight] = ST7735_WHITE;
             stages[1].highlight = (stages[1].highlight+1)%3;
             stages[1].color[stages[1].highlight] = ST7735_YELLOW;
+            
             break;
-						
             case 2:
             if (stages[2].selected) break; // in edit mode, button function disabled
             stages[2].color[stages[2].highlight] = ST7735_WHITE;
             stages[2].highlight = (stages[2].highlight+1)%5;
             stages[2].color[stages[2].highlight] = ST7735_YELLOW;
+            
             break;
-						
             case 3:
             if (stages[3].selected) break; // in edit mode, button function disabled
             stages[3].color[stages[3].highlight] = ST7735_WHITE;
