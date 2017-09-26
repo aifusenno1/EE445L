@@ -29,7 +29,7 @@
 #include <stdint.h>
 #include <limits.h>
 #include "ADCSWTrigger.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 #include "PLL.h"
 #include "ST7735.h"
 

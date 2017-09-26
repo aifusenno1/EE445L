@@ -20,7 +20,7 @@ extern uint8_t curStage;
 extern stage stages[4];
 extern int time, alarmTime;
 extern char sec[2], min[2], hour[2];
-
+extern uint32_t h,m,s;
 
 static void Timer0Arm(void){
    TIMER0_CTL_R = 0x00000000;    // 1) disable TIMER0A during setup
@@ -98,6 +98,7 @@ void GPIOPortF_Handler(void){
             }
             else if (stages[2].highlight == 0) {  // save
                curStage = 1;
+							 time = (h%12) * 3600 + m * 60 + s;
                ST7735_FillScreen(ST7735_BLACK);
             }
             else if (stages[2].highlight == 1) {
@@ -120,6 +121,7 @@ void GPIOPortF_Handler(void){
             }
             else if (stages[3].highlight == 0) {  // save
                curStage = 1;
+							 alarmTime = (h%12) * 3600 + m * 60 + s;
                ST7735_FillScreen(ST7735_BLACK);
             }
             else if (stages[3].highlight == 1) {
@@ -202,3 +204,4 @@ void PortF_Init(void){ volatile uint32_t delay;
    GPIO_PORTF_PUR_R = 0x11;          // enable pull-up on PF0 and PF4
    GPIO_PORTF_DEN_R = 0x1F;          // 7) enable digital I/O on PF4-0
 }
+

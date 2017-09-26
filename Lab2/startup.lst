@@ -1091,8 +1091,8 @@ ARM Macro Assembler    Page 17
               00000000 
 Command Line: --debug --xref --cpu=Cortex-M4 --apcs=interwork --depend=.\startu
 p.d -o.\startup.o -IC:\Applications\Keil\ARM\RV31\INC -IC:\Applications\Keil\AR
-M\CMSIS\Include -IC:\Applications\Keil\ARM\Inc\Luminary --predefine="__EVAL SET
-A 1" --list=.\startup.lst startup.s
+M\CMSIS\Include -IC:\Applications\Keil\ARM\Inc\Luminary --list=.\startup.lst st
+artup.s
 
 
 
@@ -2539,4 +2539,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 2 symbols
-480 symbols in table
+479 symbols in table
