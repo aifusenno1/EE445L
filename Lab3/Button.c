@@ -138,7 +138,7 @@ void GPIOPortF_Handler(void){
       }
    }
    
-   if (GPIO_PORTF_RIS_R&0x01) { 
+   if (GPIO_PORTF_RIS_R&0x01) { // PF0 is pressed
       GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
       
       if(last0){    // 0x01 means it was previously released; negative logic

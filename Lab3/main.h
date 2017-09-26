@@ -1,4 +1,4 @@
-
+/* main.h */
 
 typedef struct stage_t {
 	char *options[3];

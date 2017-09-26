@@ -451,11 +451,6 @@
               <FilePath>.\SysTick.c</FilePath>
             </File>
             <File>
-              <FileName>SysTickTestMain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SysTickTestMain.c</FilePath>
-            </File>
-            <File>
               <FileName>ADCSWTrigger.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ADCSWTrigger.c</FilePath>

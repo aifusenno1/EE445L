@@ -1,4 +1,8 @@
-/*
+/* main.c
+Xinyuan (Allen) Pan & Paris Kaman
+
+PD0: Speaker
+PE4: Potentiometer
 PF4: button
 PF1: button
 */
