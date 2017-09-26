@@ -202,4 +202,3 @@ void PortF_Init(void){ volatile uint32_t delay;
    GPIO_PORTF_PUR_R = 0x11;          // enable pull-up on PF0 and PF4
    GPIO_PORTF_DEN_R = 0x1F;          // 7) enable digital I/O on PF4-0
 }
-

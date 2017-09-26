@@ -12,12 +12,11 @@ PF1: button
 #include "Alarm.h"
 #include "Button.h"
 #include "main.h"
-#include "ADCSWTrigger.h"
-
 
 #define PF3                     (*((volatile uint32_t *)0x40025020))
 #define PF2                     (*((volatile uint32_t *)0x40025010))
 #define PF1                     (*((volatile uint32_t *)0x40025008))
+//#define PD0                     (*((volatile uint32_t *)0x40007
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -34,7 +33,7 @@ char hour[]={0,0,'\0'};
 int time = 6*3600;
 int alarm = 0;
 static int numToggle = 0;
-static int inAlarm = 0;
+int inAlarm = 0;
 
 stage stages[4] = {
    {0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display
@@ -43,6 +42,18 @@ stage stages[4] = {
    {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0}		              // stage 3: set alarm
 };
 uint8_t curStage = 0;
+
+void PortD_Init(void){
+  SYSCTL_RCGCGPIO_R |= 0x08;        // 1) activate port D
+  while((SYSCTL_PRGPIO_R&0x08)==0){};   // allow time for clock to stabilize
+                                    // 2) no need to unlock PD3-0
+  GPIO_PORTD_AMSEL_R &= ~0x0F;      // 3) disable analog functionality on PD3-0
+  GPIO_PORTD_PCTL_R &= ~0x0000FFFF; // 4) GPIO
+  GPIO_PORTD_DIR_R |= 0x0F;         // 5) make PD0 out
+  GPIO_PORTD_AFSEL_R &= ~0x0F;      // 6) regular port function
+  GPIO_PORTD_DEN_R |= 0x0F;         // 7) enable digital I/O on PD0
+}
+
 
 // Interrupt service routine
 // Executed every 12.5ns*(period)
@@ -54,10 +65,10 @@ void SysTick_Handler(void){
    }
 	 if(alarm | inAlarm){
 		 if(numToggle < 50){
-			 PF2 ^= 0x04;
+			 GPIO_PORTD_DATA_R ^= 0x01;
 		 }
 		 if(numToggle == 50){
-			 PF2 &= ~0x04;
+			 GPIO_PORTD_DATA_R &= ~0x01;
 		 }
 		 if(numToggle == 100){
 			 numToggle = 0;
@@ -72,8 +83,8 @@ int main(){
    
    SYSCTL_RCGCGPIO_R |= 0x20;  // activate port F
    PLL_Init(Bus80MHz);                   // 80 MHz
-	 ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
    PortF_Init();
+	 PortD_Init();
    ST7735_InitR(INITR_REDTAB);
    
    long sr;
