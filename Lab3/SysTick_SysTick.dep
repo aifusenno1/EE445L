@@ -5,7 +5,7 @@ I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (PLL.h)(0x59C971DA)
 I (tm4c123gh6pm.h)(0x59C971DB)
 I (SysTick.h)(0x59C971DA)
-F (.\main.c)(0x59C9D8EE)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (.\main.c)(0x59C9DAEC)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (tm4c123gh6pm.h)(0x59C971DB)
 I (PLL.h)(0x59C971DA)
@@ -17,7 +17,7 @@ I (C:\Applications\Keil\ARM\ARMCC\include\stdlib.h)(0x51C87C24)
 I (C:\Applications\Keil\ARM\ARMCC\include\math.h)(0x51C87C24)
 I (Alarm.h)(0x59C971DA)
 I (Button.h)(0x59C9CDA4)
-I (main.h)(0x59C9CDA4)
+I (main.h)(0x59C9DA3B)
 I (ADCSWTrigger.h)(0x59BAABD4)
 F (.\ST7735.c)(0x59C971DA)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735.o --omf_browse .\st7735.crf --depend .\st7735.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
@@ -45,7 +45,7 @@ I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (tm4c123gh6pm.h)(0x59C971DB)
 I (Alarm.h)(0x59C971DA)
 I (ST7735.h)(0x59C971DA)
-F (.\Button.c)(0x59C9D78D)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\button.o --omf_browse .\button.crf --depend .\button.d)
+F (.\Button.c)(0x59C9DAB7)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\button.o --omf_browse .\button.crf --depend .\button.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (tm4c123gh6pm.h)(0x59C971DB)
 I (PLL.h)(0x59C971DA)
@@ -56,7 +56,7 @@ I (Display.h)(0x59C971DA)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdlib.h)(0x51C87C24)
 I (C:\Applications\Keil\ARM\ARMCC\include\math.h)(0x51C87C24)
 I (Alarm.h)(0x59C971DA)
-I (main.h)(0x59C9CDA4)
+I (main.h)(0x59C9DA3B)
 F (.\SysTick.c)(0x59C971DA)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (tm4c123gh6pm.h)(0x59C971DB)

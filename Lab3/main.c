@@ -39,10 +39,10 @@ int inAlarm = 0;
 uint32_t ADCvalue;
 
 stage stages[4] = {
-   {0, {"\n"}, 0, {'\n'}, 0, 0, -1, {'\n'}, 0},  													// stage 0: clock display
-   {1, {"Set Clock", "Set Alarm", "Exit"}, 3, {'\n'}, 0, 2, 0, {ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0},   // stage 1: select menu
-   {2, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0},               // stage 2: set time
-   {3, {"Save", "Exit"}, 2, {0, 0, 0}, 3, 5, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0}		              // stage 3: set alarm
+   {{"\n"}, {'\n'}, -1, {'\n'}, 0},  													// stage 0: clock display
+   {{"Set Clock", "Set Alarm", "Exit"}, {'\n'}, 0, {ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0},   // stage 1: select menu
+   {{"Save", "Exit"}, {0, 0, 0}, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0},               // stage 2: set time
+   {{"Save", "Exit"}, {0, 0, 0}, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0}		              // stage 3: set alarm
 };
 uint8_t curStage = 0;
 
@@ -104,7 +104,9 @@ int main(){
    
    EnableInterrupts();
    
+	 // Initial Display
    ST7735_FillScreen(ST7735_BLACK);
+	 outputTime(time);	
    drawFace();
    drawHands(time);
    
@@ -229,14 +231,6 @@ int main(){
          break;
       }		
       EndCritical(sr);  
-      
-      
-      
-      
-      //    SysTick_Wait(1);        // approximately 720 ns
-      //    SysTick_Wait(2);        // approximately 720 ns
-      //    SysTick_Wait(10000);    // approximately 0.2 ms
-      //SysTick_Wait10ms(1);      // approximately 10 ms
       
    }
 }

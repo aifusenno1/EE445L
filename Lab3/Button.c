@@ -62,26 +62,27 @@ void GPIOPortF_Handler(void){
             case 1:
             if (stages[1].highlight == 0){
                curStage = 2;
-							ST7735_SetCursor(0,0);
-							ST7735_OutUDec(time);
+               ST7735_SetCursor(0,0);
+               ST7735_OutUDec(time);
                // make the initial time display current time
                getSeconds(time, sec);  // with exactly 2 digits
                getMinutes(time, min);  // with exactly 2 digits
                getHours(time, hour);  // with exactly 2 digits  
-							 ST7735_FillScreen(ST7735_BLACK);   // clear the screen							
+               ST7735_FillScreen(ST7735_BLACK);   // clear the screen							
             }
             else if (stages[1].highlight == 1) {
                curStage = 3;
-							 getSeconds(alarmTime, sec);  // with exactly 2 digits
+               getSeconds(alarmTime, sec);  // with exactly 2 digits
                getMinutes(alarmTime, min);  // with exactly 2 digits
                getHours(alarmTime, hour);  // with exactly 2 digits
                ST7735_FillScreen(ST7735_BLACK);   // clear the screen							
             }
             else if (stages[1].highlight == 2) {
                curStage = 0;
-							 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
-							 drawFace();
-							 drawHands(time);
+               ST7735_FillScreen(ST7735_BLACK);   // clear the screen
+							 outputTime(time);
+               drawFace();
+               drawHands(time);
             }
             break;
             
@@ -98,7 +99,7 @@ void GPIOPortF_Handler(void){
             }
             else if (stages[2].highlight == 0) {  // save
                curStage = 1;
-							 time = (h%12) * 3600 + m * 60 + s;
+               time = (h%12) * 3600 + m * 60 + s;
                ST7735_FillScreen(ST7735_BLACK);
             }
             else if (stages[2].highlight == 1) {
@@ -121,7 +122,7 @@ void GPIOPortF_Handler(void){
             }
             else if (stages[3].highlight == 0) {  // save
                curStage = 1;
-							 alarmTime = (h%12) * 3600 + m * 60 + s;
+               alarmTime = (h%12) * 3600 + m * 60 + s;
                ST7735_FillScreen(ST7735_BLACK);
             }
             else if (stages[3].highlight == 1) {
@@ -146,20 +147,20 @@ void GPIOPortF_Handler(void){
             case 0: 
             // alarm
             break;
-						
+            
             case 1:
             stages[1].color[stages[1].highlight] = ST7735_WHITE;
             stages[1].highlight = (stages[1].highlight+1)%3;
             stages[1].color[stages[1].highlight] = ST7735_YELLOW;
             break;
-						
+            
             case 2:
             if (stages[2].selected) break; // in edit mode, button function disabled
             stages[2].color[stages[2].highlight] = ST7735_WHITE;
             stages[2].highlight = (stages[2].highlight+1)%5;
             stages[2].color[stages[2].highlight] = ST7735_YELLOW;
             break;
-						
+            
             case 3:
             if (stages[3].selected) break; // in edit mode, button function disabled
             stages[3].color[stages[3].highlight] = ST7735_WHITE;
