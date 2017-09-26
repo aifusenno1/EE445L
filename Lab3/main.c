@@ -140,7 +140,7 @@ int main(){
          }
          break;
          case 1:
-				 if(timeInactive >= 7){
+				 if(timeInactive >= 15){
 						curStage = 0; 
 						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
 						 drawFace();
@@ -154,7 +154,7 @@ int main(){
          
          break;
          case 2:
-				 if(timeInactive >= 7){
+				 if(timeInactive >= 15){
 						curStage = 0; 
 						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
 						 drawFace();
@@ -208,7 +208,7 @@ int main(){
          break;
 				 
          case 3:
-					 if(timeInactive >= 7){
+					 if(timeInactive >= 15){
 						curStage = 0; 
 						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
 						 drawFace();
