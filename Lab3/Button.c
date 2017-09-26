@@ -81,6 +81,7 @@ void GPIOPortF_Handler(void){
                curStage = 0;
 							 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
 							 drawFace();
+							 drawHands(time);
             }
             break;
             
