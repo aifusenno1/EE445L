@@ -18,7 +18,7 @@
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
 extern stage stages[4];
-extern int time, alarmTime;
+extern int time, alarmTime, inAlarm;
 extern char sec[2], min[2], hour[2];
 extern uint32_t h,m,s;
 
@@ -145,6 +145,7 @@ void GPIOPortF_Handler(void){
          PF3 ^= 0x08;
          switch (curStage) {
             case 0: 
+							inAlarm = 0;
             // alarm
             break;
             

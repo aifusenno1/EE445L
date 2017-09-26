@@ -416,11 +416,6 @@
               <FilePath>.\PLL.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
-            </File>
-            <File>
               <FileName>ST7735.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ST7735.c</FilePath>
@@ -454,6 +449,16 @@
               <FileName>ADCSWTrigger.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ADCSWTrigger.c</FilePath>
+            </File>
+            <File>
+              <FileName>SysTickTestMain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SysTickTestMain.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\main.c</FilePath>
             </File>
           </Files>
         </Group>

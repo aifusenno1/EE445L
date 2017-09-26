@@ -6,6 +6,12 @@
 #include "TimeManagement.h"
 #include "ST7735.h"
 
+int time = 6*3600;
+char sec[]={0,0,'\0'};
+char min[]={0,0,'\0'};
+char hour[]={0,0,'\0'};
+uint32_t h,m,s; // time as numbers
+
 int updateTime(int flag, int time) {
    if (flag) return ((time+1)%(3600*12));
    else return time;
@@ -68,7 +74,10 @@ void getMinutes(int time, char minStr[2]) {
 }
 void getHours(int time, char hourStr[2]) {
    int hour = (time/3600)%12;
-   if (hour < 10) {
+	 if (hour == 0) {
+		 hourStr = "12";
+	 }
+   else if (hour < 10) {
       hourStr[0] = '0';
       hourStr[1] = 48 + hour;
    } else {

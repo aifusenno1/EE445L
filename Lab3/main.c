@@ -32,14 +32,12 @@ void WaitForInterrupt(void);  // low power mode
 
 static int count = 0;
 static int secFlag = 0;
-char sec[]={0,0,'\0'};
-char min[]={0,0,'\0'};
-char hour[]={0,0,'\0'};
-uint32_t h,m,s; // time as numbers
-int time = 6*3600;
-int alarm = 0;
+
+extern uint32_t h,m,s; // time as numbers
+extern char hour[],min[],sec[];
+extern int time;
+extern int alarm, inAlarm;
 static int numToggle = 0;
-int inAlarm = 0;
 uint32_t ADCvalue;
 
 stage stages[4] = {
