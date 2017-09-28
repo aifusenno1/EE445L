@@ -91,8 +91,10 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include "utils/uartstdio.h"
 #include "utils/cmdline.h"
 #include "application_commands.h"
+#include "../inc/tm4c123gh6pm.h"
 #include "LED.h"
-#include "Nokia5110.h"
+#include "ADCSWTrigger.h"
+#include "ST7735.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -190,11 +192,72 @@ static int32_t configureSimpleLinkToDefaultState(char *);
 
 
 // NEW CODE HERE
-char* parseMessage(char *recbuf){
-	char* temp;
-	temp = strtok(recbuf, "temp"); 	// parse to where it says temp the first time
-	temp = strtok(NULL,	":");				// cut off the colon
-	temp = strtok(NULL, ",");				// cut from the colon to the , so you grab the whole temperature
+/****************ST7735_sDecOut3***************
+ converts fixed point number to LCD
+ format signed 32-bit with resolution 0.001
+ range -9.999 to +9.999
+ Inputs:  signed 32-bit integer part of fixed-point number
+ Outputs: none
+ send exactly 6 characters to the LCD 
+Parameter LCD display
+ 12345    " *.***"
+  2345    " 2.345"  
+ -8100    "-8.100"
+  -102    "-0.102" 
+    31    " 0.031" 
+-12345    " *.***"
+ */ 
+void ST7735_sDecOut3(int32_t n) {
+  if (n > 9999 | n < -9999) {  // out of range
+     ST7735_OutString(" *.***");
+	} else {
+		if (n < 0) { // output - and negate if negative
+			ST7735_OutChar('-');
+			n = -n;
+		} else {
+			ST7735_OutChar(' ');
+		}
+		// extract each digit, +48 to get the ascii code of that digit
+		ST7735_OutChar(n/1000 + 48);
+		n = n - n/1000*1000;
+		ST7735_OutChar('.');
+		ST7735_OutChar(n/100 + 48);
+		n = n - n/100*100;
+		ST7735_OutChar(n/10 + 48);
+	  n = n - n/10*10;
+		ST7735_OutChar(n + 48);
+	}
+	
+}
+
+char* parseTemp(char *recbuf){
+	int index = 0;
+	int done = 0;
+	while (done == 0) {
+	if (recbuf[index++] != '"')
+		continue;
+	if (recbuf[index++] != 't')
+		continue;
+	if (recbuf[index++] != 'e')
+		continue;
+	if (recbuf[index++] != 'm')
+		continue;
+	if (recbuf[index++] != 'p')
+		continue;
+	if (recbuf[index++] != '"')
+		continue;
+	done = 1;
+}
+	index++;
+	static char temp[10];
+	int len = 0;
+	while (1) {
+		if (recbuf[index] != ',')  
+			temp[len++] = recbuf[index++];
+		else break;
+	}
+	temp[len] = '\0';
+
 	return temp;
 }
 
@@ -223,11 +286,18 @@ void Crash(uint32_t time){
 int main(void){int32_t retVal;  SlSecParams_t secParams;
   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
   initClk();        // PLL 50 MHz
+	ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
   UART_Init();      // Send data to PC, 115200 bps
   LED_Init();       // initialize LaunchPad I/O 
+	ST7735_InitR(INITR_REDTAB);
+	ST7735_FillScreen(ST7735_BLACK);
+
+	ADC0_SAC_R = 6;	
+
   UARTprintf("Weather App\n");
   retVal = configureSimpleLinkToDefaultState(pConfig); // set policies
   if(retVal < 0)Crash(4000000);
+
   retVal = sl_Start(0, pConfig, 0);
   if((retVal < 0) || (ROLE_STA != retVal) ) Crash(8000000);
   secParams.Key = PASSKEY;
@@ -237,12 +307,15 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
   while((0 == (g_Status&CONNECTED)) || (0 == (g_Status&IP_AQUIRED))){
     _SlNonOsMainLoopTask();
   }
+
   UARTprintf("Connected\n");
+
   while(1){
    // strcpy(HostName,"openweathermap.org");  // used to work 10/2015
     strcpy(HostName,"api.openweathermap.org"); // works 9/2016
     retVal = sl_NetAppDnsGetHostByName(HostName,
              strlen(HostName),&DestinationIP, SL_AF_INET);
+
     if(retVal == 0){
       Addr.sin_family = SL_AF_INET;
       Addr.sin_port = sl_Htons(80);
@@ -259,11 +332,22 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
         sl_Close(SockID);
         LED_GreenOn();
         UARTprintf("\r\n\r\n");
-				char* temperature = parseMessage(Recvbuff);
         UARTprintf(Recvbuff);  
 				UARTprintf("\r\n");
+		char* temperature = parseTemp(Recvbuff);
+		unsigned int ADCvalue = ADC0_InSeq3();
+		uint32_t voltage = (int)(3.3 * ADCvalue *1000/4095);
+		ST7735_OutString("Temp =  ");
+		ST7735_OutString(temperature);
+		ST7735_OutString(" C\n");
+				
+		ST7735_OutString("Voltage~");
+		ST7735_sDecOut3(voltage);
+		ST7735_OutString("V\n");
+
       }
     }
+
     while(Board_Input()==0){}; // wait for touch
     LED_GreenOff();
   }
