@@ -1,19 +1,10 @@
+/* Button. h*/
 
-
-
-
+#define PF4                     (*((volatile uint32_t *)0x40025040))
+#define PF3                     (*((volatile uint32_t *)0x40025020))
+#define PF2                     (*((volatile uint32_t *)0x40025010))
+#define PF0                     (*((volatile uint32_t *)0x40025004))
+	
 void PortF_Init(void);
 
 void EdgeInterrupt_Init(void);
-
-// Wait for switch to be pressed 
-// There will be minimum time delay from touch to when this function returns
-// Inputs:  none
-// Outputs: none 
-void Switch_WaitPress(void);
-
-// Wait for switch to be released 
-// There will be minimum time delay from release to when this function returns
-// Inputs:  none
-// Outputs: none 
-void Switch_WaitRelease(void);

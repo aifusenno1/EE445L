@@ -7,3 +7,82 @@ C:\Users\Allen Pan\Desktop\EE445L\Lab3\SysTick.uvproj
 Project File Date:  09/26/2017
 
 <h2>Output:</h2>
+Build target 'SysTick'
+compiling PLL.c...
+compiling TimeManagement.c...
+compiling Display.c...
+compiling Button.c...
+compiling main.c...
+linking...
+Program Size: Code=12896 RO-data=29016 RW-data=328 ZI-data=1136  
+".\SysTick.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Allen Pan\\Desktop\\EE445L\\Lab3\\SysTick.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Connection failed!, error code=&d
+Error: Flash Download failed  -  Target DLL has been cancelled
+Load "C:\\Users\\Allen Pan\\Desktop\\EE445L\\Lab3\\SysTick.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Failed!
+Error: Flash Download failed  -  "Cortex-M4"
+Load "C:\\Users\\Allen Pan\\Desktop\\EE445L\\Lab3\\SysTick.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+</pre>
+</body>
+</html>
+ pointer to a complete object type
+                 if (stages[2].selected == 1) {
+Button.c(79): error:  #852: expression must be a pointer to a complete object type
+                    stages[2].selected = 0;
+Button.c(80): error:  #852: expression must be a pointer to a complete object type
+                    stages[2].color[stages[2].highlight] = ST7735_YELLOW;
+Button.c(80): error:  #852: expression must be a pointer to a complete object type
+                    stages[2].color[stages[2].highlight] = ST7735_YELLOW;
+Button.c(82): error:  #852: expression must be a pointer to a complete object type
+                 else if (stages[2].selected == 0) {
+Button.c(83): error:  #852: expression must be a pointer to a complete object type
+                    stages[2].selected = 1;
+Button.c(84): error:  #852: expression must be a pointer to a complete object type
+                    stages[2].color[stages[2].highlight] = ST7735_BLUE;
+Button.c(84): error:  #852: expression must be a pointer to a complete object type
+                    stages[2].color[stages[2].highlight] = ST7735_BLUE;
+Button.c(87): error:  #852: expression must be a pointer to a complete object type
+              else if (stages[2].highlight == 0) {  // save
+Button.c(92): error:  #852: expression must be a pointer to a complete object type
+              else if (stages[2].highlight == 1) {
+Button.c(100): error:  #852: expression must be a pointer to a complete object type
+              if (stages[3].highlight >= 2 && stages[3].highlight <= 4) {
+Button.c(100): error:  #852: expression must be a pointer to a complete object type
+              if (stages[3].highlight >= 2 && stages[3].highlight <= 4) {
+Button.c(101): error:  #852: expression must be a pointer to a complete object type
+                 if (stages[3].selected == 1) {
+Button.c(102): error:  #852: expression must be a pointer to a complete object type
+                    stages[3].selected = 0;
+Button.c(103): error:  #852: expression must be a pointer to a complete object type
+                    stages[3].color[stages[3].highlight] = ST7735_YELLOW;
+Button.c(103): error:  #852: expression must be a pointer to a complete object type
+                    stages[3].color[stages[3].highlight] = ST7735_YELLOW;
+Button.c(105): error:  #852: expression must be a pointer to a complete object type
+                 else if (stages[3].selected == 0) {
+Button.c(106): error:  #852: expression must be a pointer to a complete object type
+                    stages[3].selected = 1;
+Button.c(107): error:  #852: expression must be a pointer to a complete object type
+                    stages[3].color[stages[3].highlight] = ST7735_BLUE;
+Button.c(107): error:  #852: expression must be a pointer to a complete object type
+                    stages[3].color[stages[3].highlight] = ST7735_BLUE;
+Button.c(110): error:  #852: expression must be a pointer to a complete object type
+              else if (stages[3].highlight == 0) {  // save
+Button.c(115): error:  #852: expression must be a pointer to a complete object type
+              else if (stages[3].highlight == 1) {
+Button.c(139): error:  #852: expression must be a pointer to a complete object type
+              stages[1].color[stages[1].highlight] = ST7735_WHITE;
+Button.c(139): error:  #852: expression must be a pointer to a complete object type
+              stages[1].color[stages[1].highlight] = ST7735_WHITE;
+Button.c(140): error:  #852: expression must be a pointer to a complete object type
+              stages[1].highlight = (stages[1].highlight+1)%3;
+Button.c: 0 warnings, 30 errors
+compiling main.c...
+".\SysTick.axf" - 30 Error(s), 0 Warning(s).
+Target not created

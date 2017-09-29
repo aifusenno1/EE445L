@@ -1,6 +1,6 @@
 //Paris Kaman
 // Allen Pan
-// Alarm.c
+// Alarm.h
 // determines whether the alarm needs to go off or not
 
 int checkForAlarm(int time);

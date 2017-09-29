@@ -3,8 +3,12 @@
 // TimeManagement.c
 // takes care of time stepping
 
-#include "TimeManagement.h"
+#include <stdint.h>
+#include "tm4c123gh6pm.h"
+#include "PLL.h"
+#include "SysTick.h"
 #include "ST7735.h"
+#include "TimeManagement.h"
 
 int time = 6*3600;
 char sec[]={0,0,'\0'};
@@ -51,37 +55,37 @@ void outputTime(int time){
 
 /* return a string of two digits */
 void getSeconds(int time, char secStr[2]) {
-   int sec = time%60;
-   if (sec < 10) {
+   s = time%60;
+   if (s < 10) {
       secStr[0] = '0';
-      secStr[1] = 48 + sec;
+      secStr[1] = 48 + s;
    } else {
-      secStr[0] = 48 + sec/10;
-      secStr[1] = 48 + sec%10;
+      secStr[0] = 48 + s/10;
+      secStr[1] = 48 + s%10;
    }
 
 }
 
 void getMinutes(int time, char minStr[2]) {
-   int min = (time/60)%60;
-   if (min < 10) {
+   m = (time/60)%60;
+   if (m < 10) {
       minStr[0] = '0';
-      minStr[1] = 48 + min;
+      minStr[1] = 48 + m;
    } else {
-      minStr[0] = 48 + min/10;
-      minStr[1] = 48 + min%10;
+      minStr[0] = 48 + m/10;
+      minStr[1] = 48 + m%10;
    }
 }
 void getHours(int time, char hourStr[2]) {
-   int hour = (time/3600)%12;
-	 if (hour == 0) {
+   h = (time/3600)%12;
+	 if (h == 0) {
 		 hourStr = "12";
 	 }
-   else if (hour < 10) {
+   else if (h < 10) {
       hourStr[0] = '0';
-      hourStr[1] = 48 + hour;
+      hourStr[1] = 48 + h;
    } else {
-      hourStr[0] = 48 + hour/10;
-      hourStr[1] = 48 + hour%10;
+      hourStr[0] = 48 + h/10;
+      hourStr[1] = 48 + h%10;
    }   
 }

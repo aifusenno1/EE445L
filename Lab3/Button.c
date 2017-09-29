@@ -1,4 +1,5 @@
-
+/* Button.c */
+#include "button.h"
 #include <stdint.h>
 #include "tm4c123gh6pm.h"
 #include "PLL.h"
@@ -9,11 +10,8 @@
 #include "Alarm.h"
 #include "main.h"
 
-#define PF4                     (*((volatile uint32_t *)0x40025040))
-#define PF3                     (*((volatile uint32_t *)0x40025020))
-#define PF2                     (*((volatile uint32_t *)0x40025010))
-#define PF0                     (*((volatile uint32_t *)0x40025004))
-
+long StartCritical (void);    // previous I bit, disable interrupts
+void EndCritical(long sr);    // restore I bit to previous value
 
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
@@ -53,7 +51,6 @@ void GPIOPortF_Handler(void){
    if (GPIO_PORTF_RIS_R&0x10) { // PF4 is pressed
       GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
       if(last4){    // 0x10 means it was previously released; negative logic
-         PF3 ^= 0x08;
          switch (curStage) {
             case 0:  //enter stage 1
             curStage  = 1;
@@ -63,8 +60,6 @@ void GPIOPortF_Handler(void){
             case 1:
             if (stages[1].highlight == 0){
                curStage = 2;
-               ST7735_SetCursor(0,0);
-               ST7735_OutUDec(time);
                // make the initial time display current time
                getSeconds(time, sec);  // with exactly 2 digits
                getMinutes(time, min);  // with exactly 2 digits
@@ -134,19 +129,18 @@ void GPIOPortF_Handler(void){
             break;
          }
       }
-      else{
-         PF3 ^= 0x08;
-      }
+
    }
    
    if (GPIO_PORTF_RIS_R&0x01) { // PF0 is pressed
       GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
-      
+      long sr;
       if(last0){    // 0x01 means it was previously released; negative logic
-         PF3 ^= 0x08;
          switch (curStage) {
             case 0: 
+						sr = StartCritical();
 							inAlarm = 0;
+						EndCritical(sr);
             // alarm
             break;
             
@@ -171,9 +165,7 @@ void GPIOPortF_Handler(void){
             break;
          }
       }
-      else{
-         PF3 ^= 0x08;
-      }
+
    }
    Timer0Arm(); // start one shot
 }

@@ -1,3 +1,4 @@
+// Xinyuan Pan & Paris Kaman
 // SysTick.c
 // Runs on LM4F120/TM4C123
 // Provide functions that initialize the SysTick module, wait at least a
@@ -11,7 +12,7 @@
 // SysTick_Wait10ms(), which will wait longer than 10 ms if the clock is
 // slower.
 // Daniel Valvano
-// September 11, 2013
+// September 26, 2017
 
 /* This example accompanies the books
    "Embedded Systems: Introduction to ARM Cortex M Microcontrollers",
@@ -41,16 +42,47 @@
 #define NVIC_ST_CTRL_INTEN      0x00000002  // Interrupt enable
 #define NVIC_ST_CTRL_ENABLE     0x00000001  // Counter mode
 #define NVIC_ST_RELOAD_M        0x00FFFFFF  // Counter load value
+#define PF2                     (*((volatile uint32_t *)0x40025010))
 
 // Initialize SysTick with busy wait running at bus clock.
 void SysTick_Init(void){
-  NVIC_ST_CTRL_R = 0;                   // disable SysTick during setup
-  NVIC_ST_RELOAD_R = NVIC_ST_RELOAD_M;  // maximum reload value
-  NVIC_ST_CURRENT_R = 0;                // any write to current clears it
-                                        // enable SysTick with core clock
-  NVIC_ST_CTRL_R = NVIC_ST_CTRL_ENABLE+NVIC_ST_CTRL_CLK_SRC;
+   NVIC_ST_CTRL_R = 0;         // disable SysTick during setup
+   NVIC_ST_RELOAD_R = 799999;// reload value
+   NVIC_ST_CURRENT_R = 0;      // any write to current clears it
+   NVIC_SYS_PRI3_R = (NVIC_SYS_PRI3_R&0x00FFFFFF)|0x40000000; // priority 2
+   // enable SysTick with core clock and interrupts
+   NVIC_ST_CTRL_R = 0x07;
 }
 
+static int count = 0;
+int secFlag = 0;
+static int numToggle = 0;
+extern int alarm, inAlarm;
+
+// Interrupt service routine
+// Executed every 12.5ns*(period)
+void SysTick_Handler(void){
+   count++;
+   if(count == 100){
+      count = 0;
+      secFlag = 1;
+		  PF2 ^= 0x04; //heartbeat; too fast to see in main
+   }
+   if(alarm | inAlarm){
+      if(numToggle < 50){
+         GPIO_PORTD_DATA_R ^= 0x01;
+      }
+      if(numToggle == 50){
+         GPIO_PORTD_DATA_R &= ~0x01;
+      }
+      if(numToggle == 100){
+         numToggle = 0;
+      }
+      inAlarm = 1;
+      numToggle++;
+   }
+   
+}
 
 // Time delay using busy wait.
 // The delay parameter is in units of the core clock. (units of 20 nsec for 50 MHz clock)
@@ -62,6 +94,7 @@ void SysTick_Wait(uint32_t delay){
   }
   while(elapsedTime <= delay);
 }
+
 // Time delay using busy wait.
 // This assumes 50 MHz system clock.
 void SysTick_Wait10ms(uint32_t delay){

@@ -7,4 +7,3 @@ typedef struct stage_t {
 	int color[5];     
 	uint8_t selected;      // 0 for not selected. 1 for selected
 } stage;
-

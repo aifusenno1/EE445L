@@ -3,6 +3,13 @@
 // Display.c
 // draws the hands on the screen
 
+#include <stdint.h>
+#include <stdlib.h>
+#include "tm4c123gh6pm.h"
+#include "PLL.h"
+#include "SysTick.h"
+#include "ST7735.h"
+#include <math.h>
 #include "Display.h"
 
 

@@ -37,7 +37,9 @@
 .\rvmdk\main.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdarg.h
 .\rvmdk\main.o: ..\utils/cmdline.h
 .\rvmdk\main.o: application_commands.h
+.\rvmdk\main.o: ../inc/tm4c123gh6pm.h
 .\rvmdk\main.o: LED.h
-.\rvmdk\main.o: Nokia5110.h
+.\rvmdk\main.o: ADCSWTrigger.h
+.\rvmdk\main.o: ST7735.h
 .\rvmdk\main.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\rvmdk\main.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdlib.h

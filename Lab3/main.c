@@ -30,16 +30,14 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
 
-static int count = 0;
-static int secFlag = 0;
-
 extern uint32_t h,m,s; // time as numbers
 extern char hour[],min[],sec[];
 extern int time;
 extern int alarm, inAlarm;
+extern int secFlag;
 int lastTimePressed, timeInactive;
-static int numToggle = 0;
 uint32_t ADCvalue;
+
 
 stage stages[4] = {
    {{"\n"}, {'\n'}, -1, {'\n'}, 0},  													// stage 0: clock display
@@ -61,29 +59,6 @@ void PortD_Init(void){
 }
 
 
-// Interrupt service routine
-// Executed every 12.5ns*(period)
-void SysTick_Handler(void){
-   count++;
-   if(count == 100){
-      count = 0;
-      secFlag = 1;
-   }
-   if(alarm | inAlarm){
-      if(numToggle < 50){
-         GPIO_PORTD_DATA_R ^= 0x01;
-      }
-      if(numToggle == 50){
-         GPIO_PORTD_DATA_R &= ~0x01;
-      }
-      if(numToggle == 100){
-         numToggle = 0;
-      }
-      inAlarm = 1;
-      numToggle++;
-   }
-   
-}
 
 int main(){
    
@@ -91,18 +66,9 @@ int main(){
    PLL_Init(Bus80MHz);                   // 80 MHz
    PortF_Init();
    PortD_Init();
+	 SysTick_Init();
    ADC0_InitSWTriggerSeq3_Ch9();
    ST7735_InitR(INITR_REDTAB);
-   
-   long sr;
-   sr = StartCritical();
-   NVIC_ST_CTRL_R = 0;         // disable SysTick during setup
-   NVIC_ST_RELOAD_R = 799999;// reload value
-   NVIC_ST_CURRENT_R = 0;      // any write to current clears it
-   NVIC_SYS_PRI3_R = (NVIC_SYS_PRI3_R&0x00FFFFFF)|0x40000000; // priority 2
-   // enable SysTick with core clock and interrupts
-   NVIC_ST_CTRL_R = 0x07;
-   EndCritical(sr);
    EdgeInterrupt_Init();
    
    EnableInterrupts();
@@ -116,10 +82,9 @@ int main(){
 	 timeInactive = 0;
    
    while(1){
-      
+	    long sr = StartCritical();
       int tempTime = time;
       //GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R^0x04; // toggle PF2
-      WaitForInterrupt();
       
       time = updateTime(secFlag, time);
       alarm = checkForAlarm(time);
@@ -128,7 +93,6 @@ int main(){
       }
 			timeInactive = time - lastTimePressed;
 			
-      sr = StartCritical();
       switch (curStage) {
          case 0:
          if(time != tempTime){ // if time changed, redraw, reset flag, check alarm
@@ -145,7 +109,7 @@ int main(){
 						 ST7735_FillScreen(ST7735_BLACK);   // clear the screen
 						 drawFace();
 						 drawHands(time);
-					 outputTime(time);
+					   outputTime(time);
 					  break;
 				   }
          ST7735_DrawString(6,6,stages[1].options[0], stages[1].color[0]);
@@ -253,7 +217,6 @@ int main(){
          ST7735_DrawString(8,8,stages[3].options[0], stages[3].color[0]);
          ST7735_DrawString(8,10,stages[3].options[1], stages[3].color[1]);
          ST7735_SetCursor(6, 6);
-         
          ST7735_DrawString(6,6,hour,stages[3].color[2]);
          ST7735_DrawString(8,6,":",ST7735_WHITE);
          ST7735_DrawString(9,6,min,stages[3].color[3]);
@@ -262,6 +225,5 @@ int main(){
          break;
       }		
       EndCritical(sr);  
-      
    }
 }
