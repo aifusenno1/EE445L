@@ -95,12 +95,11 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include "LED.h"
 #include "ADCSWTrigger.h"
 #include "ST7735.h"
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define SSID_NAME  "Kamanov" /* Access point name to connect to */
+#define SSID_NAME  "iPhone" /* Access point name to connect to */
 #define SEC_TYPE   SL_SEC_TYPE_WPA
-#define PASSKEY    "ohhimark"  /* Password in case of secure AP */ 
+#define PASSKEY    "nobrainer"  /* Password in case of secure AP */ 
 #define BAUD_RATE   115200
 void UART_Init(void){
   SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
@@ -290,7 +289,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
   UART_Init();      // Send data to PC, 115200 bps
   LED_Init();       // initialize LaunchPad I/O 
 	ST7735_InitR(INITR_REDTAB);
-	ST7735_FillScreen(ST7735_BLACK);
+	//ST7735_FillScreen(ST7735_BLACK);
 
 	ADC0_SAC_R = 6;	
 
@@ -305,6 +304,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
   secParams.Type = SEC_TYPE; // OPEN, WPA, or WEP
   sl_WlanConnect(SSID_NAME, strlen(SSID_NAME), 0, &secParams, 0);
   while((0 == (g_Status&CONNECTED)) || (0 == (g_Status&IP_AQUIRED))){
+		//ST7735_OutUDec(g_Status);
     _SlNonOsMainLoopTask();
   }
 
