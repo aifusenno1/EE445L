@@ -55,17 +55,17 @@
 // Sequencer 2 priority: 3rd
 // Sequencer 3 priority: 4th (lowest)
 // SS3 triggering event: software trigger
-// SS3 1st sample source: Ain9 (PE4)
+// SS3 1st sample source: PE5 Ain8
 // SS3 interrupts: enabled but not promoted to controller
 void ADC0_InitSWTriggerSeq3_Ch9(void){ 
   SYSCTL_RCGCADC_R |= 0x0001;   // 7) activate ADC0 
                                   // 1) activate clock for Port E
   SYSCTL_RCGCGPIO_R |= 0x10;
   while((SYSCTL_PRGPIO_R&0x10) != 0x10){};
-  GPIO_PORTE_DIR_R &= ~0x10;      // 2) make PE4 input
-  GPIO_PORTE_AFSEL_R |= 0x10;     // 3) enable alternate function on PE4
-  GPIO_PORTE_DEN_R &= ~0x10;      // 4) disable digital I/O on PE4
-  GPIO_PORTE_AMSEL_R |= 0x10;     // 5) enable analog functionality on PE4
+  GPIO_PORTE_DIR_R &= ~0x20;      // 2) make PE5 input
+  GPIO_PORTE_AFSEL_R |= 0x20;     // 3) enable alternate function on PE5
+  GPIO_PORTE_DEN_R &= ~0x20;      // 4) disable digital I/O on PE5
+  GPIO_PORTE_AMSEL_R |= 0x20;     // 5) enable analog functionality on PE5
     
 //  while((SYSCTL_PRADC_R&0x0001) != 0x0001){};    // good code, but not yet implemented in simulator
 
@@ -76,7 +76,7 @@ void ADC0_InitSWTriggerSeq3_Ch9(void){
   ADC0_ACTSS_R &= ~0x0008;        // 9) disable sample sequencer 3
   ADC0_EMUX_R &= ~0xF000;         // 10) seq3 is software trigger
   ADC0_SSMUX3_R &= ~0x000F;       // 11) clear SS3 field
-  ADC0_SSMUX3_R += 9;             //    set channel
+  ADC0_SSMUX3_R += 8;             //    set channel Ain8 (PE5)
   ADC0_SSCTL3_R = 0x0006;         // 12) no TS0 D0, yes IE0 END0
   ADC0_IM_R &= ~0x0008;           // 13) disable SS3 interrupts
   ADC0_ACTSS_R |= 0x0008;         // 14) enable sample sequencer 3

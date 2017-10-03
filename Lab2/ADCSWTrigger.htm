@@ -3,18 +3,18 @@
 <title>Static Call Graph - [.\ADCSWTrigger.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\ADCSWTrigger.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Thu Sep 28 20:42:38 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Mon Oct 02 01:21:26 2017
 <BR><P>
-<H3>Maximum Stack Usage =       4688 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       4536 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; calcJitter &rArr; ST7735_OutUDec &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
+__rt_entry_main &rArr; main &rArr; calcJitter
 <P>
 <H3>
 Functions with no stack information
 </H3><UL>
  <LI><a href="#[7f]">Reset_Handler</a>
  <LI><a href="#[a8]">DisableInterrupts</a>
- <LI><a href="#[b1]">EnableInterrupts</a>
+ <LI><a href="#[b0]">EnableInterrupts</a>
  <LI><a href="#[d3]">StartCritical</a>
  <LI><a href="#[d4]">EndCritical</a>
  <LI><a href="#[d5]">WaitForInterrupt</a>
@@ -684,8 +684,8 @@ Global Symbols
 <P><STRONG><a name="[d0]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[89]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4688 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; calcJitter &rArr; ST7735_OutUDec &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
+<BR><BR>[Stack]<UL><LI>Max Depth = 4536 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; calcJitter
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -713,7 +713,7 @@ Global Symbols
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer0A_Init100HzInt
 </UL>
 
-<P><STRONG><a name="[b1]"></a>EnableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<P><STRONG><a name="[b0]"></a>EnableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -772,11 +772,11 @@ Global Symbols
 <LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer0A_Handler
 </UL>
 
-<P><STRONG><a name="[af]"></a>ADC0_InitSWTriggerSeq3_Ch9</STRONG> (Thumb, 206 bytes, Stack size 0 bytes, adcswtrigger.o(i.ADC0_InitSWTriggerSeq3_Ch9))
+<P><STRONG><a name="[ae]"></a>ADC0_InitSWTriggerSeq3_Ch9</STRONG> (Thumb, 206 bytes, Stack size 0 bytes, adcswtrigger.o(i.ADC0_InitSWTriggerSeq3_Ch9))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ad]"></a>Delay1ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, st7735.o(i.Delay1ms))
+<P><STRONG><a name="[ac]"></a>Delay1ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, st7735.o(i.Delay1ms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Delay1ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commonInit
@@ -789,7 +789,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pause
 </UL>
 
-<P><STRONG><a name="[ae]"></a>PLL_Init</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, pll.o(i.PLL_Init))
+<P><STRONG><a name="[ad]"></a>PLL_Init</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, pll.o(i.PLL_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -801,7 +801,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b0]"></a>PortF_Init</STRONG> (Thumb, 110 bytes, Stack size 0 bytes, adctestmain.o(i.PortF_Init))
+<P><STRONG><a name="[af]"></a>PortF_Init</STRONG> (Thumb, 110 bytes, Stack size 0 bytes, adctestmain.o(i.PortF_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -890,15 +890,13 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawString
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcPMF
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcJitter
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcPMF
 </UL>
 
 <P><STRONG><a name="[a3]"></a>ST7735_SetCursor</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, st7735.o(i.ST7735_SetCursor))
 <BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcPMF
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcJitter
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcPMF
 </UL>
 
 <P><STRONG><a name="[20]"></a>Timer0A_Handler</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, adctestmain.o(i.Timer0A_Handler))
@@ -942,16 +940,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ab]"></a>calcJitter</STRONG> (Thumb, 90 bytes, Stack size 4008 bytes, adctestmain.o(i.calcJitter))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4160<LI>Call Chain = calcJitter &rArr; ST7735_OutUDec &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
-</UL>
-<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
-<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutUDec
+<P><STRONG><a name="[b1]"></a>calcJitter</STRONG> (Thumb, 76 bytes, Stack size 4008 bytes, adctestmain.o(i.calcJitter))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4008<LI>Call Chain = calcJitter
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ac]"></a>calcPMF</STRONG> (Thumb, 148 bytes, Stack size 24 bytes, adctestmain.o(i.calcPMF))
+<P><STRONG><a name="[ab]"></a>calcPMF</STRONG> (Thumb, 148 bytes, Stack size 24 bytes, adctestmain.o(i.calcPMF))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = calcPMF &rArr; ST7735_OutUDec &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
@@ -971,8 +966,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[8a]"></a>main</STRONG> (Thumb, 294 bytes, Stack size 528 bytes, adctestmain.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4688 + Unknown Stack Size
-<LI>Call Chain = main &rArr; calcJitter &rArr; ST7735_OutUDec &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
+<BR><BR>[Stack]<UL><LI>Max Depth = 4536 + Unknown Stack Size
+<LI>Call Chain = main &rArr; calcJitter
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutUDec
@@ -980,16 +975,16 @@ Global Symbols
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawFastVLine
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawFastHLine
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcPMF
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcJitter
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcPMF
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcJitter
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer1_Init
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer0A_Init100HzInt
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortF_Init
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortF_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pause
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0_InitSWTriggerSeq3_Ch9
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableInterrupts
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC0_InitSWTriggerSeq3_Ch9
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableInterrupts
 </UL>
 <BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -1000,7 +995,7 @@ Local Symbols
 <P><STRONG><a name="[a1]"></a>commandList</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, st7735.o(i.commandList))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = commandList &rArr; Delay1ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writedata
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writecommand
 </UL>
@@ -1011,7 +1006,7 @@ Local Symbols
 <P><STRONG><a name="[a0]"></a>commonInit</STRONG> (Thumb, 340 bytes, Stack size 8 bytes, st7735.o(i.commonInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = commonInit &rArr; commandList &rArr; Delay1ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commandList
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR

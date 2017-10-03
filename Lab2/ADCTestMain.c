@@ -263,8 +263,6 @@ int calcJitter(void) {
 				if (timeDiff[j] > maxDiff) maxDiff = timeDiff[j];
 				if (timeDiff[j] < minDiff) minDiff = timeDiff[j];
 			}
-			ST7735_SetCursor(0,3);
-			ST7735_OutUDec(maxDiff);
 		return maxDiff - minDiff;
 }
 
@@ -283,7 +281,7 @@ void calcPMF(uint32_t pmf[128]) {
 				peakIndex = j;
 			 }
 			ST7735_SetCursor(0,1);
-			ST7735_OutUDec(peak);
+			ST7735_OutUDec(peakIndex);
 		int xMiddle = peakIndex;
 		int xStart = xMiddle - 64; // only extract the middle 128 data values 
 	  if(xStart < 0){

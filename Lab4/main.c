@@ -206,7 +206,7 @@ Parameter LCD display
     31    " 0.031" 
 -12345    " *.***"
  */ 
-void ST7735_sDecOut3(int32_t n) {
+static void ST7735_sDecOut3(int32_t n) {
   if (n > 9999 | n < -9999) {  // out of range
      ST7735_OutString(" *.***");
 	} else {
@@ -229,7 +229,7 @@ void ST7735_sDecOut3(int32_t n) {
 	
 }
 
-char* parseTemp(char *recbuf){
+static char* parseTemp(char *recbuf){
 	int index = 0;
 	int done = 0;
 	while (done == 0) {
@@ -289,7 +289,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
   UART_Init();      // Send data to PC, 115200 bps
   LED_Init();       // initialize LaunchPad I/O 
 	ST7735_InitR(INITR_REDTAB);
-	//ST7735_FillScreen(ST7735_BLACK);
+	ST7735_FillScreen(ST7735_BLACK);
 
 	ADC0_SAC_R = 6;	
 
@@ -337,6 +337,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
 		char* temperature = parseTemp(Recvbuff);
 		unsigned int ADCvalue = ADC0_InSeq3();
 		uint32_t voltage = (int)(3.3 * ADCvalue *1000/4095);
+		ST7735_SetCursor(0,0);
 		ST7735_OutString("Temp =  ");
 		ST7735_OutString(temperature);
 		ST7735_OutString(" C\n");

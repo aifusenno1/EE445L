@@ -3,7 +3,7 @@ F (.\startup.s)(0x59BD81A8)(--cpu Cortex-M4 -g --apcs=interwork -I C:\Applicat
 F (.\ADCSWTrigger.c)(0x59C9CF43)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --c99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adcswtrigger.o --omf_browse .\adcswtrigger.crf --depend .\adcswtrigger.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (tm4c123gh6pm.h)(0x5388C2DA)
-F (.\ADCTestMain.c)(0x59C9CF3F)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --c99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adctestmain.o --omf_browse .\adctestmain.crf --depend .\adctestmain.d)
+F (.\ADCTestMain.c)(0x59D1DAE3)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --c99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adctestmain.o --omf_browse .\adctestmain.crf --depend .\adctestmain.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (C:\Applications\Keil\ARM\ARMCC\include\limits.h)(0x51C87C24)
 I (ADCSWTrigger.h)(0x59BAABD4)
