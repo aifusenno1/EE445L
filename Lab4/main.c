@@ -97,9 +97,9 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include "ST7735.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define SSID_NAME  "iPhone" /* Access point name to connect to */
+#define SSID_NAME  "ATT724" /* Access point name to connect to */
 #define SEC_TYPE   SL_SEC_TYPE_WPA
-#define PASSKEY    "nobrainer"  /* Password in case of secure AP */ 
+#define PASSKEY    "5777010203"  /* Password in case of secure AP */ 
 #define BAUD_RATE   115200
 void UART_Init(void){
   SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
@@ -165,6 +165,7 @@ typedef struct{
 
 char Recvbuff[MAX_RECV_BUFF_SIZE];
 char SendBuff[MAX_SEND_BUFF_SIZE];
+char SendBuff2[MAX_SEND_BUFF_SIZE];
 char HostName[MAX_HOSTNAME_SIZE];
 unsigned long DestinationIP;
 int SockID;
@@ -345,9 +346,39 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
 		ST7735_OutString("Voltage~");
 		ST7735_sDecOut3(voltage);
 		ST7735_OutString("V\n");
+				
+					//new stuff here
+		  strcpy(HostName,"ee445l-pak679.appspot.com"); 
+			retVal = sl_NetAppDnsGetHostByName(HostName,
+             strlen(HostName),&DestinationIP, SL_AF_INET);
+			if(retVal == 0){
+      Addr.sin_family = SL_AF_INET;
+      Addr.sin_port = sl_Htons(80);
+      Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
+      ASize = sizeof(SlSockAddrIn_t);
+      SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
+      if( SockID >= 0 ){
+        retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
+      }
+      if((SockID >= 0)&&(retVal >= 0)){
+				char test2[154] = "GET /query?city=Austin%20Texas&amp;id=Paris%20Kaman%20Allen%20Pan&amp;greet=Temp%3D56789C HTTP/1.1\r\nUser-Agent: Keil\r\nHost: ee445l-pak679.appspot.com\r\n\r\n";
+				
+				for(int ii = 0; ii < 5; ii++){
+					test2[83+ii] = temperature[0+ii];
+				}				
+				
+        strcpy(SendBuff2, test2); 
+        sl_Send(SockID, SendBuff2, strlen(SendBuff2), 0);// Send the HTTP GET 
+        sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
+        sl_Close(SockID);
+				
+				
+      }
+    }
 
       }
     }
+	
 
     while(Board_Input()==0){}; // wait for touch
     LED_GreenOff();
@@ -449,6 +480,7 @@ static int32_t configureSimpleLinkToDefaultState(char *pConfig){
   g_Status = 0;
   memset(&Recvbuff,0,MAX_RECV_BUFF_SIZE);
   memset(&SendBuff,0,MAX_SEND_BUFF_SIZE);
+	memset(&SendBuff2,0,MAX_SEND_BUFF_SIZE);
   memset(&HostName,0,MAX_HOSTNAME_SIZE);
   DestinationIP = 0;;
   SockID = 0;
