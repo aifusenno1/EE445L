@@ -1,55 +1,55 @@
 /*
- * main.c - Example project for UT.6.02x Embedded Systems - Shape the World
- * Jonathan Valvano and Ramesh Yerraballi
- * September 14, 2016
- * Hardware requirements 
-     TM4C123 LaunchPad, optional Nokia5110
-     CC3100 wifi booster and 
-     an internet access point with OPEN, WPA, or WEP security
- 
- * derived from TI's getweather example
- * Copyright (C) 2014 Texas Instruments Incorporated - http://www.ti.com/
- *
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
- *
- *    Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- *    Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the
- *    distribution.
- *
- *    Neither the name of Texas Instruments Incorporated nor the names of
- *    its contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+* main.c - Example project for UT.6.02x Embedded Systems - Shape the World
+* Jonathan Valvano and Ramesh Yerraballi
+* September 14, 2016
+* Hardware requirements 
+TM4C123 LaunchPad, optional Nokia5110
+CC3100 wifi booster and 
+an internet access point with OPEN, WPA, or WEP security
+
+* derived from TI's getweather example
+* Copyright (C) 2014 Texas Instruments Incorporated - http://www.ti.com/
+*
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
+*  are met:
+*
+*    Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+*
+*    Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the
+*    distribution.
+*
+*    Neither the name of Texas Instruments Incorporated nor the names of
+*    its contributors may be used to endorse or promote products derived
+*    from this software without specific prior written permission.
+*
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+*  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+*  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+*  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+*  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+*  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+*  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+*  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+*  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
 */
 
 /*
- * Application Name     -   Get weather
- * Application Overview -   This is a sample application demonstrating how to
-                            connect to openweathermap.org server and request for
-              weather details of a city.
- * Application Details  -   http://processors.wiki.ti.com/index.php/CC31xx_SLS_Get_Weather_Application
- *                          doc\examples\sls_get_weather.pdf
- */
- /* CC3100 booster pack connections (unused pins can be used by user application)
+* Application Name     -   Get weather
+* Application Overview -   This is a sample application demonstrating how to
+connect to openweathermap.org server and request for
+weather details of a city.
+* Application Details  -   http://processors.wiki.ti.com/index.php/CC31xx_SLS_Get_Weather_Application
+*                          doc\examples\sls_get_weather.pdf
+*/
+/* CC3100 booster pack connections (unused pins can be used by user application)
 Pin  Signal        Direction      Pin   Signal     Direction
 P1.1  3.3 VCC         IN          P2.1  Gnd   GND      IN
 P1.2  PB5 UNUSED      NA          P2.2  PB2   IRQ      OUT
@@ -96,18 +96,30 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include "ADCSWTrigger.h"
 #include "ST7735.h"
 #include <stdio.h>
+#include "SysTick.h"
 #include <stdlib.h>
-#define SSID_NAME  "ATT724" /* Access point name to connect to */
+#include "PLL.h"
+
+#define SSID_NAME  "iPhone" /* Access point name to connect to */
 #define SEC_TYPE   SL_SEC_TYPE_WPA
-#define PASSKEY    "5777010203"  /* Password in case of secure AP */ 
+#define PASSKEY    "nobrainer"  /* Password in case of secure AP */ 
 #define BAUD_RATE   115200
+#define SERVER  "ee445l-xp572.appspot.com"
+//#define SERVER  "embedded-systems-server.appspot.com"
+#define REQUEST1 "GET /query?city=Austin%2C%20Texas&id=PAN%20KAMAN&greet="
+#define REQUEST2 " HTTP/1.1\r\nUser-Agent: Keil\r\nHost: ee445l-xp572.appspot.com\r\n\r\n"
+//#define REQUEST1 "GET /query?city=Austin%2C%20Texas&id=Allen%20and%20Paris&edxcode=8086&greet="
+//#define REQUEST2 " HTTP/1.1\r\nUser-Agent: Keil\r\nHost: embedded-systems-server.appspot.com\r\n\r\n"
+
+void EnableInterrupts(void);  // Enable interrupts
+
 void UART_Init(void){
-  SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
-  SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-  GPIOPinConfigure(GPIO_PA0_U0RX);
-  GPIOPinConfigure(GPIO_PA1_U0TX);
-  GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-  UARTStdioConfig(0,BAUD_RATE,50000000);
+   SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+   SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+   GPIOPinConfigure(GPIO_PA0_U0RX);
+   GPIOPinConfigure(GPIO_PA1_U0TX);
+   GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+   UARTStdioConfig(0,BAUD_RATE,50000000);
 }
 
 #define MAX_RECV_BUFF_SIZE  1024
@@ -124,44 +136,42 @@ void UART_Init(void){
 
 /* Application specific status/error codes */
 typedef enum{
-    DEVICE_NOT_IN_STATION_MODE = -0x7D0,/* Choosing this number to avoid overlap w/ host-driver's error codes */
-
-    STATUS_CODE_MAX = -0xBB8
+   DEVICE_NOT_IN_STATION_MODE = -0x7D0,/* Choosing this number to avoid overlap w/ host-driver's error codes */
+   
+   STATUS_CODE_MAX = -0xBB8
 }e_AppStatusCodes;
 
 
 /* Status bits - These are used to set/reset the corresponding bits in 'g_Status' */
 typedef enum{
-    STATUS_BIT_CONNECTION =  0, /* If this bit is:
-                                 *      1 in 'g_Status', the device is connected to the AP
-                                 *      0 in 'g_Status', the device is not connected to the AP
-                                 */
-
-    STATUS_BIT_IP_AQUIRED,       /* If this bit is:
-                                 *      1 in 'g_Status', the device has acquired an IP
-                                 *      0 in 'g_Status', the device has not acquired an IP
-                                 */
-
+   STATUS_BIT_CONNECTION =  0, /* If this bit is:
+   *      1 in 'g_Status', the device is connected to the AP
+   *      0 in 'g_Status', the device is not connected to the AP
+   */
+   
+   STATUS_BIT_IP_AQUIRED,       /* If this bit is:
+   *      1 in 'g_Status', the device has acquired an IP
+   *      0 in 'g_Status', the device has not acquired an IP
+   */
+   
 }e_StatusBits;
 
 
 #define SET_STATUS_BIT(status_variable, bit)    status_variable |= (1<<(bit))
 #define CLR_STATUS_BIT(status_variable, bit)    status_variable &= ~(1<<(bit))
 #define GET_STATUS_BIT(status_variable, bit)    (0 != (status_variable & (1<<(bit))))
-#define IS_CONNECTED(status_variable)           GET_STATUS_BIT(status_variable, \
-                                                               STATUS_BIT_CONNECTION)
-#define IS_IP_AQUIRED(status_variable)          GET_STATUS_BIT(status_variable, \
-                                                               STATUS_BIT_IP_AQUIRED)
+#define IS_CONNECTED(status_variable)           GET_STATUS_BIT(status_variable, STATUS_BIT_CONNECTION)
+#define IS_IP_AQUIRED(status_variable)          GET_STATUS_BIT(status_variable, STATUS_BIT_IP_AQUIRED)
 
 typedef struct{
-    UINT8 SSID[MAX_SSID_SIZE];
-    INT32 encryption;
-    UINT8 password[MAX_PASSKEY_SIZE];
+   UINT8 SSID[MAX_SSID_SIZE];
+   INT32 encryption;
+   UINT8 password[MAX_PASSKEY_SIZE];
 }UserInfo;
 
 /*
- * GLOBAL VARIABLES -- Start
- */
+* GLOBAL VARIABLES -- Start
+*/
 
 char Recvbuff[MAX_RECV_BUFF_SIZE];
 char SendBuff[MAX_SEND_BUFF_SIZE];
@@ -169,510 +179,539 @@ char SendBuff2[MAX_SEND_BUFF_SIZE];
 char HostName[MAX_HOSTNAME_SIZE];
 unsigned long DestinationIP;
 int SockID;
-
+char temperature[100];
+char voltage[100];
 
 typedef enum{
-    CONNECTED = 0x01,
-    IP_AQUIRED = 0x02,
-    IP_LEASED = 0x04,
-    PING_DONE = 0x08
-
+   CONNECTED = 0x01,
+   IP_AQUIRED = 0x02,
+   IP_LEASED = 0x04,
+   PING_DONE = 0x08
+   
 }e_Status;
 UINT32  g_Status = 0;
 /*
- * GLOBAL VARIABLES -- End
- */
+* GLOBAL VARIABLES -- End
+*/
 
 
- /*
- * STATIC FUNCTION DEFINITIONS  -- Start
- */
+/*
+* STATIC FUNCTION DEFINITIONS  -- Start
+*/
 
 static int32_t configureSimpleLinkToDefaultState(char *);
 
 
 // NEW CODE HERE
 /****************ST7735_sDecOut3***************
- converts fixed point number to LCD
- format signed 32-bit with resolution 0.001
- range -9.999 to +9.999
- Inputs:  signed 32-bit integer part of fixed-point number
- Outputs: none
- send exactly 6 characters to the LCD 
+converts fixed point number to LCD
+format signed 32-bit with resolution 0.001
+range -9.999 to +9.999
+Inputs:  signed 32-bit integer part of fixed-point number
+Outputs: none
+send exactly 6 characters to the LCD 
 Parameter LCD display
- 12345    " *.***"
-  2345    " 2.345"  
- -8100    "-8.100"
-  -102    "-0.102" 
-    31    " 0.031" 
+12345    " *.***"
+2345    " 2.345"  
+-8100    "-8.100"
+-102    "-0.102" 
+31    " 0.031" 
 -12345    " *.***"
- */ 
+*/ 
 static void ST7735_sDecOut3(int32_t n) {
-  if (n > 9999 | n < -9999) {  // out of range
-     ST7735_OutString(" *.***");
-	} else {
-		if (n < 0) { // output - and negate if negative
-			ST7735_OutChar('-');
-			n = -n;
-		} else {
-			ST7735_OutChar(' ');
-		}
-		// extract each digit, +48 to get the ascii code of that digit
-		ST7735_OutChar(n/1000 + 48);
-		n = n - n/1000*1000;
-		ST7735_OutChar('.');
-		ST7735_OutChar(n/100 + 48);
-		n = n - n/100*100;
-		ST7735_OutChar(n/10 + 48);
-	  n = n - n/10*10;
-		ST7735_OutChar(n + 48);
-	}
-	
+   if (n > 9999 | n < -9999) {  // out of range
+      ST7735_OutString(" *.***");
+   } else {
+      if (n < 0) { // output - and negate if negative
+         ST7735_OutChar('-');
+         n = -n;
+      }
+      // extract each digit, +48 to get the ascii code of that digit
+      ST7735_OutChar(n/1000 + 48);
+      n = n - n/1000*1000;
+      ST7735_OutChar('.');
+      ST7735_OutChar(n/100 + 48);
+      n = n - n/100*100;
+      ST7735_OutChar(n/10 + 48);
+      n = n - n/10*10;
+      ST7735_OutChar(n + 48);
+   }
+}
+
+//format signed 32-bit with resolution 0.001
+static char * toFixedString(int32_t n) {
+	static char output[100];
+	int index = 0;
+   if (n > 9999 | n < -9999) {  // out of range
+      strcpy(output," *.***");
+   } else {
+      if (n < 0) { // output - and negate if negative
+         output[index++] = '-';
+         n = -n;
+      }
+      // extract each digit, +48 to get the ascii code of that digit
+      output[index++] = n/1000 + 48;
+      n = n - n/1000*1000;
+      output[index++] = '.';
+      output[index++] = n/100 + 48;
+      n = n - n/100*100;
+      output[index++] = n/10 + 48;
+      n = n - n/10*10;
+      output[index++] = n + 48;
+			output[index] = '\0';
+   }
+	 return output;
 }
 
 static char* parseTemp(char *recbuf){
-	int index = 0;
-	int done = 0;
-	while (done == 0) {
-	if (recbuf[index++] != '"')
-		continue;
-	if (recbuf[index++] != 't')
-		continue;
-	if (recbuf[index++] != 'e')
-		continue;
-	if (recbuf[index++] != 'm')
-		continue;
-	if (recbuf[index++] != 'p')
-		continue;
-	if (recbuf[index++] != '"')
-		continue;
-	done = 1;
+   int index = 0;
+   int done = 0;
+   while (done == 0) {
+      if (recbuf[index++] != '"')
+      continue;
+      if (recbuf[index++] != 't')
+      continue;
+      if (recbuf[index++] != 'e')
+      continue;
+      if (recbuf[index++] != 'm')
+      continue;
+      if (recbuf[index++] != 'p')
+      continue;
+      if (recbuf[index++] != '"')
+      continue;
+      done = 1;
+   }
+   index++;
+   static char temp[10];
+   int len = 0;
+   while (1) {
+      if (recbuf[index] != ',')  
+      temp[len++] = recbuf[index++];
+      else break;
+   }
+   temp[len] = '\0';
+   
+   return temp;
 }
-	index++;
-	static char temp[10];
-	int len = 0;
-	while (1) {
-		if (recbuf[index] != ',')  
-			temp[len++] = recbuf[index++];
-		else break;
-	}
-	temp[len] = '\0';
-
-	return temp;
-}
-
 
 
 /*
- * STATIC FUNCTION DEFINITIONS -- End
- */
+* STATIC FUNCTION DEFINITIONS -- End
+*/
 
 
 void Crash(uint32_t time){
-  while(1){
-    for(int i=time;i;i--){};
-    LED_RedToggle();
-  }
+   while(1){
+      for(int i=time;i;i--){};
+      LED_RedToggle();
+   }
 }
 /*
- * Application's entry point
- */
+* Application's entry point
+*/
 // 1) change Austin Texas to your city
 // 2) you can change metric to imperial if you want temperature in F
 #define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&APPID=1bc54f645c5f1c75e681c102ed4bbca4&units=metric HTTP/1.1\r\nUser-Agent: Keil\r\nHost:api.openweathermap.org\r\nAccept: */*\r\n\r\n"
 // 1) go to http://openweathermap.org/appid#use 
 // 2) Register on the Sign up page
 // 3) get an API key (APPID) replace the 1234567890abcdef1234567890abcdef with your APPID
-int main(void){int32_t retVal;  SlSecParams_t secParams;
-  char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
-  initClk();        // PLL 50 MHz
-	ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
-  UART_Init();      // Send data to PC, 115200 bps
-  LED_Init();       // initialize LaunchPad I/O 
-	ST7735_InitR(INITR_REDTAB);
-	ST7735_FillScreen(ST7735_BLACK);
+int main(void){
+	 int32_t retVal;  SlSecParams_t secParams;
+   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
+   initClk();        // PLL 50 MHz
+   ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
+   UART_Init();      // Send data to PC, 115200 bps
+   LED_Init();       // initialize LaunchPad I/O 
+	 //SysTick_Init();
+   ST7735_InitR(INITR_REDTAB);
+   ST7735_FillScreen(ST7735_BLACK);
+		//EnableInterrupts();
+   ADC0_SAC_R = 6;	
+   
+   UARTprintf("Weather App\n");
+   retVal = configureSimpleLinkToDefaultState(pConfig); // set policies
+   if(retVal < 0)Crash(4000000);
+   
+   retVal = sl_Start(0, pConfig, 0);
+   if((retVal < 0) || (ROLE_STA != retVal) ) Crash(8000000);
+   secParams.Key = PASSKEY;
+   secParams.KeyLen = strlen(PASSKEY);
+   secParams.Type = SEC_TYPE; // OPEN, WPA, or WEP
+   sl_WlanConnect(SSID_NAME, strlen(SSID_NAME), 0, &secParams, 0);
+   while((0 == (g_Status&CONNECTED)) || (0 == (g_Status&IP_AQUIRED))){
+      //ST7735_OutUDec(g_Status);
+      _SlNonOsMainLoopTask();
+   }
+   
+   UARTprintf("Connected\n");
+   
+   while(1){
+      strcpy(HostName,"api.openweathermap.org"); // works 9/2016
+			
+      retVal = sl_NetAppDnsGetHostByName(HostName, strlen(HostName),&DestinationIP, SL_AF_INET);
+         
+         if(retVal == 0){
+            Addr.sin_family = SL_AF_INET;
+            Addr.sin_port = sl_Htons(80);
+            Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
+            ASize = sizeof(SlSockAddrIn_t);
+            SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
+            if( SockID >= 0 ){
+               retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
+            }
+            if((SockID >= 0)&&(retVal >= 0)){
+               strcpy(SendBuff,REQUEST); 
+							 ST7735_SetCursor(3,0);
+							 //ST7735_OutUDec(NVIC_ST_CURRENT_R);
+               sl_Send(SockID, SendBuff, strlen(SendBuff), 0);// Send the HTTP GET 
+               sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
+               sl_Close(SockID);
+							 ST7735_SetCursor(4,0);
+							// ST7735_OutUDec(NVIC_ST_CURRENT_R);
 
-	ADC0_SAC_R = 6;	
+               LED_GreenOn();
+               UARTprintf("\r\n\r\n");
+               UARTprintf(Recvbuff);  
+               UARTprintf("\r\n");
+               strcpy(temperature,parseTemp(Recvbuff));
+               unsigned int ADCvalue = ADC0_InSeq3();
+               uint32_t vol = (int)(3.3 * ADCvalue *1000/4095);
+							 // write it into the voltage string
+							 strcpy(voltage, "Voltage~");
+							 strcat(voltage,toFixedString(vol));
+							 strcat(voltage, "V");
 
-  UARTprintf("Weather App\n");
-  retVal = configureSimpleLinkToDefaultState(pConfig); // set policies
-  if(retVal < 0)Crash(4000000);
-
-  retVal = sl_Start(0, pConfig, 0);
-  if((retVal < 0) || (ROLE_STA != retVal) ) Crash(8000000);
-  secParams.Key = PASSKEY;
-  secParams.KeyLen = strlen(PASSKEY);
-  secParams.Type = SEC_TYPE; // OPEN, WPA, or WEP
-  sl_WlanConnect(SSID_NAME, strlen(SSID_NAME), 0, &secParams, 0);
-  while((0 == (g_Status&CONNECTED)) || (0 == (g_Status&IP_AQUIRED))){
-		//ST7735_OutUDec(g_Status);
-    _SlNonOsMainLoopTask();
-  }
-
-  UARTprintf("Connected\n");
-
-  while(1){
-   // strcpy(HostName,"openweathermap.org");  // used to work 10/2015
-    strcpy(HostName,"api.openweathermap.org"); // works 9/2016
-    retVal = sl_NetAppDnsGetHostByName(HostName,
-             strlen(HostName),&DestinationIP, SL_AF_INET);
-
-    if(retVal == 0){
-      Addr.sin_family = SL_AF_INET;
-      Addr.sin_port = sl_Htons(80);
-      Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
-      ASize = sizeof(SlSockAddrIn_t);
-      SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
-      if( SockID >= 0 ){
-        retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
+               ST7735_SetCursor(0,0);
+               ST7735_OutString("Temp =  ");
+               ST7735_OutString(temperature);
+               ST7735_OutString(" C\n");
+               
+               ST7735_OutString("Voltage~");
+               ST7735_sDecOut3(vol);
+               ST7735_OutString("V\n");
+               }
+            }
+				 
+						               //new stuff here
+           retVal = sl_NetAppDnsGetHostByName(SERVER, strlen(SERVER),&DestinationIP, SL_AF_INET);
+                  if(retVal == 0){
+                     Addr.sin_family = SL_AF_INET;
+                     Addr.sin_port = sl_Htons(80);
+                     Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
+                     ASize = sizeof(SlSockAddrIn_t);
+                     SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
+                     if( SockID >= 0 ){
+                        retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
+                     }
+                     if((SockID >= 0)&&(retVal >= 0)){
+											 
+										
+                        strcpy(SendBuff2, REQUEST1);
+												strcat(SendBuff2, voltage);
+												strcat(SendBuff2, REQUEST2);
+											 
+                        sl_Send(SockID, SendBuff2, strlen(SendBuff2), 0);// Send the HTTP GET 
+                        sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
+                        sl_Close(SockID);
+                        
+                        
+                     }
+                  }
+            
+            
+            while(Board_Input()==0){}; // wait for touch
+            LED_GreenOff();
+         }
       }
-      if((SockID >= 0)&&(retVal >= 0)){
-        strcpy(SendBuff,REQUEST); 
-        sl_Send(SockID, SendBuff, strlen(SendBuff), 0);// Send the HTTP GET 
-        sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
-        sl_Close(SockID);
-        LED_GreenOn();
-        UARTprintf("\r\n\r\n");
-        UARTprintf(Recvbuff);  
-				UARTprintf("\r\n");
-		char* temperature = parseTemp(Recvbuff);
-		unsigned int ADCvalue = ADC0_InSeq3();
-		uint32_t voltage = (int)(3.3 * ADCvalue *1000/4095);
-		ST7735_SetCursor(0,0);
-		ST7735_OutString("Temp =  ");
-		ST7735_OutString(temperature);
-		ST7735_OutString(" C\n");
-				
-		ST7735_OutString("Voltage~");
-		ST7735_sDecOut3(voltage);
-		ST7735_OutString("V\n");
-				
-					//new stuff here
-		  strcpy(HostName,"ee445l-pak679.appspot.com"); 
-			retVal = sl_NetAppDnsGetHostByName(HostName,
-             strlen(HostName),&DestinationIP, SL_AF_INET);
-			if(retVal == 0){
-      Addr.sin_family = SL_AF_INET;
-      Addr.sin_port = sl_Htons(80);
-      Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
-      ASize = sizeof(SlSockAddrIn_t);
-      SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
-      if( SockID >= 0 ){
-        retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
+      
+      /*!
+      \brief This function puts the device in its default state. It:
+      - Set the mode to STATION
+      - Configures connection policy to Auto and AutoSmartConfig
+      - Deletes all the stored profiles
+      - Enables DHCP
+      - Disables Scan policy
+      - Sets Tx power to maximum
+      - Sets power policy to normal
+      - Unregister mDNS services
+      
+      \param[in]      none
+      
+      \return         On success, zero is returned. On error, negative is returned
+      */
+      static int32_t configureSimpleLinkToDefaultState(char *pConfig){
+         SlVersionFull   ver = {0};
+         UINT8           val = 1;
+         UINT8           configOpt = 0;
+         UINT8           configLen = 0;
+         UINT8           power = 0;
+         
+         INT32           retVal = -1;
+         INT32           mode = -1;
+         
+         mode = sl_Start(0, pConfig, 0);
+         
+         
+         /* If the device is not in station-mode, try putting it in station-mode */
+         if (ROLE_STA != mode){
+            if (ROLE_AP == mode){
+               /* If the device is in AP mode, we need to wait for this event before doing anything */
+               while(!IS_IP_AQUIRED(g_Status));
+            }
+            
+            /* Switch to STA role and restart */
+            retVal = sl_WlanSetMode(ROLE_STA);
+            
+            retVal = sl_Stop(0xFF);
+            
+            retVal = sl_Start(0, pConfig, 0);
+            
+            /* Check if the device is in station again */
+            if (ROLE_STA != retVal){
+               /* We don't want to proceed if the device is not coming up in station-mode */
+               return DEVICE_NOT_IN_STATION_MODE;
+            }
+         }
+         /* Get the device's version-information */
+         configOpt = SL_DEVICE_GENERAL_VERSION;
+         configLen = sizeof(ver);
+         retVal = sl_DevGet(SL_DEVICE_GENERAL_CONFIGURATION, &configOpt, &configLen, (unsigned char *)(&ver));
+         
+         /* Set connection policy to Auto + SmartConfig (Device's default connection policy) */
+         retVal = sl_WlanPolicySet(SL_POLICY_CONNECTION, SL_CONNECTION_POLICY(1, 0, 0, 0, 1), NULL, 0);
+         
+         /* Remove all profiles */
+         retVal = sl_WlanProfileDel(0xFF);
+         
+         /*
+         * Device in station-mode. Disconnect previous connection if any
+         * The function returns 0 if 'Disconnected done', negative number if already disconnected
+         * Wait for 'disconnection' event if 0 is returned, Ignore other return-codes
+         */
+         retVal = sl_WlanDisconnect();
+         if(0 == retVal){
+            /* Wait */
+            while(IS_CONNECTED(g_Status));
+         }
+         
+         /* Enable DHCP client*/
+         retVal = sl_NetCfgSet(SL_IPV4_STA_P2P_CL_DHCP_ENABLE,1,1,&val);
+         
+         /* Disable scan */
+         configOpt = SL_SCAN_POLICY(0);
+         retVal = sl_WlanPolicySet(SL_POLICY_SCAN , configOpt, NULL, 0);
+         
+         /* Set Tx power level for station mode
+         Number between 0-15, as dB offset from max power - 0 will set maximum power */
+         power = 0;
+         retVal = sl_WlanSet(SL_WLAN_CFG_GENERAL_PARAM_ID, WLAN_GENERAL_PARAM_OPT_STA_TX_POWER, 1, (unsigned char *)&power);
+         
+         /* Set PM policy to normal */
+         retVal = sl_WlanPolicySet(SL_POLICY_PM , SL_NORMAL_POLICY, NULL, 0);
+         
+         /* TBD - Unregister mDNS services */
+         retVal = sl_NetAppMDNSUnRegisterService(0, 0);
+         
+         
+         retVal = sl_Stop(0xFF);
+         
+         
+         g_Status = 0;
+         memset(&Recvbuff,0,MAX_RECV_BUFF_SIZE);
+         memset(&SendBuff,0,MAX_SEND_BUFF_SIZE);
+         memset(&SendBuff2,0,MAX_SEND_BUFF_SIZE);
+         memset(&HostName,0,MAX_HOSTNAME_SIZE);
+         DestinationIP = 0;;
+         SockID = 0;
+         
+         
+         return retVal; /* Success */
       }
-      if((SockID >= 0)&&(retVal >= 0)){
-				char test2[154] = "GET /query?city=Austin%20Texas&amp;id=Paris%20Kaman%20Allen%20Pan&amp;greet=Temp%3D56789C HTTP/1.1\r\nUser-Agent: Keil\r\nHost: ee445l-pak679.appspot.com\r\n\r\n";
-				
-				for(int ii = 0; ii < 5; ii++){
-					test2[83+ii] = temperature[0+ii];
-				}				
-				
-        strcpy(SendBuff2, test2); 
-        sl_Send(SockID, SendBuff2, strlen(SendBuff2), 0);// Send the HTTP GET 
-        sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
-        sl_Close(SockID);
-				
-				
+      
+      
+      
+      
+      /*
+      * * ASYNCHRONOUS EVENT HANDLERS -- Start
+      */
+      
+      /*!
+      \brief This function handles WLAN events
+      
+      \param[in]      pWlanEvent is the event passed to the handler
+      
+      \return         None
+      
+      \note
+      
+      \warning
+      */
+      void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent){
+         switch(pWlanEvent->Event){
+            case SL_WLAN_CONNECT_EVENT:
+            {
+               SET_STATUS_BIT(g_Status, STATUS_BIT_CONNECTION);
+               
+               /*
+               * Information about the connected AP (like name, MAC etc) will be
+               * available in 'sl_protocol_wlanConnectAsyncResponse_t' - Applications
+               * can use it if required
+               *
+               * sl_protocol_wlanConnectAsyncResponse_t *pEventData = NULL;
+               * pEventData = &pWlanEvent->EventData.STAandP2PModeWlanConnected;
+               *
+               */
+            }
+            break;
+            
+            case SL_WLAN_DISCONNECT_EVENT:
+            {
+               sl_protocol_wlanConnectAsyncResponse_t*  pEventData = NULL;
+               
+               CLR_STATUS_BIT(g_Status, STATUS_BIT_CONNECTION);
+               CLR_STATUS_BIT(g_Status, STATUS_BIT_IP_AQUIRED);
+               
+               pEventData = &pWlanEvent->EventData.STAandP2PModeDisconnected;
+               
+               /* If the user has initiated 'Disconnect' request, 'reason_code' is SL_USER_INITIATED_DISCONNECTION */
+               if(SL_USER_INITIATED_DISCONNECTION == pEventData->reason_code){
+                  UARTprintf(" Device disconnected from the AP on application's request \r\n");
+               }
+               else{
+                  UARTprintf(" Device disconnected from the AP on an ERROR..!! \r\n");
+               }
+            }
+            break;
+            
+            default:
+            {
+               UARTprintf(" [WLAN EVENT] Unexpected event \r\n");
+            }
+            break;
+         }
       }
-    }
-
+      
+      /*!
+      \brief This function handles events for IP address acquisition via DHCP
+      indication
+      
+      \param[in]      pNetAppEvent is the event passed to the handler
+      
+      \return         None
+      
+      \note
+      
+      \warning
+      */
+      void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent){
+         switch(pNetAppEvent->Event)
+         {
+            case SL_NETAPP_IPV4_ACQUIRED:
+            {
+               
+               SET_STATUS_BIT(g_Status, STATUS_BIT_IP_AQUIRED);
+               /*
+               * Information about the connected AP's ip, gateway, DNS etc
+               * will be available in 'SlIpV4AcquiredAsync_t' - Applications
+               * can use it if required
+               *
+               * SlIpV4AcquiredAsync_t *pEventData = NULL;
+               * pEventData = &pNetAppEvent->EventData.ipAcquiredV4;
+               * <gateway_ip> = pEventData->gateway;
+               *
+               */
+               
+            }
+            break;
+            
+            default:
+            {
+               UARTprintf(" [NETAPP EVENT] Unexpected event \r\n");
+            }
+            break;
+         }
       }
-    }
-	
-
-    while(Board_Input()==0){}; // wait for touch
-    LED_GreenOff();
-  }
-}
-
-/*!
-    \brief This function puts the device in its default state. It:
-           - Set the mode to STATION
-           - Configures connection policy to Auto and AutoSmartConfig
-           - Deletes all the stored profiles
-           - Enables DHCP
-           - Disables Scan policy
-           - Sets Tx power to maximum
-           - Sets power policy to normal
-           - Unregister mDNS services
-
-    \param[in]      none
-
-    \return         On success, zero is returned. On error, negative is returned
-*/
-static int32_t configureSimpleLinkToDefaultState(char *pConfig){
-  SlVersionFull   ver = {0};
-  UINT8           val = 1;
-  UINT8           configOpt = 0;
-  UINT8           configLen = 0;
-  UINT8           power = 0;
-
-  INT32           retVal = -1;
-  INT32           mode = -1;
-
-  mode = sl_Start(0, pConfig, 0);
-
-
-    /* If the device is not in station-mode, try putting it in station-mode */
-  if (ROLE_STA != mode){
-    if (ROLE_AP == mode){
-            /* If the device is in AP mode, we need to wait for this event before doing anything */
-      while(!IS_IP_AQUIRED(g_Status));
-    }
-
-        /* Switch to STA role and restart */
-    retVal = sl_WlanSetMode(ROLE_STA);
-
-    retVal = sl_Stop(0xFF);
-
-    retVal = sl_Start(0, pConfig, 0);
-
-        /* Check if the device is in station again */
-    if (ROLE_STA != retVal){
-            /* We don't want to proceed if the device is not coming up in station-mode */
-      return DEVICE_NOT_IN_STATION_MODE;
-    }
-  }
-    /* Get the device's version-information */
-  configOpt = SL_DEVICE_GENERAL_VERSION;
-  configLen = sizeof(ver);
-  retVal = sl_DevGet(SL_DEVICE_GENERAL_CONFIGURATION, &configOpt, &configLen, (unsigned char *)(&ver));
-
-    /* Set connection policy to Auto + SmartConfig (Device's default connection policy) */
-  retVal = sl_WlanPolicySet(SL_POLICY_CONNECTION, SL_CONNECTION_POLICY(1, 0, 0, 0, 1), NULL, 0);
-
-    /* Remove all profiles */
-  retVal = sl_WlanProfileDel(0xFF);
-
-    /*
-     * Device in station-mode. Disconnect previous connection if any
-     * The function returns 0 if 'Disconnected done', negative number if already disconnected
-     * Wait for 'disconnection' event if 0 is returned, Ignore other return-codes
-     */
-  retVal = sl_WlanDisconnect();
-  if(0 == retVal){
-        /* Wait */
-     while(IS_CONNECTED(g_Status));
-  }
-
-    /* Enable DHCP client*/
-  retVal = sl_NetCfgSet(SL_IPV4_STA_P2P_CL_DHCP_ENABLE,1,1,&val);
-
-    /* Disable scan */
-  configOpt = SL_SCAN_POLICY(0);
-  retVal = sl_WlanPolicySet(SL_POLICY_SCAN , configOpt, NULL, 0);
-
-    /* Set Tx power level for station mode
-       Number between 0-15, as dB offset from max power - 0 will set maximum power */
-  power = 0;
-  retVal = sl_WlanSet(SL_WLAN_CFG_GENERAL_PARAM_ID, WLAN_GENERAL_PARAM_OPT_STA_TX_POWER, 1, (unsigned char *)&power);
-
-    /* Set PM policy to normal */
-  retVal = sl_WlanPolicySet(SL_POLICY_PM , SL_NORMAL_POLICY, NULL, 0);
-
-    /* TBD - Unregister mDNS services */
-  retVal = sl_NetAppMDNSUnRegisterService(0, 0);
-
-
-  retVal = sl_Stop(0xFF);
-
-
-  g_Status = 0;
-  memset(&Recvbuff,0,MAX_RECV_BUFF_SIZE);
-  memset(&SendBuff,0,MAX_SEND_BUFF_SIZE);
-	memset(&SendBuff2,0,MAX_SEND_BUFF_SIZE);
-  memset(&HostName,0,MAX_HOSTNAME_SIZE);
-  DestinationIP = 0;;
-  SockID = 0;
-
-
-  return retVal; /* Success */
-}
-
-
-
-
-/*
- * * ASYNCHRONOUS EVENT HANDLERS -- Start
- */
-
-/*!
-    \brief This function handles WLAN events
-
-    \param[in]      pWlanEvent is the event passed to the handler
-
-    \return         None
-
-    \note
-
-    \warning
-*/
-void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent){
-  switch(pWlanEvent->Event){
-    case SL_WLAN_CONNECT_EVENT:
-    {
-      SET_STATUS_BIT(g_Status, STATUS_BIT_CONNECTION);
-
+      
+      /*!
+      \brief This function handles callback for the HTTP server events
+      
+      \param[in]      pServerEvent - Contains the relevant event information
+      \param[in]      pServerResponse - Should be filled by the user with the
+      relevant response information
+      
+      \return         None
+      
+      \note
+      
+      \warning
+      */
+      void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent,
+         SlHttpServerResponse_t *pHttpResponse){
             /*
-             * Information about the connected AP (like name, MAC etc) will be
-             * available in 'sl_protocol_wlanConnectAsyncResponse_t' - Applications
-             * can use it if required
-             *
-             * sl_protocol_wlanConnectAsyncResponse_t *pEventData = NULL;
-             * pEventData = &pWlanEvent->EventData.STAandP2PModeWlanConnected;
-             *
-             */
-    }
-    break;
-
-    case SL_WLAN_DISCONNECT_EVENT:
-    {
-      sl_protocol_wlanConnectAsyncResponse_t*  pEventData = NULL;
-
-      CLR_STATUS_BIT(g_Status, STATUS_BIT_CONNECTION);
-      CLR_STATUS_BIT(g_Status, STATUS_BIT_IP_AQUIRED);
-
-      pEventData = &pWlanEvent->EventData.STAandP2PModeDisconnected;
-
-            /* If the user has initiated 'Disconnect' request, 'reason_code' is SL_USER_INITIATED_DISCONNECTION */
-      if(SL_USER_INITIATED_DISCONNECTION == pEventData->reason_code){
-        UARTprintf(" Device disconnected from the AP on application's request \r\n");
-      }
-      else{
-        UARTprintf(" Device disconnected from the AP on an ERROR..!! \r\n");
-      }
-    }
-    break;
-
-    default:
-    {
-      UARTprintf(" [WLAN EVENT] Unexpected event \r\n");
-    }
-    break;
-  }
-}
-
-/*!
-    \brief This function handles events for IP address acquisition via DHCP
-           indication
-
-    \param[in]      pNetAppEvent is the event passed to the handler
-
-    \return         None
-
-    \note
-
-    \warning
-*/
-void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent){
-  switch(pNetAppEvent->Event)
-  {
-    case SL_NETAPP_IPV4_ACQUIRED:
-    {
-
-      SET_STATUS_BIT(g_Status, STATUS_BIT_IP_AQUIRED);
-        /*
-             * Information about the connected AP's ip, gateway, DNS etc
-             * will be available in 'SlIpV4AcquiredAsync_t' - Applications
-             * can use it if required
-             *
-             * SlIpV4AcquiredAsync_t *pEventData = NULL;
-             * pEventData = &pNetAppEvent->EventData.ipAcquiredV4;
-             * <gateway_ip> = pEventData->gateway;
-             *
-             */
-
-    }
-    break;
-
-    default:
-    {
-            UARTprintf(" [NETAPP EVENT] Unexpected event \r\n");
-    }
-    break;
-  }
-}
-
-/*!
-    \brief This function handles callback for the HTTP server events
-
-    \param[in]      pServerEvent - Contains the relevant event information
-    \param[in]      pServerResponse - Should be filled by the user with the
-                    relevant response information
-
-    \return         None
-
-    \note
-
-    \warning
-*/
-void SimpleLinkHttpServerCallback(SlHttpServerEvent_t *pHttpEvent,
-                                  SlHttpServerResponse_t *pHttpResponse){
-    /*
-     * This application doesn't work with HTTP server - Hence these
-     * events are not handled here
-     */
-  UARTprintf(" [HTTP EVENT] Unexpected event \r\n");
-}
-
-/*!
-    \brief This function handles general error events indication
-
-    \param[in]      pDevEvent is the event passed to the handler
-
-    \return         None
-*/
-void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent){
-    /*
-     * Most of the general errors are not FATAL are are to be handled
-     * appropriately by the application
-     */
-  UARTprintf(" [GENERAL EVENT] \r\n");
-}
-
-/*!
-    \brief This function handles socket events indication
-
-    \param[in]      pSock is the event passed to the handler
-
-    \return         None
-*/
-void SimpleLinkSockEventHandler(SlSockEvent_t *pSock){
-  switch( pSock->Event )
-  {
-    case SL_NETAPP_SOCKET_TX_FAILED:
-    {
-            /*
-            * TX Failed
-            *
-            * Information about the socket descriptor and status will be
-            * available in 'SlSockEventData_t' - Applications can use it if
-            * required
-            *
-            * SlSockEventData_t *pEventData = NULL;
-            * pEventData = & pSock->EventData;
+            * This application doesn't work with HTTP server - Hence these
+            * events are not handled here
             */
-      switch( pSock->EventData.status )
-      {
-        case SL_ECLOSE:
-          UARTprintf(" [SOCK EVENT] Close socket operation failed to transmit all queued packets\r\n");
-          break;
-
-
-        default:
-          UARTprintf(" [SOCK EVENT] Unexpected event \r\n");
-          break;
-      }
-    }
-    break;
-
-    default:
-      UARTprintf(" [SOCK EVENT] Unexpected event \r\n");
-    break;
-  }
-}
-/*
- * * ASYNCHRONOUS EVENT HANDLERS -- End
- */
-
-
+            UARTprintf(" [HTTP EVENT] Unexpected event \r\n");
+         }
+         
+         /*!
+         \brief This function handles general error events indication
+         
+         \param[in]      pDevEvent is the event passed to the handler
+         
+         \return         None
+         */
+         void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent){
+            /*
+            * Most of the general errors are not FATAL are are to be handled
+            * appropriately by the application
+            */
+            UARTprintf(" [GENERAL EVENT] \r\n");
+         }
+         
+         /*!
+         \brief This function handles socket events indication
+         
+         \param[in]      pSock is the event passed to the handler
+         
+         \return         None
+         */
+         void SimpleLinkSockEventHandler(SlSockEvent_t *pSock){
+            switch( pSock->Event )
+            {
+               case SL_NETAPP_SOCKET_TX_FAILED:
+               {
+                  /*
+                  * TX Failed
+                  *
+                  * Information about the socket descriptor and status will be
+                  * available in 'SlSockEventData_t' - Applications can use it if
+                  * required
+                  *
+                  * SlSockEventData_t *pEventData = NULL;
+                  * pEventData = & pSock->EventData;
+                  */
+                  switch( pSock->EventData.status )
+                  {
+                     case SL_ECLOSE:
+                     UARTprintf(" [SOCK EVENT] Close socket operation failed to transmit all queued packets\r\n");
+                     break;
+                     
+                     
+                     default:
+                     UARTprintf(" [SOCK EVENT] Unexpected event \r\n");
+                     break;
+                  }
+               }
+               break;
+               
+               default:
+               UARTprintf(" [SOCK EVENT] Unexpected event \r\n");
+               break;
+            }
+         }
+         /*
+         * * ASYNCHRONOUS EVENT HANDLERS -- End
+         */
+         
+         
