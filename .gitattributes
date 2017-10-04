@@ -1,9 +1,2 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-*.o
-*.d
-*.crf
-*.axf
-*.build_log.htm
-*.uvopt
-*.bak
