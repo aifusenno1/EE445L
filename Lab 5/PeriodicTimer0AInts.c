@@ -47,6 +47,12 @@ struct song{
 	char notePitch[MAX_SONG_NOTES][2];	//2 chars in each note for things like C3 or A5 etc.
 };
 
+static const unsigned short Horn[32] = { 
+	  1063,1082,1119,1275,1678,1748,1275,755,661,661,703,
+	  731,769,845,1039,1134,1209,1332,1465,1545,1427,1588,
+	  1370,1086,708,519,448,490,566,684,802,992
+	}; 
+
 
 #define PF1       (*((volatile uint32_t *)0x40025008))
 #define PF2       (*((volatile uint32_t *)0x40025010))
@@ -66,10 +72,11 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
+int dacIndex = 0;
+
 void UserTask(void){
-  static int i = 0;
-  LEDS = COLORWHEEL[i&(WHEELSIZE-1)];
-  i = i + 1;
+  DAC_Out(Horn[dacIndex]);
+	dacIndex = (dacIndex + 1) % 32;
 }
 // if desired interrupt frequency is f, Timer0A_Init parameter is busfrequency/f
 #define F16HZ (50000000/16)
@@ -86,6 +93,8 @@ int main(void){
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;          // disable analog functionality on PF
   LEDS = 0;                        // turn all LEDs off
+		
+	DAC_Init(2047);
 		
 		//TODO: FIX THIS STUFF TO LAB 5
 //  Timer0A_Init(&UserTask, F20KHZ);     // initialize timer0A (20,000 Hz)
