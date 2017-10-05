@@ -38,6 +38,15 @@
 #include "Switch.h"
 #include "DAC.h"
 
+#define MAX_SONG_NOTES 1000
+
+struct song{
+	int tempo;								//given in beats per minute to have a starting tempo for the song -- may get changed by buttons or something?
+	//int numNotes;
+	double noteLength[MAX_SONG_NOTES];	//double so it can be 1 for full note or .5 for half note etc
+	char notePitch[MAX_SONG_NOTES][2];	//2 chars in each note for things like C3 or A5 etc.
+};
+
 
 #define PF1       (*((volatile uint32_t *)0x40025008))
 #define PF2       (*((volatile uint32_t *)0x40025010))
@@ -77,6 +86,8 @@ int main(void){
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;          // disable analog functionality on PF
   LEDS = 0;                        // turn all LEDs off
+		
+		//TODO: FIX THIS STUFF TO LAB 5
 //  Timer0A_Init(&UserTask, F20KHZ);     // initialize timer0A (20,000 Hz)
   Timer0A_Init(&UserTask, F16HZ);  // initialize timer0A (16 Hz)
   EnableInterrupts();
