@@ -37,6 +37,7 @@
 #include "MAX5353.h"
 #include "Switch.h"
 #include "DAC.h"
+#include <string.h>
 
 #define MAX_SONG_NOTES 1000
 
@@ -44,7 +45,7 @@ struct song{
 	int tempo;								//given in beats per minute to have a starting tempo for the song -- may get changed by buttons or something?
 	//int numNotes;
 	double noteLength[MAX_SONG_NOTES];	//double so it can be 1 for full note or .5 for half note etc
-	char notePitch[MAX_SONG_NOTES][2];	//2 chars in each note for things like C3 or A5 etc.
+	char notePitch[MAX_SONG_NOTES][3];	//2 chars in each note for things like C 3 or Ab5 etc.
 };
 
 static const unsigned short Horn[32] = { 
@@ -58,12 +59,21 @@ static const unsigned short Horn[32] = {
 #define PF2       (*((volatile uint32_t *)0x40025010))
 #define PF3       (*((volatile uint32_t *)0x40025020))
 #define LEDS      (*((volatile uint32_t *)0x40025038))
-#define RED       0x02
-#define BLUE      0x04
-#define GREEN     0x08
-#define WHEELSIZE 8           // must be an integer multiple of 2
-                              //    red, yellow,    green, light blue, blue, purple,   white,          dark
-const long COLORWHEEL[WHEELSIZE] = {RED, RED+GREEN, GREEN, GREEN+BLUE, BLUE, BLUE+RED, RED+GREEN+BLUE, 0};
+
+
+//BASE FREQUENCY
+#define B	 	494
+#define Bb	466
+#define A		440
+#define Ab	415
+#define G		392
+#define Gb	370
+#define F		349
+#define E		330
+#define Eb	311
+#define D		294
+#define Db	277
+#define C		262
 
 
 void DisableInterrupts(void); // Disable interrupts
@@ -78,6 +88,68 @@ void UserTask(void){
   DAC_Out(Horn[dacIndex]);
 	dacIndex = (dacIndex + 1) % 32;
 }
+
+int getIntValue(int freq){
+	return 80000000 / (freq * 32);		//number of clocks in a second/frequency to get number of waves in a second and then divided by 32 because there are 32 points in the wave.
+}
+
+int getFrequency(char note[3]){
+	double base = 0;
+	char name[2] = {"  "};
+	name[0] = note[0];
+	name[1] = note[1];
+	int octave = note[2] - '0';
+	
+	if(strcmp(name, "B ") == 0){
+		base = B;
+	}
+	else if(strcmp(name, "Bb") == 0){
+		base = Bb;
+	}
+	else if(strcmp(name, "A ") == 0){
+		base = A;
+	}
+	else if(strcmp(name, "Ab") == 0){
+		base = Ab;
+	}
+	else if(strcmp(name, "G ") == 0){
+		base = G;
+	}
+	else if(strcmp(name, "Gb") == 0){
+		base = Gb;
+	}
+	else if(strcmp(name, "F ") == 0){
+		base = F;
+	}
+	else if(strcmp(name, "E ") == 0){
+		base = E;
+	}
+	else if(strcmp(name, "Eb") == 0){
+		base = Eb;
+	}
+	else if(strcmp(name, "D ") == 0){
+		base = D;
+	}
+	else if(strcmp(name, "Db") == 0){
+		base = Db;
+	}
+	else if(strcmp(name, "C ") == 0){
+		base = C;
+	}
+	
+	int shifts = octave - 4;		// 4 is the base octave all the frequencies are listed as
+	if(shifts == 0){
+		return base;
+	}
+	else if(shifts > 0){
+		return ((int)base << shifts);
+	}
+	else{
+		return ((int)base >> (-shifts));
+	}
+}
+
+
 // if desired interrupt frequency is f, Timer0A_Init parameter is busfrequency/f
 #define F16HZ (50000000/16)
 #define F20KHZ (50000000/20000)
@@ -93,15 +165,21 @@ int main(void){
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;          // disable analog functionality on PF
   LEDS = 0;                        // turn all LEDs off
+	char test[3] = {"A 2"};
+	int x = getFrequency(test);
+	int y = getIntValue(x);
+	DAC_Init(1063);
 		
-	DAC_Init(2047);
+		EdgeInterrupt_Init();
+		PortF_Init();
 		
 		//TODO: FIX THIS STUFF TO LAB 5
 //  Timer0A_Init(&UserTask, F20KHZ);     // initialize timer0A (20,000 Hz)
-  Timer0A_Init(&UserTask, F16HZ);  // initialize timer0A (16 Hz)
+  Timer0A_Init(&UserTask, y);  // initialize timer0A (16 Hz)
   EnableInterrupts();
 
   while(1){
     WaitForInterrupt();
+		
   }
 }

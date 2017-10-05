@@ -38,10 +38,20 @@ void Timer1A_Handler(void){
 void GPIOPortF_Handler(void){
    if (GPIO_PORTF_RIS_R&0x10) { // PF4 is pressed
       GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
+//		 if(playing){
+//			 pause();
+//		 }
+//		 else{
+//			 play();
+//		 }
    }
    
    if (GPIO_PORTF_RIS_R&0x01) { // PF0 is pressed
       GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
+//		 if(!playing){
+//			 reset();
+//		 }
+		 
    }
 	 
 	 
