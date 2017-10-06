@@ -45,10 +45,11 @@
 #define NVIC_ST_RELOAD_M        0x00FFFFFF  // Counter load value
 #define PF2                     (*((volatile uint32_t *)0x40025010))
 
+unsigned long int time = 0;
 // Initialize SysTick with busy wait running at bus clock.
 void SysTick_Init(void){
    NVIC_ST_CTRL_R = 0;         // disable SysTick during setup
-   NVIC_ST_RELOAD_R = 799999;// reload value
+   NVIC_ST_RELOAD_R = 49999;// reload value
    NVIC_ST_CURRENT_R = 0;      // any write to current clears it
    NVIC_SYS_PRI3_R = (NVIC_SYS_PRI3_R&0x00FFFFFF)|0x40000000; // priority 2
    // enable SysTick with core clock and interrupts
@@ -57,9 +58,9 @@ void SysTick_Init(void){
 
 
 // Interrupt service routine
-// Executed every 12.5ns*(period)
+// Executed every 20ns*50000 = 1 ms
 void SysTick_Handler(void){
-
+	time++;
 }
 
 // Time delay using busy wait.

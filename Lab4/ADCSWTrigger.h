@@ -53,7 +53,7 @@
 // Sequencer 2 priority: 3rd
 // Sequencer 3 priority: 4th (lowest)
 // SS3 triggering event: software trigger
-// SS3 1st sample source: Ain9 (PE4)
+// SS3 1st sample source: Ain8 (PE5)
 // SS3 interrupts: enabled but not promoted to controller
 void ADC0_InitSWTriggerSeq3_Ch9(void);
 

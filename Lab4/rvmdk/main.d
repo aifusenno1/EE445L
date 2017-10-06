@@ -44,4 +44,3 @@
 .\rvmdk\main.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\rvmdk\main.o: SysTick.h
 .\rvmdk\main.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdlib.h
-.\rvmdk\main.o: PLL.h

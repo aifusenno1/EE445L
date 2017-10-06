@@ -88,7 +88,7 @@ __Vectors
         DCD     IntDefaultHandler           ; Debug monitor handler
         DCD     0                           ; Reserved
         DCD     IntDefaultHandler           ; The PendSV handler
-        DCD     IntDefaultHandler           ; The SysTick handler
+        DCD     SysTick_Handler           ; The SysTick handler
         DCD     IntDefaultHandler           ; GPIO Port A
         DCD     GPIOB_intHandler            ; GPIO Port B
         DCD     IntDefaultHandler           ; GPIO Port C
@@ -262,6 +262,9 @@ Reset_Handler
         IMPORT  __main
         B       __main
 
+
+
+
 ;******************************************************************************
 ;
 ; This is the code that gets called when the processor receives a NMI.  This
@@ -281,7 +284,10 @@ NmiSR
 ;******************************************************************************
 FaultISR
         B       FaultISR
-
+SysTick_Handler PROC
+                EXPORT  SysTick_Handler           [WEAK]
+                B       .
+                ENDP
 ;******************************************************************************
 ;
 ; This is the code that gets called when the processor receives an unexpected

@@ -40,21 +40,23 @@
 #include <string.h>
 
 #define MAX_SONG_NOTES 1000
+#define TABLE_SIZE 32
 
-struct song{
+struct note{
 	int tempo;								//given in beats per minute to have a starting tempo for the song -- may get changed by buttons or something?
 	//int numNotes;
-	double noteLength[MAX_SONG_NOTES];	//double so it can be 1 for full note or .5 for half note etc
-	char notePitch[MAX_SONG_NOTES][3];	//2 chars in each note for things like C 3 or Ab5 etc.
+	double noteLength;	//double so it can be 1 for full note or .5 for half note etc
+	char notePitch[3];	//2 chars in each note for things like C 3 or Ab5 etc.
 };
 
-static const unsigned short Horn[32] = { 
+static const unsigned short Horn[TABLE_SIZE] = { 
 	  1063,1082,1119,1275,1678,1748,1275,755,661,661,703,
 	  731,769,845,1039,1134,1209,1332,1465,1545,1427,1588,
 	  1370,1086,708,519,448,490,566,684,802,992
 	}; 
 
-
+static struct note song[MAX_SONG_NOTES];
+	
 #define PF1       (*((volatile uint32_t *)0x40025008))
 #define PF2       (*((volatile uint32_t *)0x40025010))
 #define PF3       (*((volatile uint32_t *)0x40025020))
@@ -86,11 +88,11 @@ int dacIndex = 0;
 
 void UserTask(void){
   DAC_Out(Horn[dacIndex]);
-	dacIndex = (dacIndex + 1) % 32;
+	dacIndex = (dacIndex + 1) % TABLE_SIZE;
 }
 
 int getIntValue(int freq){
-	return 80000000 / (freq * 32);		//number of clocks in a second/frequency to get number of waves in a second and then divided by 32 because there are 32 points in the wave.
+	return 80000000 / (freq * TABLE_SIZE);		//number of clocks in a second/frequency to get number of waves in a second and then divided by 32 because there are 32 points in the wave.
 }
 
 int getFrequency(char note[3]){
@@ -151,8 +153,7 @@ int getFrequency(char note[3]){
 
 
 // if desired interrupt frequency is f, Timer0A_Init parameter is busfrequency/f
-#define F16HZ (50000000/16)
-#define F20KHZ (50000000/20000)
+
 //debug code
 int main(void){ 
   PLL_Init(Bus80MHz);              // bus clock at 50 MHz
@@ -169,10 +170,9 @@ int main(void){
 	int x = getFrequency(test);
 	int y = getIntValue(x);
 	DAC_Init(1063);
-		
-		EdgeInterrupt_Init();
-		PortF_Init();
-		
+	EdgeInterrupt_Init();
+	PortF_Init();
+	 
 		//TODO: FIX THIS STUFF TO LAB 5
 //  Timer0A_Init(&UserTask, F20KHZ);     // initialize timer0A (20,000 Hz)
   Timer0A_Init(&UserTask, y);  // initialize timer0A (16 Hz)

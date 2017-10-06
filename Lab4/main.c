@@ -1,7 +1,7 @@
 /*
 * main.c - Example project for UT.6.02x Embedded Systems - Shape the World
-* Jonathan Valvano and Ramesh Yerraballi
-* September 14, 2016
+* Allen Pan & Paris Kaman
+* October 4, 2017
 * Hardware requirements 
 TM4C123 LaunchPad, optional Nokia5110
 CC3100 wifi booster and 
@@ -98,7 +98,6 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include <stdio.h>
 #include "SysTick.h"
 #include <stdlib.h>
-#include "PLL.h"
 
 #define SSID_NAME  "iPhone" /* Access point name to connect to */
 #define SEC_TYPE   SL_SEC_TYPE_WPA
@@ -182,6 +181,10 @@ int SockID;
 char temperature[100];
 char voltage[100];
 
+static int time_retrive[10];
+static int time_send[10];
+extern long int time;
+
 typedef enum{
    CONNECTED = 0x01,
    IP_AQUIRED = 0x02,
@@ -200,6 +203,10 @@ UINT32  g_Status = 0;
 */
 
 static int32_t configureSimpleLinkToDefaultState(char *);
+static void calc_measurement(void);
+static void ST7735_sDecOut3(int32_t n);
+static char* toFixedString(int32_t n);
+static char* parseTemp(char *recbuf);
 
 
 // NEW CODE HERE
@@ -294,6 +301,41 @@ static char* parseTemp(char *recbuf){
    return temp;
 }
 
+static void calc_measurement(void) {
+							  int min_retrive = 0x7FFFFFFF;
+						  int max_retrive = 0;
+							 int min_send= 0x7FFFFFFF;
+						  int max_send = 0;
+							int sum_retrive = 0;
+							int sum_send = 0;
+							for (int j=0; j<10; j++) {
+								if (time_retrive[j] > max_retrive)
+										max_retrive = time_retrive[j];
+								if (time_retrive[j] < min_retrive)
+										min_retrive = time_retrive[j];
+								if (time_send[j] > max_send)
+										max_send = time_send[j];
+								if (time_send[j] < min_send)
+										min_send = time_send[j];
+								sum_retrive += time_retrive[j];
+								sum_send += time_send[j];
+							}
+							int average_retrive = sum_retrive / 10;
+							int average_send = sum_send / 10;
+							ST7735_SetCursor(0,3);
+							ST7735_OutUDec(max_retrive);
+							ST7735_SetCursor(0,4);
+							ST7735_OutUDec(min_retrive);
+							ST7735_SetCursor(0,5);
+							ST7735_OutUDec(average_retrive);
+							ST7735_SetCursor(0,7);
+							ST7735_OutUDec(max_send);
+							ST7735_SetCursor(0,8);
+							ST7735_OutUDec(min_send);
+							ST7735_SetCursor(0,9);
+							ST7735_OutUDec(average_send);
+}
+
 
 /*
 * STATIC FUNCTION DEFINITIONS -- End
@@ -322,7 +364,7 @@ int main(void){
    ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
    UART_Init();      // Send data to PC, 115200 bps
    LED_Init();       // initialize LaunchPad I/O 
-	 //SysTick_Init();
+	 SysTick_Init();
    ST7735_InitR(INITR_REDTAB);
    ST7735_FillScreen(ST7735_BLACK);
 		//EnableInterrupts();
@@ -344,12 +386,13 @@ int main(void){
    }
    
    UARTprintf("Connected\n");
-   
+   int i = 0;
+	 
    while(1){
       strcpy(HostName,"api.openweathermap.org"); // works 9/2016
 			
       retVal = sl_NetAppDnsGetHostByName(HostName, strlen(HostName),&DestinationIP, SL_AF_INET);
-         
+ 
          if(retVal == 0){
             Addr.sin_family = SL_AF_INET;
             Addr.sin_port = sl_Htons(80);
@@ -361,14 +404,14 @@ int main(void){
             }
             if((SockID >= 0)&&(retVal >= 0)){
                strcpy(SendBuff,REQUEST); 
-							 ST7735_SetCursor(3,0);
-							 //ST7735_OutUDec(NVIC_ST_CURRENT_R);
+							 long temp = time;
                sl_Send(SockID, SendBuff, strlen(SendBuff), 0);// Send the HTTP GET 
                sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
                sl_Close(SockID);
-							 ST7735_SetCursor(4,0);
-							// ST7735_OutUDec(NVIC_ST_CURRENT_R);
-
+							 int time_elapse = time - temp;
+							 if (i < 10) {
+								 time_retrive[i] = time_elapse;
+							 }
                LED_GreenOn();
                UARTprintf("\r\n\r\n");
                UARTprintf(Recvbuff);  
@@ -409,14 +452,23 @@ int main(void){
                         strcpy(SendBuff2, REQUEST1);
 												strcat(SendBuff2, voltage);
 												strcat(SendBuff2, REQUEST2);
-											 
+											 long temp = time;
                         sl_Send(SockID, SendBuff2, strlen(SendBuff2), 0);// Send the HTTP GET 
                         sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
                         sl_Close(SockID);
-                        
+                        int time_elapse = time - temp;
+							 if (i < 10) {
+								 time_send[i] = time_elapse;
+								 i++;
+							 }
                         
                      }
                   }
+									
+						// find max, min and average times from 10 transmissions
+						if (i == 10) {
+							calc_measurement();
+						}
             
             
             while(Board_Input()==0){}; // wait for touch
