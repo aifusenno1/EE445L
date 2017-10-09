@@ -95,7 +95,7 @@ struct Song {
 
 extern int musicPlaying;
 
-void Music_Init(struct Song song_);
+void Music_Init(void);
 void Music_Play(void);
 void Music_Pause(void);
 void Music_Rewind(void);

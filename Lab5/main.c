@@ -53,7 +53,7 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
-struct Song song = {};
+	
 
 // if desired interrupt frequency is f, Timer0A_Init parameter is busfrequency/f
 
@@ -65,11 +65,11 @@ int main(void){
 	PortF_Init();
   ST7735_InitR(INITR_REDTAB);
 	EdgeInterrupt_Init();
-	Music_Init(song);
+	Music_Init();
 	EnableInterrupts();
 
   while(1){
-    WaitForInterrupt();
-		PF2 ^= 0x04;
+    // WaitForInterrupt();
+		//PF2 ^= 0x04;
   }
 }

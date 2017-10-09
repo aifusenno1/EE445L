@@ -14,6 +14,12 @@ R2 = 220 R1 = 1000
 Rs <= (3.3 - Vz)/(Il+Iz) = 22457
 Rs = 22000
 
+TPA731
+Rf = 10k
+Ri = 22k
+Ci = 0.1 micro
+Cs = 0.1 micro
+Cb = 4.7 micro
 */
 
 #include <stdint.h>
@@ -24,7 +30,7 @@ Rs = 22000
 void DAC_Init(void) {
 	SYSCTL_RCGCSSI_R |= 0x08;  // SSI3
 	SYSCTL_RCGCGPIO_R |= 0x08;  // port D
-	while ((SYSCTL_PRGPIO_R&0x02) == 0) {};
+	while ((SYSCTL_PRGPIO_R&0x08) == 0) {};
 	GPIO_PORTD_AMSEL_R &= ~0x0F; // 2) disable analog on PD0-3
 	GPIO_PORTD_AFSEL_R |= 0x0F; // 3) Enable alternative functionality on PD0-3
 	GPIO_PORTD_PCTL_R &= ~0x0000FFFF;

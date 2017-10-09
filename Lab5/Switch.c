@@ -6,6 +6,7 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "Music.h"
+#include "ST7735.h"
 
 #define PF4                     (*((volatile uint32_t *)0x40025040))
 #define PF3                     (*((volatile uint32_t *)0x40025020))
@@ -48,9 +49,12 @@ void GPIOPortF_Handler(void){
 	    if (last4) {				// 0x10 means it was previously released; negative logic
 		 if(musicPlaying){
 				Music_Pause();
+			 	ST7735_DrawString(0,0,"Pause ",ST7735_YELLOW);
 		 }
 		 else{
 			 Music_Play();
+		  ST7735_DrawString(0,0,"Play  ",ST7735_YELLOW);
+
 	 }
 			}
    }
@@ -59,6 +63,7 @@ void GPIOPortF_Handler(void){
       GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
 		  if (last0) {
 					 Music_Rewind();
+					ST7735_DrawString(0,0,"Rewind",ST7735_YELLOW);
 			}
    }
 	 
