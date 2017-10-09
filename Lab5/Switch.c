@@ -1,10 +1,9 @@
 // adapted from button.c from lab 3
 
-
+#include "Switch.h"
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
-#include "Switch.h"
 
 volatile static unsigned long last4, last0;      // previous
 

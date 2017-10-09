@@ -430,6 +430,11 @@
               <FileType>1</FileType>
               <FilePath>.\DAC.c</FilePath>
             </File>
+            <File>
+              <FileName>Switch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Switch.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

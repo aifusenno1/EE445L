@@ -38,16 +38,9 @@
 #include "Switch.h"
 #include "DAC.h"
 #include <string.h>
+#include "Music.h"
 
-#define MAX_SONG_NOTES 1000
-#define TABLE_SIZE 32
 
-struct note{
-	int tempo;								//given in beats per minute to have a starting tempo for the song -- may get changed by buttons or something?
-	//int numNotes;
-	double noteLength;	//double so it can be 1 for full note or .5 for half note etc
-	char notePitch[3];	//2 chars in each note for things like C 3 or Ab5 etc.
-};
 
 static const unsigned short Horn[TABLE_SIZE] = { 
 	  1063,1082,1119,1275,1678,1748,1275,755,661,661,703,
@@ -63,19 +56,7 @@ static struct note song[MAX_SONG_NOTES];
 #define LEDS      (*((volatile uint32_t *)0x40025038))
 
 
-//BASE FREQUENCY
-#define B	 	494
-#define Bb	466
-#define A		440
-#define Ab	415
-#define G		392
-#define Gb	370
-#define F		349
-#define E		330
-#define Eb	311
-#define D		294
-#define Db	277
-#define C		262
+
 
 
 void DisableInterrupts(void); // Disable interrupts
@@ -95,61 +76,6 @@ int getIntValue(int freq){
 	return 80000000 / (freq * TABLE_SIZE);		//number of clocks in a second/frequency to get number of waves in a second and then divided by 32 because there are 32 points in the wave.
 }
 
-int getFrequency(char note[3]){
-	double base = 0;
-	char name[2] = {"  "};
-	name[0] = note[0];
-	name[1] = note[1];
-	int octave = note[2] - '0';
-	
-	if(strcmp(name, "B ") == 0){
-		base = B;
-	}
-	else if(strcmp(name, "Bb") == 0){
-		base = Bb;
-	}
-	else if(strcmp(name, "A ") == 0){
-		base = A;
-	}
-	else if(strcmp(name, "Ab") == 0){
-		base = Ab;
-	}
-	else if(strcmp(name, "G ") == 0){
-		base = G;
-	}
-	else if(strcmp(name, "Gb") == 0){
-		base = Gb;
-	}
-	else if(strcmp(name, "F ") == 0){
-		base = F;
-	}
-	else if(strcmp(name, "E ") == 0){
-		base = E;
-	}
-	else if(strcmp(name, "Eb") == 0){
-		base = Eb;
-	}
-	else if(strcmp(name, "D ") == 0){
-		base = D;
-	}
-	else if(strcmp(name, "Db") == 0){
-		base = Db;
-	}
-	else if(strcmp(name, "C ") == 0){
-		base = C;
-	}
-	
-	int shifts = octave - 4;		// 4 is the base octave all the frequencies are listed as
-	if(shifts == 0){
-		return base;
-	}
-	else if(shifts > 0){
-		return ((int)base << shifts);
-	}
-	else{
-		return ((int)base >> (-shifts));
-	}
-}
 
 
 // if desired interrupt frequency is f, Timer0A_Init parameter is busfrequency/f
