@@ -1,30 +1,50 @@
 //DAC.c
 /*
-SSI2Clk PB4 (2) I/O    SSI module 2 clock.
-SSI2Fss PB5 (2) I/O    SSI module 2 frame signal.
-SSI2Rx  PB6 (2) I      SSI module 2 receive.
-SSI2Tx  PB7 (2) O      SSI module 2 transmit.
+SSI3Clk PD0 (1) I/O    SSI module 3 clock.
+SSI3Fss PD1 (1) I/O    SSI module 3 frame signal.
+SSI3Rx  PD2 (1) I      SSI module 3 receive.
+SSI3Tx  PD3 (1) O      SSI module 3 transmit.
+
+TLV5616 input impedance for Refin pin is 10M ohm
+load current Il = 1.5v/10M = 0.15E-6 A
+LM4041C: Iz = 80E-6 A Vref = 1.233 V
+Vz = 1.5 v
+Vz = Vref(1+R2/R1) = 1.5 V
+R2 = 220 R1 = 1000
+Rs <= (3.3 - Vz)/(Il+Iz) = 22457
+Rs = 22000
+
 */
 
-#include "DAC.h"
 #include <stdint.h>
-#include "..//inc//tm4c123gh6pm.h"
+#include "DAC.h"
+#include "../inc/tm4c123gh6pm.h"
 
-void DAC_Init(uint16_t data) {
-	SYSCTL_RCGCSSI_R |= 0x04;  // SSI2
-	SYSCTL_RCGCGPIO_R |= 0x02;  // port B
+// initialize port D for SSI3
+void DAC_Init(void) {
+	SYSCTL_RCGCSSI_R |= 0x08;  // SSI3
+	SYSCTL_RCGCGPIO_R |= 0x08;  // port D
 	while ((SYSCTL_PRGPIO_R&0x02) == 0) {};
-	GPIO_PORTB_AMSEL_R &= ~0xF0; // 2) disable analog on PB4-7
-	GPIO_PORTB_AFSEL_R |= 0xF0; // 3) Enable alternative functionality on PB4-7
-	GPIO_PORTB_PCTL_R &= ~0xFFFF0000;
-	GPIO_PORTB_PCTL_R |= 0x22220000;// 4) choose GPIO functionality
-	GPIO_PORTB_DIR_R |= 0xF0;   // 5) set PB7-4 to be outputs
-	GPIO_PORTB_DEN_R |= 0xF0;    // 6) outputs are digital
+	GPIO_PORTD_AMSEL_R &= ~0x0F; // 2) disable analog on PD0-3
+	GPIO_PORTD_AFSEL_R |= 0x0F; // 3) Enable alternative functionality on PD0-3
+	GPIO_PORTD_PCTL_R &= ~0x0000FFFF;
+	GPIO_PORTD_PCTL_R |= 0x00001111;// 4) choose GPIO functionality
+	GPIO_PORTD_DIR_R |= 0x0F;   // 5) set PB7-4 to be outputs
+	GPIO_PORTD_DEN_R |= 0x0F;    // 6) outputs are digital
 		
-	SSI2_CR1_R = 0x00000000;  //2) Disable SSI, master mode
-	SSI2_CPSR_R = 0x08;  //3) 10Mhz SSIClk Fssi = Fbus / (CPSDVSR * (1 + SCR))
-	SSI2_CR0_R &= ~(0x0000FFFF);  //3) SCR = 0, Freescale frame format.
-	SSI2_CR0_R |= 0x4F;  //5)) DSS = 16 bit data,  SPH = 0 and SP0 = 1 ( use 16 bit data??)
-	SSI2_CR1_R |= SSI_CR1_SSE;  //4) enable SSI / set the SSE
+	SSI3_CR1_R = 0x00000000;  //2) Disable SSI, master mode
+	SSI3_CPSR_R = 0x08;  //3) 10Mhz SSIClk Fssi = Fbus / (CPSDVSR * (1 + SCR))
+	SSI3_CR0_R &= ~(0x0000FFF0);  // SCR = 0, SPH = 0, SPO = 0 Freescale
+	SSI3_CR0_R |= 0x0F;              // DSS = 16-bit data
+	SSI3_CR1_R |= SSI_CR1_SSE;  //4) enable SSI / set the SSE
+
 }
+
+void DAC_Out(uint16_t data) {
+		data &= 0xFFF;
+	 while((SSI3_SR_R & SSI_SR_TNF) == 0) {}; // wait till Transmit FIFO not full
+		SSI3_DR_R = data;
+}
+
+
 	
