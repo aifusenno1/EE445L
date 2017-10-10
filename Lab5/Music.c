@@ -54,6 +54,76 @@ struct Note song_harmony[] = {
 	{C5, quarter}, {D5, quarter}, {E5, quarter}, {F5, quarter}
 };
 
+struct Note sos_melody[] = {
+	{Eb3, quarter}, {Bb3, quarter}, {F3, quarter}, {Bb3, quarter},
+	{Eb3, quarter}, {Bb3, quarter}, {F3, quarter}, {Bb3, quarter},
+	{Eb3, quarter}, {Bb3, quarter}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth},
+	{Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth},
+	{Ab3, whole},
+	{Ab3, whole},
+	{R, quarter}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth},
+	{F3, eighth}, {F3, sixteenth}, {R, sixteenth}, {F3, eighth}, {F3, sixteenth}, {R, sixteenth}, {Ab3, eighth}, {Ab3, sixteenth}, {R, sixteenth}, {Ab3, eighth}, {Ab3, sixteenth}, {R, sixteenth},
+	{Gb3, whole},
+	{Gb3, whole}.
+	{R, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+	{Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Db4, eighth}, {Db4, sixteenth}, {R, sixteenth}, {Eb4, quarter},
+	{Eb4, quarter}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Db4, quarter},
+	{Db4, half}, {R, half},
+	{R, half}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+	{Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Db4, eighth}, {Db4, sixteenth}, {R, sixteenth}, {Eb4, quarter},
+	{Eb4, quarter}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Db4, quarter},
+	{Db4, half}, {R, half},
+	{R, half}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+  {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Eb4, quarter}, {Eb4, half},
+  {Eb4, quarter}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {F4, eighth}, {F4, sixteenth}, {R, sixteenth},
+	{Gb4, eighth}, {Gb4, sixteenth}, {R, sixteenth}, {Gb4, half}, {Gb4, eighth}, {Gb4, sixteenth}, {R, sixteenth},
+	{F4, eighth}, {F4, sixteenth}, {R, sixteenth}, {Eb4, quarter}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Db4, quarter},
+	{Db4, whole},
+	{R, half}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Db4, eighth}, {Db4, sixteenth}, {R, sixteenth},
+	{Bb3, whole},
+	{R, whole},
+	{R, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, 
+	{Db4, whole},
+	{Db4, half}, {R, quarter}, {F3, eighth}, {F3, sixteenth}, {R, sixteenth},
+	{Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Eb3, quarter}, {Eb3, half},
+	{Eb3, whole}
+};
+
+struct Note sos_harmony[] = {
+	{R, whole},
+	{R, whole},
+	{R, half}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth},
+	{Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth}, {Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth},
+	{Db3, whole},
+	{Db3, whole},
+	{R, quarter}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth},
+	{Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth},
+	{Eb3, whole}, 
+	{Eb3, whole}, 
+	{R, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+	{Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, quarter},
+	{Gb3, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, quarter},
+	{Gb3, half}, {R, half},
+	{R, half}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+	{Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, quarter},
+	{Gb3, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, quarter},
+	{Gb3, half}, {R, half},
+	{R, half}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, 
+	{Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, quarter}, {Gb3, half},
+	{Gb3, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+	{Db4, eighth}, {Db4, sixteenth}, {R, sixteenth}, {Db4, half}, {Db4, eighth}, {Db4, sixteenth}, {R, sixteenth},
+	{Db4, eighth}, {Db4, sixteenth}, {R, sixteenth}, {Db4, quarter}, {Db4, eighth}, {Db4, sixteenth}, {R, sixteenth}, {Bb3, quarter},
+	{Bb3, whole},
+	{R, half}, {C4, eighth}, {C4, sixteenth}, {R, sixteenth}, {Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth},
+	{Gb3, whole},
+	{R, whole}, 
+	{R, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
+	{F3, whole},
+	{F3, half}, {R, quarter}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth},
+	{Eb3, eighth}, {Eb3, sixteenth}, {R, sixteenth}, {Eb3, quarter}, {Eb3, half},
+	{Eb3, whole}	
+};
+
 //struct Note song_harmony[] = {
 //	{C4, quarter}, {D4, quarter}, {E4, quarter}, {F4, quarter},
 //	{G4, quarter}, {A4, quarter}, {B4, quarter}, {C5, quarter}
@@ -124,7 +194,7 @@ static void harmony_handler(void) {
 	if (noteIndex >= song.harmony_note_num) {  // done playing the song
 		// for now, make the music stop when it plays through once
 		// need to figure out how to cycle
-			DAC_Out();
+			DAC_Out(0);
 			return;
 	}
 			
