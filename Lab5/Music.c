@@ -8,52 +8,70 @@
 
 /***** public variable *****/
 int musicPlaying;
+int songEnd;
+long StartCritical (void);    // previous I bit, disable interrupts
+void EndCritical(long sr);    // restore I bit to previous value
+
 
 /** instruments **/
-static const unsigned short Wave[32] = {  
-  2048,2360,2660,2937,3179,3378,3526,3617,3648,3617,3526,
-  3378,3179,2937,2660,2360,2048,1736,1436,1159,917,718,
-  570,479,448,479,570,718,917,1159,1436,1736
+#define NUMBER_OF_INSTRUMENTS  5
+#define TABLE_SIZE 64
+const unsigned short Wave[TABLE_SIZE] = {  
+  2048,2244,2438,2629,2813,2991,3159,3317,3462,3594,3711,
+  3812,3896,3962,4010,4038,4048,4038,4010,3962,3896,3812,
+  3711,3594,3462,3317,3159,2991,2813,2629,2438,2244,2048,
+  1852,1658,1467,1283,1105,937,779,634,502,385,284,200,134,86,
+  257,248,257,283,326,385,461,551,657,775,906,1048,1199,1359,1525,1697,1872
 };
-static const unsigned short Flute[32] = {  
-  1007,1252,1374,1548,1698,1797,1825,1797,1675,1562,1383,
-  1219,1092,1007,913,890,833,847,810,777,744,674,
-  598,551,509,476,495,533,589,659,758,876
-};  
-static const unsigned short Trumpet[32] = {  
-  2013,2179,2318,2397,2135,1567,572,153,1567,3043,2973,
-  2353,2135,2074,2170,2126,2022,2030,2091,2126,2022,2022,
-  2118,2231,2170,2153,2161,2214,2179,2100,2030,2091
-}; 
 
-static const unsigned short Horn[32] = { 
-	  1063,1082,1119,1275,1678,1748,1275,755,661,661,703,
-	  731,769,845,1039,1134,1209,1332,1465,1545,1427,1588,
-	  1370,1086,708,519,448,490,566,684,802,992
-}; 
+const unsigned short Oboe[TABLE_SIZE] = {
+	2126,2164,2238,2550,3356,3496,2550,1510,1322,1322,1406,1462,1538,1690,2078,2268,2418,2664,2930,
+	3090,2854,3176,2740,2172,1416,1038,896,980,1132,1368,1604,1984,2126,2164,2238,2550,3356,3496,2550,
+	1510,1322,1322,1406,1462,1538,1690,2078,2268,2418,2664,2930,3090,2854,3176,2740,2172,1416,1038,
+	896,980,1132,1368,1604,1984
+};
 
-static uint16_t melody_out = 0;
-static uint16_t harmony_out = 0;
+const unsigned short Trumpet[TABLE_SIZE] = {
+	2014,2176,2312,2388,2134,1578,606,198,1578,3020,2952,2346,2134,2074,2168,2124,2022,2030,2090,2124,
+	2022,2022,2116,2226,2168,2150,2158,2210,2176,2098,2030,2090,2014,2176,2312,2388,2134,1578,606,198,
+	1578,3020,2952,2346,2134,2074,2168,2124,2022,2030,2090,2124,2022,2022,2116,2226,2168,2150,2158,
+	2210,2176,2098,2030,2090
+};
+
+const unsigned short Flute[TABLE_SIZE] = {
+	2014,2504,2748,3096,3396,3594,3650,3594,3350,3124,2766,2438,2184,2014,1826,1780,1666,1694,1620,1554,
+	1488,1348,1196,1102,1018,952,990,1066,1178,1318,1516,1752,2014,2504,2748,3096,3396,3594,3650,3594,
+	3350,3124,2766,2438,2184,2014,1826,1780,1666,1694,1620,1554,1488,1348,1196,1102,1018,952,990,1066,
+	1178,1318,1516,1752
+};
+
+const unsigned short Guitar[TABLE_SIZE] = {  
+  2048,2048,2052,2003,1869,1665,1459,1293,1238,1332,1563,
+  1928,2343,2673,2922,3073,3116,3005,2792,2471,2080,1728,
+  1510,1517,1754,2175,2716,3227,3579,3692,3544,3250,2907,
+  2571,2347,2193,2103,2067,2054,2072,2157,2273,2367,2494,2527,2500,2363,
+  2163,1948,1731,1602,1557,1621,1689,1717,1718,1701,1698,1750,1843,1954,2048,2048,2048
+};
+
+static uint16_t melody_out;
+static uint16_t harmony_out;
 static long melody_note_duration;     // made it global because of initial note
 static long harmony_note_duration;
 
-typedef struct {
-	const unsigned short *melody;
-	const unsigned short *harmony;
-} instrument_comb;  // instrument combination
-
-#define MELODY_NOTE_NUM 8
-#define HARMONY_NOTE_NUM 8
-struct Note song_melody[] = {
+#define MAJORSCALE_MELODY_NOTE_NUM 8
+#define MAJORSCALE_HARMONY_NOTE_NUM 8
+struct Note majorscale_melody[] = {
 	{C4, quarter}, {D4, quarter}, {E4, quarter}, {F4, quarter},
 	{G4, quarter}, {A4, quarter}, {B4, quarter}, {C5, quarter}
 };
 
-struct Note song_harmony[] = {
+struct Note majorscale_harmony[] = {
 	{F4, quarter}, {G4, quarter}, {A4, quarter}, {Bb4, quarter},
 	{C5, quarter}, {D5, quarter}, {E5, quarter}, {F5, quarter}
 };
 
+#define SOS_MELODY_NOTE_NUM 180
+#define SOS_HARMONY_NOTE_NUM 173
 struct Note sos_melody[] = {
 	{Eb3, quarter}, {Bb3, quarter}, {F3, quarter}, {Bb3, quarter},
 	{Eb3, quarter}, {Bb3, quarter}, {F3, quarter}, {Bb3, quarter},
@@ -64,7 +82,7 @@ struct Note sos_melody[] = {
 	{R, quarter}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth}, {Db3, eighth}, {Db3, sixteenth}, {R, sixteenth},
 	{F3, eighth}, {F3, sixteenth}, {R, sixteenth}, {F3, eighth}, {F3, sixteenth}, {R, sixteenth}, {Ab3, eighth}, {Ab3, sixteenth}, {R, sixteenth}, {Ab3, eighth}, {Ab3, sixteenth}, {R, sixteenth},
 	{Gb3, whole},
-	{Gb3, whole}.
+	{Gb3, whole},
 	{R, quarter}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth}, {Gb3, eighth}, {Gb3, sixteenth}, {R, sixteenth},
 	{Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Bb3, eighth}, {Bb3, sixteenth}, {R, sixteenth}, {Db4, eighth}, {Db4, sixteenth}, {R, sixteenth}, {Eb4, quarter},
 	{Eb4, quarter}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Eb4, eighth}, {Eb4, sixteenth}, {R, sixteenth}, {Db4, quarter},
@@ -124,18 +142,13 @@ struct Note sos_harmony[] = {
 	{Eb3, whole}	
 };
 
-//struct Note song_harmony[] = {
-//	{C4, quarter}, {D4, quarter}, {E4, quarter}, {F4, quarter},
-//	{G4, quarter}, {A4, quarter}, {B4, quarter}, {C5, quarter}
-//};
 
 
-#define NUMBER_OF_INSTRUMENT_COMBS  4
-static instrument_comb instruments[] = {{Wave, Wave}, {Wave, Flute}, {Wave, Trumpet}, {Wave, Horn}};
-struct Song song = {60, song_melody, Horn, MELODY_NOTE_NUM, song_harmony, Horn, HARMONY_NOTE_NUM};
+struct Song song = {196, sos_melody, Wave, SOS_MELODY_NOTE_NUM, sos_harmony, Wave, SOS_HARMONY_NOTE_NUM};
 
-
-static unsigned cur_instrument_comb = 0;  // not init in Music_Init, so that when rewind the instrument does not get reset
+static const unsigned short *instruments[NUMBER_OF_INSTRUMENTS] = {Wave, Trumpet, Oboe, Flute, Guitar};
+static char *instrumentText[NUMBER_OF_INSTRUMENTS] = {"Wave", "Trumpet", "Obe", "Flute", "Guitar"};
+static unsigned curInstrument;  // not init in Music_Init, so that when rewind the instrument does not get reset
 static void melody_handler(void);
 static void harmony_handler(void);	
 static unsigned long getNoteDuration(struct Note note, uint16_t tempo);
@@ -144,73 +157,86 @@ static unsigned long getBeatDuration(uint16_t tempo);
 void Music_Init(void) {
 	melody_note_duration = getNoteDuration(*song.melody, song.tempo);
 	harmony_note_duration = getNoteDuration(*song.harmony, song.tempo);
-	
+	curInstrument = 0;
 	musicPlaying = 1;
+	melody_out = 0;
+	harmony_out = 0;
+	songEnd = 0;
 	Timer2A_Init(&melody_handler, (*song.melody).note);
 	Timer3A_Init(&harmony_handler, (*song.harmony).note);
 }
 
-/* TO DO
-	 figure out how to represent a rest
-*/
 
+  static uint16_t melodyInstrumentIndex = 0;
+	static uint16_t melodyNoteIndex = 0;
+	static long melodyLasts = 0;
 
 static void melody_handler(void) {
-  static uint16_t instrumentIndex = 0;
-	static uint16_t noteIndex = 0;
-	static long curDuration = 0;
-	
-	if (noteIndex >= song.melody_note_num) {  // done playing the song
-		// for now, make the music stop when it plays through once
-		// need to figure out how to cycle
-			DAC_Out(harmony_out);
-			return;
+
+	if (melodyNoteIndex >= song.melody_note_num) {  // done playing the song
+			melody_out = 0;
+	}
+	else if (song.melody[melodyNoteIndex].note == R) {	 // a Rest
+			// keeping the previous melody out value;
+				melodyLasts++;
+	}
+	else {
+			melody_out = song.melody_instrument[melodyInstrumentIndex];
+	melodyInstrumentIndex = (melodyInstrumentIndex + 1) % TABLE_SIZE;
+	melodyLasts++;
 	}
 			
-	melody_out = song.melody_instrument[instrumentIndex];
-	uint16_t output = (melody_out + harmony_out) / 2;
-
+	uint16_t output = (melody_out + harmony_out) / 4;
 	DAC_Out(output);
-	curDuration++;
-	instrumentIndex = (instrumentIndex + 1) % TABLE_SIZE;
 	
-	if (curDuration >= melody_note_duration) {  // this note has been played long enough
+	if (melodyLasts >= melody_note_duration) {  // this note has been played long enough
 		// move on to the next note
 //		noteIndex = noteIndex + 1;
-		noteIndex = (noteIndex + 1);
-		instrumentIndex = 0;
-		curDuration = 0;
-		melody_note_duration = getNoteDuration(song.melody[noteIndex], song.tempo); 		// update the note duration
-		Timer2A_Period(song.melody[noteIndex].note);  // change the int period to the new note
+		melodyNoteIndex = melodyNoteIndex + 1;
+		melodyInstrumentIndex = 0;
+		melodyLasts = 0;
+		melody_note_duration = getNoteDuration(song.melody[melodyNoteIndex], song.tempo); 		// update the note duration
+		if (melodyNoteIndex >  song.melody_note_num) {
+			songEnd = 1; // Not entirely valid since harmony might still be playing, but should end soon if they have same number of bars
+			Timer2A_Disarm();
+		}			
+		else Timer2A_Period(song.melody[melodyNoteIndex].note);  // change the int period to the new note
 	}
-	
 }
 
+  static uint16_t harmonyInstrumentIndex = 0;
+	static uint16_t harmonyNoteIndex = 0;
+	static long harmonyLasts = 0;
+
 static void harmony_handler(void) {
-  static uint16_t instrumentIndex = 0;
-	static uint16_t noteIndex = 0;
-	static long curDuration = 0;
-	
-	if (noteIndex >= song.harmony_note_num) {  // done playing the song
-		// for now, make the music stop when it plays through once
-		// need to figure out how to cycle
-			DAC_Out(0);
-			return;
+
+	if (harmonyNoteIndex >= song.harmony_note_num) {  // done playing the song
+			harmony_out = 0;
 	}
-			
-	harmony_out = song.harmony_instrument[instrumentIndex];
-	uint16_t output = (melody_out + harmony_out) / 2;
-	DAC_Out(output);
-	curDuration++;
-	instrumentIndex = (instrumentIndex + 1) % TABLE_SIZE;
+		else if (song.harmony[harmonyNoteIndex].note == R) {	 // a Rest
+			// keeping the previous melody out value;
+				harmonyLasts++;
+	}
+	else {
+	harmony_out = song.harmony_instrument[harmonyInstrumentIndex];
+	harmonyInstrumentIndex = (harmonyInstrumentIndex + 1) % TABLE_SIZE;
+	harmonyLasts++;
+	}
 	
-	if (curDuration >= harmony_note_duration) {  // this note has been played long enough
+	uint16_t output = (melody_out + harmony_out) / 4;
+	DAC_Out(output);
+	
+	if (harmonyLasts >= harmony_note_duration) {  // this note has been played long enough
 		// move on to the next note
-		noteIndex = noteIndex + 1;
-		instrumentIndex = 0;
-		curDuration = 0;
-		harmony_note_duration = getNoteDuration(song.harmony[noteIndex], song.tempo); 		// update the note duration
-		Timer3A_Period(song.harmony[noteIndex].note);  // change the int period to the new note
+		harmonyNoteIndex = harmonyNoteIndex + 1;
+		harmonyInstrumentIndex = 0;
+		harmonyLasts = 0;
+		harmony_note_duration = getNoteDuration(song.harmony[harmonyNoteIndex], song.tempo); 		// update the note duration
+		if (harmonyNoteIndex >  song.harmony_note_num) {
+			songEnd = 1; // Not entirely valid since melody might still be playing, but should end soon if they have same number of bars
+			Timer3A_Disarm();
+		}			
+		Timer3A_Period(song.harmony[harmonyNoteIndex].note);  // change the int period to the new note
 	}
 }
 
@@ -221,6 +247,7 @@ void Music_Play(void){
 	Timer2A_Arm();
 	Timer3A_Arm();
 	musicPlaying = 1;
+
 }
 
 void Music_Pause(void){
@@ -231,13 +258,32 @@ void Music_Pause(void){
 
 void Music_Rewind(void) {
 	Music_Pause();
-	Music_Init();  // Assuming re-init timers will reset the static varaibles inside the handlers
+
+	melody_note_duration = getNoteDuration(*song.melody, song.tempo);
+	harmony_note_duration = getNoteDuration(*song.harmony, song.tempo);
+	 melodyInstrumentIndex = 0;
+	melodyNoteIndex = 0;
+	melodyLasts = 0;
+	 harmonyInstrumentIndex = 0;
+	 harmonyNoteIndex = 0;
+	harmonyLasts = 0;
+			Timer2A_Period((*song.melody).note);  // change the int period to the new note
+
+			Timer3A_Period((*song.harmony).note);  // change the int period to the new note
+
+		melody_out = 0;
+	harmony_out = 0;
+	songEnd = 0;
+	Music_Play();
+
 }
 
 void Music_ChangeIntrument(void) {
-	cur_instrument_comb = (cur_instrument_comb + 1) % NUMBER_OF_INSTRUMENT_COMBS;
-	song.melody_instrument = instruments[cur_instrument_comb].melody;
-  song.harmony_instrument = instruments[cur_instrument_comb].harmony;
+	curInstrument = (curInstrument + 1) % NUMBER_OF_INSTRUMENTS;
+	song.melody_instrument = instruments[curInstrument];
+  song.harmony_instrument = instruments[curInstrument];
+	Output_Clear();
+	ST7735_DrawString(0,0,instrumentText[curInstrument],ST7735_YELLOW);
 }
 
 /* 

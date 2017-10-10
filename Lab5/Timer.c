@@ -36,35 +36,9 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
-static void (*Task0)(void);   // user function
 static void (*Task2)(void);   // user function
 static void (*Task3)(void);   // user function
 
-
-// ***************** Timer0A_Init ****************
-// Activate TIMER0 interrupts to run user task periodically
-// Inputs:  task is a pointer to a user function
-//          period in units (1/clockfreq), 32 bits
-// Outputs: none
-void Timer0A_Init(void(*task)(void), uint32_t period) {
-	long sr;
-  sr = StartCritical(); 
-  SYSCTL_RCGCTIMER_R |= 0x01;   // 0) activate TIMER0
-  Task0 = task;          // user function
-  TIMER0_CTL_R = 0x00000000;    // 1) disable TIMER0A during setup
-  TIMER0_CFG_R = 0x00000000;    // 2) configure for 32-bit mode
-  TIMER0_TAMR_R = 0x00000002;   // 3) configure for periodic mode, default down-count settings
-  TIMER0_TAILR_R = period-1;    // 4) reload value
-  TIMER0_TAPR_R = 0;            // 5) bus clock resolution
-  TIMER0_ICR_R = 0x00000001;    // 6) clear TIMER0A timeout flag
-  TIMER0_IMR_R = 0x00000001;    // 7) arm timeout interrupt
-  NVIC_PRI4_R = (NVIC_PRI4_R&0x00FFFFFF)|0x60000000; // 8) priority 3
-// interrupts enabled in the main program after all devices initialized
-// vector number 35, interrupt number 19
-  NVIC_EN0_R = 1<<19;           // 9) enable IRQ 19 in NVIC
-  TIMER0_CTL_R = 0x00000001;    // 10) enable TIMER0A
-  EndCritical(sr);
-}
 
 /** Timer2A_Init() **
  * Activate TIMER2A to countdown for period seconds
@@ -126,11 +100,6 @@ NVIC_PRI8_R = (NVIC_PRI8_R | 0x80000000); // priority 4
 }
 
 
-void Timer0A_Handler(void){
-  Timer0A_Acknowledge();
-  (*Task0)();                // execute user task
-}
-
 void Timer2A_Handler(void){
   Timer2A_Acknowledge();
   (*Task2)();                // execute user task
@@ -141,49 +110,6 @@ void Timer3A_Handler(void){
   (*Task3)();                // execute user task
 }
 
-/******************* Timer0A Methods ****************************/
-
-/** Timer0A_Start() **
- * Restart the Clock (TIMER 0A)
- */
-void Timer0A_Start(){
-	TIMER0_CTL_R |= TIMER_CTL_TAEN;
-}
-
-/** Timer0A_Stop() **
- * Stop the Clock (TIMER 0A)
- */
-void Timer0A_Stop(){
-	TIMER0_CTL_R &= ~TIMER_CTL_TAEN;
-}
-
-/** Timer0A_Arm() **
- * Enable interrupts from Timer0A.
- */
-void Timer0A_Arm(){
-	NVIC_EN0_R = 1 << 19;
-}
-
-/** Timer0A_Disarm() **
- * Disable interrupts from Timer0A.
- */
-void Timer0A_Disarm(){
-	NVIC_DIS0_R = 1 << 19;
-}
-
-/** Timer0A_Period() **
- * Acknowledge a Timer0A interrupt
- */
-void Timer0A_Acknowledge(){
-	TIMER0_ICR_R = TIMER_ICR_TATOCINT; 
-}
-
-/** Timer0A_Period() **
- * Reset the period on Timer0A
- */
-void Timer0A_Period(uint32_t period){
-	TIMER0_TAILR_R = period - 1; 
-}
 
 /******************* Timer2A Methods ****************************/
 

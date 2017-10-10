@@ -69,7 +69,7 @@ int main(void){
 	EnableInterrupts();
 
   while(1){
-    // WaitForInterrupt();
+    WaitForInterrupt();
 		//PF2 ^= 0x04;
   }
 }
