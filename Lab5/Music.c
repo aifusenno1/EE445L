@@ -11,17 +11,18 @@ int musicPlaying;
 int songEnd;
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
+#define PF3       (*((volatile uint32_t *)0x40025020))
 
 
 /** instruments **/
 #define NUMBER_OF_INSTRUMENTS  5
 #define TABLE_SIZE 64
-const unsigned short Wave[TABLE_SIZE] = {  
-  2048,2244,2438,2629,2813,2991,3159,3317,3462,3594,3711,
-  3812,3896,3962,4010,4038,4048,4038,4010,3962,3896,3812,
-  3711,3594,3462,3317,3159,2991,2813,2629,2438,2244,2048,
-  1852,1658,1467,1283,1105,937,779,634,502,385,284,200,134,86,
-  257,248,257,283,326,385,461,551,657,775,906,1048,1199,1359,1525,1697,1872
+const unsigned short Wave[64] = {  
+  2048,2224,2399,2571,2737,2897,3048,3190,3321,3439,3545,
+  3635,3711,3770,3813,3839,3848,3839,3813,3770,3711,3635,
+  3545,3439,3321,3190,3048,2897,2737,2571,2399,2224,2048,
+  1872,1697,1525,1359,1199,1048,906,775,657,551,461,385,326,283,
+  257,248,257,265,300,385,461,551,657,775,906,1048,1199,1359,1525,1697,1872
 };
 
 const unsigned short Oboe[TABLE_SIZE] = {
@@ -53,6 +54,31 @@ const unsigned short Guitar[TABLE_SIZE] = {
   2163,1948,1731,1602,1557,1621,1689,1717,1718,1701,1698,1750,1843,1954,2048,2048,2048
 };
 
+
+
+/** instruments **/
+//const unsigned short Wave[32] = {  
+//  2048,2438,2813,3159,3462,3711,3896,4010,4048,4010,3896,
+//  3711,3462,3159,2813,2438,2048,1658,1283,937,634,385,
+//  200,86,48,86,200,385,634,937,1283,1658
+//};  
+//const unsigned short Flute[32] = {  
+//  1007,1252,1374,1548,1698,1797,1825,1797,1675,1562,1383,
+//  1219,1092,1007,913,890,833,847,810,777,744,674,
+//  598,551,509,476,495,533,589,659,758,876
+//};  
+//const unsigned short Trumpet[32] = {  
+//  2013,2179,2318,2397,2135,1567,572,153,1567,3043,2973,
+//  2353,2135,2074,2170,2126,2022,2030,2091,2126,2022,2022,
+//  2118,2231,2170,2153,2161,2214,2179,2100,2030,2091
+//};  
+
+//const unsigned short Horn[32] = {  
+//  2112,2144,2207,2467,3137,3255,2467,1600,1442,1442,1513,
+//  1560,1624,1750,2073,2231,2357,2562,2782,2916,2719,2987,
+//  2625,2152,1521,1206,1087,1158,1285,1482,1679,1994
+//};   
+
 static uint16_t melody_out;
 static uint16_t harmony_out;
 static long melody_note_duration;     // made it global because of initial note
@@ -61,13 +87,15 @@ static long harmony_note_duration;
 #define MAJORSCALE_MELODY_NOTE_NUM 8
 #define MAJORSCALE_HARMONY_NOTE_NUM 8
 struct Note majorscale_melody[] = {
-	{C4, quarter}, {D4, quarter}, {E4, quarter}, {F4, quarter},
-	{G4, quarter}, {A4, quarter}, {B4, quarter}, {C5, quarter}
+	{F4, quarter}, {F4, quarter}, {F4, quarter}, {F4, quarter},
+	{F4, quarter}, {F4, quarter}, {F4, quarter}, {F4, quarter}
 };
 
 struct Note majorscale_harmony[] = {
-	{F4, quarter}, {G4, quarter}, {A4, quarter}, {Bb4, quarter},
-	{C5, quarter}, {D5, quarter}, {E5, quarter}, {F5, quarter}
+//	{F4, quarter}, {G4, quarter}, {A4, quarter}, {Bb4, quarter},
+//	{C5, quarter}, {D5, quarter}, {E5, quarter}, {F5, quarter}
+		{C4, quarter}, {D4, quarter}, {E4, quarter}, {F4, quarter},
+	{G4, quarter}, {A4, quarter}, {B4, quarter}, {C5, quarter}
 };
 
 #define SOS_MELODY_NOTE_NUM 180
@@ -145,9 +173,10 @@ struct Note sos_harmony[] = {
 
 
 struct Song song = {196, sos_melody, Wave, SOS_MELODY_NOTE_NUM, sos_harmony, Wave, SOS_HARMONY_NOTE_NUM};
+// struct Song song = {10, majorscale_melody, Wave, 8, majorscale_harmony, Wave, 8};
 
-static const unsigned short *instruments[NUMBER_OF_INSTRUMENTS] = {Wave, Trumpet, Oboe, Flute, Guitar};
-static char *instrumentText[NUMBER_OF_INSTRUMENTS] = {"Wave", "Trumpet", "Obe", "Flute", "Guitar"};
+static const unsigned short *instruments[NUMBER_OF_INSTRUMENTS] = {Wave, Trumpet, Flute, Guitar, Oboe};
+static char *instrumentText[NUMBER_OF_INSTRUMENTS] = {"Wave", "Trumpet", "Flute", "Guitar", "Oboe"};
 static unsigned curInstrument;  // not init in Music_Init, so that when rewind the instrument does not get reset
 static void melody_handler(void);
 static void harmony_handler(void);	
@@ -172,7 +201,8 @@ void Music_Init(void) {
 	static long melodyLasts = 0;
 
 static void melody_handler(void) {
-
+	PF3 ^= 0x08;
+	PF3 ^= 0x08;
 	if (melodyNoteIndex >= song.melody_note_num) {  // done playing the song
 			melody_out = 0;
 	}
@@ -202,6 +232,8 @@ static void melody_handler(void) {
 		}			
 		else Timer2A_Period(song.melody[melodyNoteIndex].note);  // change the int period to the new note
 	}
+	
+		PF3 ^= 0x08;
 }
 
   static uint16_t harmonyInstrumentIndex = 0;

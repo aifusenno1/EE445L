@@ -25,6 +25,7 @@ Cb = 4.7 micro
 #include <stdint.h>
 #include "DAC.h"
 #include "../inc/tm4c123gh6pm.h"
+#include "ST7735.h"
 
 // initialize port D for SSI3
 void DAC_Init(void) {
@@ -47,7 +48,8 @@ void DAC_Init(void) {
 }
 
 void DAC_Out(uint16_t data) {
-		data &= 0xFFF;
+		data &= 0x0FFF;
+		//ST7735_OutUDec(data);
 	 while((SSI3_SR_R & SSI_SR_TNF) == 0) {}; // wait till Transmit FIFO not full
 		SSI3_DR_R = data;
 }

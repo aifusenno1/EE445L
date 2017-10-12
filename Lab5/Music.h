@@ -1,6 +1,6 @@
 
-// note periods = 80000000 / (freq * TABLE_SIZE)
-// TABLE_SIZE = 32
+ //note periods = 80000000 / (freq * TABLE_SIZE)
+ //TABLE_SIZE = 32
 //#define C2 38223   // 65.406 Hz
 //#define Db2 36077   // 69.296 Hz
 //#define D2 34052   // 73.416 Hz
@@ -64,7 +64,8 @@
 //#define C7 1194   // 2093.005 Hz
 //#define R  10000  // sepecial case for rest
 
-
+ //note periods = 80000000 / (freq * TABLE_SIZE)
+ //TABLE_SIZE = 64
 #define C2 19111   // 65.406 Hz
 #define Db2 18039   // 69.296 Hz
 #define D2 17026   // 73.416 Hz
