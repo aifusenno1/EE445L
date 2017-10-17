@@ -43,6 +43,7 @@ void Timer0A_Handler(void){
    
 }
 
+
 void GPIOPortF_Handler(void){
    if (GPIO_PORTF_RIS_R&0x10) { // PF4 is pressed
       GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
@@ -51,13 +52,13 @@ void GPIOPortF_Handler(void){
 		 if(musicPlaying){
 				Music_Pause();
 			 Output_Clear();
- 	ST7735_DrawString(0,0,"Pause",ST7735_YELLOW);
+ 	   //ST7735_DrawString(0,0,"Pause",ST7735_YELLOW);
 
 		 }
 		 else{
 			 Music_Play();
 			   Output_Clear();
- 	ST7735_DrawString(0,0,"Play",ST7735_YELLOW);
+ 	   //ST7735_DrawString(0,0,"Play",ST7735_YELLOW);
 	 }
 		 					 	PF2 ^= 0x4;
       }
@@ -70,7 +71,7 @@ void GPIOPortF_Handler(void){
       if(last0){    // 0x01 means it was previously released; negative logic
 			Music_Rewind();
 							   Output_Clear();
-					ST7735_DrawString(0,0,"Rewind",ST7735_YELLOW);
+					//ST7735_DrawString(0,0,"Rewind",ST7735_YELLOW);
 				 	PF2 ^= 0x4;
 
       }

@@ -10,7 +10,7 @@ load current Il = 1.5v/10M = 0.15E-6 A
 LM4041C: Iz = 80E-6 A Vref = 1.233 V
 Vz = 1.5 v
 Vz = Vref(1+R2/R1) = 1.5 V
-R2 = 220 R1 = 1000
+R2 = 2200 R1 = 10000
 Rs <= (3.3 - Vz)/(Il+Iz) = 22457
 Rs = 22000
 
@@ -41,7 +41,7 @@ void DAC_Init(void) {
 		
 	SSI3_CR1_R = 0x00000000;  //2) Disable SSI, master mode
 	SSI3_CPSR_R = 0x08;  //3) 10Mhz SSIClk Fssi = Fbus / (CPSDVSR * (1 + SCR))
-	SSI3_CR0_R &= ~(0x0000FFF0);  // SCR = 0, SPH = 0, SPO = 0 Freescale
+	SSI3_CR0_R &= ~(0x0000FFF0);  //  Freescale SCR = 0, SPH = 0, SPO = 0
 	SSI3_CR0_R |= 0x0F;              // DSS = 16-bit data
 	SSI3_CR1_R |= SSI_CR1_SSE;  //4) enable SSI / set the SSE
 
