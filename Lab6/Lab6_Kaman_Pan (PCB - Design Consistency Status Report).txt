@@ -1,0 +1,18 @@
+Design Consistency Status Report
+--------------------------------
+
+Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan (PCB - Design Consistency Status Report).txt
+Report Written:     Tuesday, October 17, 2017
+Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         10/17/2017 5:52:50 AM
+Editing Time:       1168 min
+Units:              mil (precision 0)
+
+
+Checking integrity of Schematic "C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan.sch" with PCB "C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan.pcb"
+================================================================================================================================================================
+
+
+End Of Report.

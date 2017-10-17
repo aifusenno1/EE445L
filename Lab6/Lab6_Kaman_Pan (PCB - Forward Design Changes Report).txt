@@ -1,129 +1,20 @@
 Forward Design Changes Report
 -----------------------------
 
-Report File:        C:\Users\Allen Pan\Desktop\Lab6_Kaman_Pan (PCB - Forward Design Changes Report).txt
+Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan (PCB - Forward Design Changes Report).txt
 Report Written:     Tuesday, October 17, 2017
-Design Path:        C:\Users\Allen Pan\Desktop\Lab6_Kaman_Pan.pcb
+Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan.pcb
 Design Title:       
 Created:            1/29/2013 12:01:41 AM
-Last Saved:         3/28/2017 8:21:32 AM
-Editing Time:       824 min
+Last Saved:         10/17/2017 5:52:50 AM
+Editing Time:       1168 min
 Units:              mil (precision 0)
 
-Disconnected pin "U1-17" from net "PA0".
-Disconnected pin "U1-19" from net "PA2".
-Disconnected pin "U1-20" from net "PA3".
-Disconnected pin "U1-21" from net "PA4".
-Disconnected pin "U1-22" from net "PA5".
-Disconnected pin "U1-23" from net "PA6".
-Disconnected pin "U1-24" from net "PA7".
+Added component reference "VR1" of component "BigPot", package "Pot".
 
-Changed component reference "U2" from component "LP2950CZ-3.3", package "TO220" to component "LM2937ET-3.3", package "TO220".
-
-Added net "+3V3".
-Added net "N0673".
-Added net "N0675".
-Added net "N0676".
-Added net "N0677".
-Added net "N0678".
-Added net "N0679".
-Added net "N0680".
-Added net "N0681".
-Added net "N0682".
-Added net "N0683".
-Added net "N0684".
-Added net "N0685".
-Added net "N0698".
-Added net "N0699".
-Added net "N0700".
-
-Added component reference "R4" of component "0.25Wresistor", package "DIP".
-Changed value "V" on component reference "R4" to "220".
-Added value "Manufacturer=" to component reference "R4".
-
-Added value "Manufacturer Part Number=" to component reference "R4".
-
-Added value "Distributor=" to component reference "R4".
-
-Added value "Distributor Part Number=" to component reference "R4".
-
-Added component reference "Q1" of component "P2N2222", package "TO92".
-Added component reference "J2" of component "Speaker", package "DIP".
-Added value "Manufacturer=" to component reference "J2".
-
-Added value "Manufacturer Part Number=" to component reference "J2".
-
-Added value "Distributor=" to component reference "J2".
-
-Added value "Distributor Part Number=" to component reference "J2".
-
-Added component reference "D2" of component "1N914", package "MISC".
-Added value "Manufacturer=" to component reference "D2".
-
-Added value "Manufacturer Part Number=" to component reference "D2".
-
-Added value "Distributor=" to component reference "D2".
-
-Added value "Distributor Part Number=" to component reference "D2".
-
-Added component reference "SW3" of component "B3F-1050", package "DIP".
-Added value "Manufacturer=" to component reference "SW3".
-
-Added value "Manufacturer Part Number=" to component reference "SW3".
-
-Added value "Distributor=" to component reference "SW3".
-
-Added value "Distributor Part Number=" to component reference "SW3".
-
-Error: Unable to add component reference "VR1" of component "Potentiometer", package "SPICE" because No PCB information for Component "Potentiometer"..
-Added component reference "SW4" of component "B3F-1050", package "DIP".
-Added value "Manufacturer=" to component reference "SW4".
-
-Added value "Manufacturer Part Number=" to component reference "SW4".
-
-Added value "Distributor=" to component reference "SW4".
-
-Added value "Distributor Part Number=" to component reference "SW4".
-
-Added component reference "R5" of component "0.25Wresistor", package "DIP".
-Added component reference "R6" of component "0.25Wresistor", package "DIP".
-
-Renamed component reference "J6" to "J6".
-
-
-Connected pin "U1-24" to net "N0679".
-Connected pin "U1-23" to net "N0678".
-Connected pin "U1-22" to net "N0676".
-Connected pin "U1-20" to net "N0677".
-Connected pin "U1-19" to net "N0675".
-Connected pin "U1-61" to net "N0685".
-Connected pin "U1-59" to net "N0682".
-Connected pin "U1-5" to net "N0684".
-Connected pin "U1-28" to net "N0681".
-Connected pin "R4-1" to net "N0685".
-Connected pin "R4-2" to net "N0699".
-Connected pin "Q1-1" to net "N0673".
-Connected pin "Q1-2" to net "N0698".
-Connected pin "Q1-3" to net "N0699".
-Connected pin "J2-1" to net "+5V".
-Connected pin "J2-2" to net "N0673".
-Connected pin "D2-2" to net "+5V".
-Connected pin "D2-1" to net "N0673".
-Connected pin "J6-2" to net "+3V3".
-Connected pin "J6-3" to net "N0679".
-Connected pin "J6-4" to net "N0678".
-Connected pin "J6-6" to net "N0677".
-Connected pin "J6-7" to net "N0676".
-Connected pin "J6-8" to net "N0675".
-Connected pin "J6-10" to net "+3V3".
-Connected pin "SW3-1" to net "N0681".
-Connected pin "SW3-4" to net "N0680".
-Connected pin "SW4-1" to net "N0684".
-Connected pin "SW4-2" to net "N0700".
-Connected pin "SW4-4" to net "N0683".
-Connected pin "R5-1" to net "+3.3".
-Connected pin "R5-2" to net "N0700".
-Connected pin "R6-1" to net "+3.3".
+Connected pin "VR1-1" to net "+3.3".
+Connected pin "VR1-3" to net "GND".
+Connected pin "VR1-2" to net "N0682".
 
 
 End Of Report.

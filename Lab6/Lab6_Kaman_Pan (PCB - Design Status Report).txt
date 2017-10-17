@@ -1,0 +1,110 @@
+Design Status Report
+--------------------
+
+Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan (PCB - Design Status Report).txt
+Report Written:     Tuesday, October 17, 2017
+Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         10/17/2017 4:32:25 AM
+Editing Time:       1090 min
+Units:              mil (precision 0)
+
+
+Board Area
+==========
+
+    8578125 mil squared
+
+
+Board Extents
+=============
+
+    X:3813 mil Y:2250 mil
+Layers
+======
+
+Name               Type          Side   Net
+--------------------------------------------------
+Top Silkscreen     Silk Screen   Top
+Top Copper         Electrical    Top
+Top Solder Mask    Solder Mask   Top
+Documentation1     Documentation Top
+Top Paste Mask     Paste Mask    Top
+Bottom Silkscreen  Silk Screen   Bottom
+Bottom Copper      Electrical    Bottom
+Bottom Solder Mask Solder Mask   Bottom
+Documentation2     Documentation Bottom
+
+Components
+==========
+
+Component           Package  Components Top Bottom Pins
+-----------------------------------------------------------------
+0.125Wresistor      DIL               6   3      3   12
+1N914               MISC              1   0      1    2
+B3F-1050            DIP               2   0      2    8
+Ceramic             C                11  11      0   22
+Header5             SIP               1   1      0    5
+KSC353JLFG          SM                1   0      1    4
+LEDT1.75            SIP               1   1      0    2
+LM2937ET-3.3        TO220             1   1      0    3
+LogicAnalyzer       DIP               1   1      0   16
+OffBoardPowerSwitch DIP               1   0      1    2
+P2N2222             TO92              1   0      1    3
+Speaker             DIP               1   0      1    2
+ST7735              LCD               1   0      1   10
+tantalum            C                 3   3      0    6
+Testpoint_TwoHole   DIL               4   4      0    8
+TM4C123GH6PM        LQFP              1   1      0   64
+USB_Micro-B_SM      SM                1   1      0    9
+XTAL                NX5032            1   1      0    2
+-----------------------------------------------------------------
+Total:                               39  28     11  180
+-----------------------------------------------------------------
+
+Total Pin Count
+===============
+
+Free Pads:                             6
+Total PinCount:                        186
+
+
+Net List
+========
+
+Net Class Nets  Track Length Vias Connections Connection Length
+-------------------------------------------------------------------------
+Signal    129          20470    9           0                 0
+Power     8            14207    6           0                 0
+Ground    1            12555    7           0                 0
+-------------------------------------------------------------------------
+Total:    138          47231   22           0                 0
+-------------------------------------------------------------------------
+
+Drill List
+==========
+
+Drill Diameter  Number of holes
+---------------------------------
+15                           22
+29                           42
+30                            2
+32                            3
+33                            9
+33                            2
+35                           16
+40                           18
+42                            3
+50                            8
+59                            2
+125                           6
+---------------------------------
+Total:                      133
+---------------------------------
+Total number of free pads 6.
+
+
+
+
+End Of Report.
