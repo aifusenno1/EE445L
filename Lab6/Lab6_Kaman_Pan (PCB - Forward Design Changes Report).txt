@@ -6,15 +6,11 @@ Report Written:     Tuesday, October 17, 2017
 Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab6\Lab6_Kaman_Pan.pcb
 Design Title:       
 Created:            1/29/2013 12:01:41 AM
-Last Saved:         10/17/2017 5:52:50 AM
-Editing Time:       1168 min
+Last Saved:         10/17/2017 11:06:54 AM
+Editing Time:       1211 min
 Units:              mil (precision 0)
 
-Added component reference "VR1" of component "BigPot", package "Pot".
-
-Connected pin "VR1-1" to net "+3.3".
-Connected pin "VR1-3" to net "GND".
-Connected pin "VR1-2" to net "N0682".
+The designs are the same, so no design changes to forward.
 
 
 End Of Report.
