@@ -2,39 +2,16 @@ Forward Design Changes Report
 -----------------------------
 
 Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman (PCB - Forward Design Changes Report).txt
-Report Written:     Tuesday, October 24, 2017
+Report Written:     Friday, October 27, 2017
 Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman.pcb
 Design Title:       
 Created:            1/29/2013 12:01:41 AM
-Last Saved:         10/24/2017 11:08:39 AM
-Editing Time:       910 min
-Units:              mil (precision 0)
+Last Saved:         10/27/2017 7:07:33 AM
+Editing Time:       1778 min
+Units:              inches (precision 3)
 
-Deleted component reference "J6".
+Renamed component reference "U10" to "U10".
 
-Added net "N0707".
-Added net "N0709".
-
-Added component reference "KEY1" of component "12-key Common Terminal Keypad", package "DIP".
-Added component reference "CAM1" of component "Camera Module", package "MISC".
-Added component reference "J2" of component "JST-VH Right Angle 3.96MM", package "SIP".
-Added component reference "S1" of component "SM-S2309S", package "SIP".
-
-Connected pin "KEY1-11" to net "N0702".
-Connected pin "KEY1-8" to net "N0699".
-Connected pin "KEY1-5" to net "N0696".
-Connected pin "KEY1-2" to net "N0693".
-Connected pin "KEY1-3" to net "N0694".
-Connected pin "KEY1-6" to net "N0697".
-Connected pin "KEY1-9" to net "N0700".
-Connected pin "KEY1-12" to net "N0704".
-Connected pin "KEY1-4" to net "N0695".
-Connected pin "KEY1-7" to net "N0698".
-Connected pin "KEY1-10" to net "N0701".
-Connected pin "KEY1-13" to net "N0705".
-Connected pin "CAM1-2" to net "N0709".
-Connected pin "U3-8" to net "N0707".
-Connected pin "U4-8" to net "N0707".
 
 
 End Of Report.
