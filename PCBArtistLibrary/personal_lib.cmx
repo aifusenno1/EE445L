@@ -1,6 +1,6 @@
 12-key Common Terminal Keypad||#DIP=13=12-pin Keypad||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
 Camera Module||#MISC=6=6pinHeader||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
-Electret Microphone Amplifier||#SIP=5=5pinHeader||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
+Electret Microphone Amplifier||#SIP=5=Microphone Header||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
 ESO8266||#SIP=8=ESP8266||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
 JST-VH Right Angle 3.96MM||#SIP=2=2pinPowerHeader0_156rightAngle||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
 L7805CV||#TO-220=3=TO220-2||@Manufacturer=||@Manufacturer Part Number=||@Distributor=||@Distributor Part Number=
