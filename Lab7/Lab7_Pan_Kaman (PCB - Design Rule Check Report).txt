@@ -1,0 +1,61 @@
+Design Rule Check Report
+------------------------
+
+Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman (PCB - Design Rule Check Report).txt
+Report Written:     Wednesday, November 01, 2017
+Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         11/1/2017 2:21:44 AM
+Editing Time:       2396 min
+Units:              inches (precision 3)
+
+
+Results
+=======
+
+
+No errors found
+
+
+Settings
+========
+
+
+Spacings
+
+=========
+
+Tracks        Yes
+Pads and Vias Yes
+Shapes        Yes
+Text          Yes
+Board         Yes
+Drills        Yes
+Components    No
+
+
+Manufacturing
+
+==============
+
+Min Drill Hole Size  Yes
+Min Track Width      Yes
+Min Annular Ring     Yes
+Copper Text In Board Yes
+Mirrored Text        Yes
+Routing Areas        Yes
+Drill Breakout       Yes
+
+
+Nets
+
+=====
+
+Net Completion               Yes
+Dangling Tracks              Yes
+Net Track Length Differences No
+
+
+
+End Of Report.

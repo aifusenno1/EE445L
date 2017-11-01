@@ -2,16 +2,16 @@ Forward Design Changes Report
 -----------------------------
 
 Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman (PCB - Forward Design Changes Report).txt
-Report Written:     Friday, October 27, 2017
+Report Written:     Wednesday, November 01, 2017
 Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman.pcb
 Design Title:       
 Created:            1/29/2013 12:01:41 AM
-Last Saved:         10/27/2017 7:07:33 AM
-Editing Time:       1778 min
+Last Saved:         11/1/2017 2:19:24 AM
+Editing Time:       2394 min
 Units:              inches (precision 3)
 
-Renamed component reference "U10" to "U10".
-
+Connected pin "CsDAC-1" to net "+3.3".
+Connected pin "CsDAC-2" to net "GND".
 
 
 End Of Report.
