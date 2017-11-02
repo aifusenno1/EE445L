@@ -1,6 +1,6 @@
-//keypad.h
-//Pan
-//Kaman
+// Keypad.h
+// Pan
+// Kaman
 
 //INPUT: int attempt that was entered from keypad
 //RETURNS: boolean stating if the attempted passcode equals the saved code
