@@ -2,12 +2,12 @@ Design Consistency Status Report
 --------------------------------
 
 Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman (PCB - Design Consistency Status Report).txt
-Report Written:     Wednesday, November 01, 2017
+Report Written:     Thursday, November 02, 2017
 Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman.pcb
 Design Title:       
 Created:            1/29/2013 12:01:41 AM
-Last Saved:         11/1/2017 2:21:44 AM
-Editing Time:       2396 min
+Last Saved:         11/2/2017 5:26:05 AM
+Editing Time:       2494 min
 Units:              inches (precision 3)
 
 

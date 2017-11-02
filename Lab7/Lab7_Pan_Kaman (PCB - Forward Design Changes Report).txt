@@ -2,16 +2,24 @@ Forward Design Changes Report
 -----------------------------
 
 Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman (PCB - Forward Design Changes Report).txt
-Report Written:     Wednesday, November 01, 2017
+Report Written:     Thursday, November 02, 2017
 Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\Lab7_Pan_Kaman.pcb
 Design Title:       
 Created:            1/29/2013 12:01:41 AM
-Last Saved:         11/1/2017 2:19:24 AM
-Editing Time:       2394 min
+Last Saved:         11/2/2017 5:11:58 AM
+Editing Time:       2478 min
 Units:              inches (precision 3)
 
-Connected pin "CsDAC-1" to net "+3.3".
-Connected pin "CsDAC-2" to net "GND".
+Disconnected pin "U1-28" from net "PF3".
+Disconnected pin "SW3-1" from net "PF3".
+
+Added net "PF0".
+
+Connected pin "R1-1" to net "Wake".
+Connected pin "U1-28" to net "PF0".
+Connected pin "U1-32" to net "Wake".
+Connected pin "SW3-1" to net "PF0".
+Connected pin "R11-2" to net "PF0".
 
 
 End Of Report.
