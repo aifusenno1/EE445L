@@ -1,0 +1,18 @@
+Design Consistency Status Report
+--------------------------------
+
+Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\UTX-2017F213 (PCB - Design Consistency Status Report).txt
+Report Written:     Friday, November 03, 2017
+Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\UTX-2017F213.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         11/2/2017 6:17:21 AM
+Editing Time:       2520 min
+Units:              inches (precision 3)
+
+
+Checking integrity of Schematic "C:\Users\Allen Pan\Desktop\EE445L\Lab7\UTX-2017F213.sch" with PCB "C:\Users\Allen Pan\Desktop\EE445L\Lab7\UTX-2017F213.pcb"
+============================================================================================================================================================
+
+
+End Of Report.

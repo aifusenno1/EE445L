@@ -3,4 +3,4 @@
 //Kaman
 
 //initialization
-void motionDetectInit(void);
+int motionDetectInit(void);

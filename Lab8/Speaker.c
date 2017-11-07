@@ -3,9 +3,9 @@
 // Alarm.c
 // determines whether the alarm needs to go off or not
 
+#include "Speaker.h"
 #include <stdint.h>
-#include "tm4c123gh6pm.h"
-#include "Alarm.h"
+#include "../inc/tm4c123gh6pm.h"
 #include "ST7735.h"
 #define PF2                     (*((volatile uint32_t *)0x40025010))
 

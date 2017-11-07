@@ -1,0 +1,16 @@
+Forward Design Changes Report
+-----------------------------
+
+Report File:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\UTX-2017F213 (PCB - Forward Design Changes Report).txt
+Report Written:     Friday, November 03, 2017
+Design Path:        C:\Users\Allen Pan\Desktop\EE445L\Lab7\UTX-2017F213.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         11/2/2017 6:17:21 AM
+Editing Time:       2520 min
+Units:              inches (precision 3)
+
+Changed component reference "U8" from component "ESO8266", package "SIP" to component "ESP8266", package "SIP".
+
+
+End Of Report.
