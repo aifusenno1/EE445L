@@ -45,6 +45,7 @@ static void flush(void) {
 }
 
  int reset(void) {
+	flush();  // flush the response
 	uint8_t args[] = {0x00};
 	uint8_t argn = 1;
    uint8_t respLen = 5; 
