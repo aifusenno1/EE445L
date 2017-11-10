@@ -15,9 +15,7 @@ I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
 I (ST7735.h)(0x59FAD0B4)
 F (.\Keypad.h)(0x59FB3A16)()
-F (.\Microphone.h)(0x59FB3D22)()
 F (.\Monitor.h)(0x59FB3D37)()
-F (.\MotionDetect.h)(0x5A01CC4B)()
 F (.\Servo.h)(0x59FB3D2D)()
 F (.\Speaker.h)(0x59FB3D0F)()
 F (.\Wifi.h)(0x59FB3E11)()
@@ -40,10 +38,22 @@ F (.\Timer.c)(0x59FB3DFB)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sec
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
 I (Timer.h)(0x59FB3E01)
-F (.\MotionDetect.c)(0x5A01E6F1)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\TI\TM4C123-Drvmdk -DPART_LM4F120H5QR -DTM4C123GH6PM-o .\motiondetect.o --omf_browse .\motiondetect.crf --depend .\motiondetect.d)
-I (MotionDetect.h)(0x5A01CC4B)
+F (.\MotionDetect.c)(0x5A061596)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\TI\TM4C123-Drvmdk -DPART_LM4F120H5QR -DTM4C123GH6PM-o .\motiondetect.o --omf_browse .\motiondetect.crf --depend .\motiondetect.d)
+I (MotionDetect.h)(0x5A0614D2)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
 I (PLL.h)(0x59C963CA)
 I (ST7735.h)(0x59FAD0B4)
+I (Serial.h)(0x5A04AD96)
 F (.\startup.s)(0x5A0191A8)(--cpu Cortex-M4 -g --apcs=interwork -I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\TI\TM4C123--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\Serial.c)(0x5A04D1F4)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\TI\TM4C123-Drvmdk -DPART_LM4F120H5QR -DTM4C123GH6PM-o .\serial.o --omf_browse .\serial.crf --depend .\serial.d)
+I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
+I (Serial.h)(0x5A04AD96)
+I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
+F (.\Microphone.c)(0x5A061B78)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\TI\TM4C123-Drvmdk -DPART_LM4F120H5QR -DTM4C123GH6PM-o .\microphone.o --omf_browse .\microphone.crf --depend .\microphone.d)
+I (Microphone.h)(0x5A061990)
+I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
+I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
+I (PLL.h)(0x59C963CA)
+I (ST7735.h)(0x59FAD0B4)
+I (Serial.h)(0x5A04AD96)

@@ -36,9 +36,30 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
+static void (*Task1)(void);   // user function
 static void (*Task2)(void);   // user function
 static void (*Task3)(void);   // user function
 
+
+void Timer1_Init(void(*task)(void), uint32_t period){
+	  long sr = StartCritical(); 
+
+  SYSCTL_RCGCTIMER_R |= 0x02;   // 0) activate TIMER1
+  Task1 = task;          // user function
+  TIMER1_CTL_R = 0x00000000;    // 1) disable TIMER1A during setup
+  TIMER1_CFG_R = 0x00000000;    // 2) configure for 32-bit mode
+  TIMER1_TAMR_R = 0x00000002;   // 3) configure for periodic mode, default down-count settings
+  TIMER1_TAILR_R = period-1;    // 4) reload value
+  TIMER1_TAPR_R = 0;            // 5) bus clock resolution
+  TIMER1_ICR_R = 0x00000001;    // 6) clear TIMER1A timeout flag
+  TIMER1_IMR_R = 0x00000001;    // 7) arm timeout interrupt
+  NVIC_PRI5_R = (NVIC_PRI5_R&0xFFFF00FF)|0x00008000; // 8) priority 4
+// interrupts enabled in the main program after all devices initialized
+// vector number 37, interrupt number 21
+  NVIC_EN0_R = 1<<21;           // 9) enable IRQ 21 in NVIC
+  TIMER1_CTL_R = 0x00000001;    // 10) enable TIMER1A
+	  EndCritical(sr);
+}
 
 /** Timer2A_Init() **
  * Activate TIMER2A to countdown for period seconds
@@ -47,9 +68,9 @@ static void (*Task3)(void);   // user function
 //          period in units (1/clockfreq), 32 bits
 // Outputs: none
  */
-void Timer2A_Init(void(*task)(void), uint32_t period){
-	long sr;
-  sr = StartCritical(); 
+void Timer2_Init(void(*task)(void), uint32_t period){
+	
+  long sr = StartCritical(); 
 	volatile uint32_t delay;
   SYSCTL_RCGCTIMER_R |= 0x04;   // 0) activate TIMER2
 	delay = SYSCTL_RCGCTIMER_R;   // allow time to finish activating
@@ -77,7 +98,7 @@ void Timer2A_Init(void(*task)(void), uint32_t period){
 //          period in units (1/clockfreq), 32 bits
 // Outputs: none
  */
-void Timer3A_Init(void(*task)(void), uint32_t period){
+void Timer3_Init(void(*task)(void), uint32_t period){
 	long sr;
   sr = StartCritical(); 
 	volatile uint32_t delay;
@@ -99,102 +120,149 @@ NVIC_PRI8_R = (NVIC_PRI8_R | 0x80000000); // priority 4
   EndCritical(sr);
 }
 
+void Timer1_Handler(void){
+  Timer1_Acknowledge();
+  (*Task1)();                // execute user task
+}
 
-void Timer2A_Handler(void){
-  Timer2A_Acknowledge();
+void Timer2_Handler(void){
+  Timer2_Acknowledge();
   (*Task2)();                // execute user task
 }
 
-void Timer3A_Handler(void){
-   Timer3A_Acknowledge();
+void Timer3_Handler(void){
+   Timer3_Acknowledge();
   (*Task3)();                // execute user task
 }
 
+/******************* Timer1A Methods ****************************/
 
-/******************* Timer2A Methods ****************************/
-
-/** Timer2A_Start() **
- * Restart the Clock (TIMER 2A)
+/** Timer1A_Start() **
+ * Restart the Clock (TIMER 1
  */
-void Timer2A_Start(){
+inline void Timer1_Start(){
+	TIMER1_CTL_R |= TIMER_CTL_TAEN;
+}
+
+/** Timer1A_Stop() **
+ * Stop the Clock (TIMER 1
+ */
+inline void Timer1_Stop(){
+	TIMER1_CTL_R &= ~TIMER_CTL_TAEN;
+}
+
+/** Timer1_Arm() **
+ * Enable interrupts from Timer1
+ */
+inline void Timer1_Arm(){
+	NVIC_EN0_R = 1 << 21;
+}
+
+/** Timer1_Disarm() **
+ * Disable interrupts from Timer1
+ */
+inline void Timer1_Disarm(){
+	NVIC_DIS0_R = 1 << 21;
+}
+
+/** Timer1_Acknowledge() **
+ * Acknowledge a Timer1A interrupt
+ */
+inline void Timer1_Acknowledge(){
+	TIMER1_ICR_R = TIMER_ICR_TATOCINT; 
+}
+
+/** Timer1_Period() **
+ * Reset the period on Timer1
+ */
+inline void Timer1_Period(uint32_t period){
+	TIMER1_TAILR_R = period - 1; 
+}
+
+/******************* Timer2 Methods ****************************/
+
+/**
+ * Restart the Clock
+ */
+inline void Timer2_Start(){
 	TIMER2_CTL_R |= TIMER_CTL_TAEN;
 }
 
-/** Timer2A_Stop() **
- * Stop the Clock (TIMER 2A)
+/**
+ * Stop the Clock 
  */
-void Timer2A_Stop(){
+inline void Timer2_Stop(){
 	TIMER2_CTL_R &= ~TIMER_CTL_TAEN;
 }
 
-/** Timer2A_Arm() **
- * Enable interrupts from Timer2A.
+/**
+ * Enable interrupts from Timer2
  */
-void Timer2A_Arm(){
+inline void Timer2_Arm(){
 	NVIC_EN0_R = 1 << 23;
 }
 
-/** Timer2A_Disarm() **
- * Disable interrupts from Timer2A.
+/*
+ * Disable interrupts from Timer2
  */
-void Timer2A_Disarm(){
+inline void Timer2_Disarm(){
 	NVIC_DIS0_R = 1 << 23;
 }
 
-/** Timer2A_Acknowledge() **
- * Acknowledge a Timer2A interrupt
+/** 
+ * Acknowledge a Timer2 interrupt
  */
-void Timer2A_Acknowledge(){
+inline void Timer2_Acknowledge(){
 	TIMER2_ICR_R = TIMER_ICR_TATOCINT; 
 }
 
-/** Timer2A_Period() **
- * Reset the period on Timer2A
+/** Timer2_Period() **
+ * Reset the period on Timer2
  */
-void Timer2A_Period(uint32_t period){
+inline void Timer2_Period(uint32_t period){
 	TIMER2_TAILR_R = period - 1; 
 }
 
-/******************* Timer3A Methods ****************************/
+/******************* Timer3 Methods ****************************/
 
-/** Timer3A_Start() **
- * Restart the Clock (TIMER 2A)
+/*
+ * Restart the Clock
  */
-void Timer3A_Start(){
+inline void Timer3_Start(){
 	TIMER3_CTL_R |= TIMER_CTL_TAEN;
 }
 
-/** Timer3A_Stop() **
- * Stop the Clock (TIMER 2A)
+/*
+ * Stop the Clock 
  */
-void Timer3A_Stop(){
+inline void Timer3_Stop(){
 	TIMER3_CTL_R &= ~TIMER_CTL_TAEN;
 }
 
-/** Timer3A_Arm() **
- * Enable interrupts from Timer3A.
+/*
+ * Enable interrupts from Timer3.
  */
-void Timer3A_Arm(){
+inline void Timer3_Arm(){
 	NVIC_EN1_R = 1 << 3;
 }
 
-/** Timer3A_Disarm() **
- * Disable interrupts from Timer3A.
+/*
+ * Disable interrupts from Timer3.
  */
-void Timer3A_Disarm(){
+inline void Timer3_Disarm(){
 	NVIC_DIS1_R = 1 << 3;
 }
 
-/** Timer3A_Acknowledge() **
- * Acknowledge a Timer3A interrupt
+/*
+ * Acknowledge a Timer3 interrupt
  */
-void Timer3A_Acknowledge(){
+inline void Timer3_Acknowledge(){
 	TIMER3_ICR_R = TIMER_ICR_TATOCINT; 
 }
 
-/** Timer3A_Period() **
- * Reset the period on Timer3A
+/*
+ * Reset the period on Timer3
  */
-void Timer3A_Period(uint32_t period){
+inline void Timer3_Period(uint32_t period){
 	TIMER3_TAILR_R = period - 1; 
 }

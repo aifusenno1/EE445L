@@ -1,6 +1,5 @@
 //MotionDetect.h
-//Pan
-//Kaman
 
-//initialization
-int motionDetectInit(void);
+
+
+int MotionDetect_Init(void);

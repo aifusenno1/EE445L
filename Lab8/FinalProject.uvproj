@@ -411,11 +411,6 @@
               <FilePath>.\ST7735.h</FilePath>
             </File>
             <File>
-              <FileName>SysTick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\SysTick.h</FilePath>
-            </File>
-            <File>
               <FileName>ST7735.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ST7735.c</FilePath>
@@ -436,29 +431,14 @@
               <FilePath>.\Keypad.h</FilePath>
             </File>
             <File>
-              <FileName>Microphone.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Microphone.h</FilePath>
-            </File>
-            <File>
               <FileName>Monitor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Monitor.h</FilePath>
             </File>
             <File>
-              <FileName>MotionDetect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\MotionDetect.h</FilePath>
-            </File>
-            <File>
               <FileName>Servo.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Servo.h</FilePath>
-            </File>
-            <File>
-              <FileName>Speaker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Speaker.h</FilePath>
             </File>
             <File>
               <FileName>Wifi.h</FileName>
@@ -486,11 +466,6 @@
               <FilePath>.\PLL.h</FilePath>
             </File>
             <File>
-              <FileName>Timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Timer.h</FilePath>
-            </File>
-            <File>
               <FileName>Timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Timer.c</FilePath>
@@ -504,6 +479,21 @@
               <FileName>startup.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup.s</FilePath>
+            </File>
+            <File>
+              <FileName>Serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>Microphone.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Microphone.c</FilePath>
+            </File>
+            <File>
+              <FileName>DAC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\DAC.c</FilePath>
             </File>
           </Files>
         </Group>

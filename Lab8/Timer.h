@@ -22,73 +22,29 @@
  http://users.ece.utexas.edu/~valvano/
  */
 
-
-void Timer2A_Init(void(*task)(void), uint32_t period);
-void Timer3A_Init(void(*task)(void), uint32_t period);
-
-
-/******************* Timer2A Methods ****************************/
-
-/** Timer2A_Start() **
- * Restart the Clock (TIMER 2A)
- */
-void Timer2A_Start(void);
-
-/** Timer2A_Stop() **
- * Stop the Clock (TIMER 2A)
- */
-void Timer2A_Stop(void);
-
-/** Timer2A_Arm() **
- * Enable interrupts from Timer2A.
- */
-void Timer2A_Arm(void);
-
-/** Timer2A_Disarm() **
- * Disable interrupts from Timer2A.
- */
-void Timer2A_Disarm(void);
-
-/** Timer2A_Period() **
- * Acknowledge a Timer2A interrupt
- */
-void Timer2A_Acknowledge(void);
+void Timer1_Init(void(*task)(void), uint32_t period);
+void Timer2_Init(void(*task)(void), uint32_t period);
+void Timer3_Init(void(*task)(void), uint32_t period);
 
 
-/** Timer2A_Period() **
- * Reset the period on Timer2A
- */
-void Timer2A_Period(uint32_t period);
+void inline Timer1_Start(void);
+void inline Timer1_Stop(void);
+void inline Timer1_Arm(void);
+void inline Timer1_Disarm(void);
+void inline Timer1_Acknowledge(void);
+void inline Timer1_Period(uint32_t period);
+/******************* Timer2 Methods ****************************/
+void inline Timer2_Start(void);
+void inline Timer2_Stop(void);
+void inline Timer2_Arm(void);
+void inline Timer2_Disarm(void);
+void inline Timer2_Acknowledge(void);
+void inline Timer2_Period(uint32_t period);
 
-/******************* Timer3A Methods ****************************/
-
-/** Timer3A_Start() **
- * Restart the Clock (TIMER 3A)
- */
-void Timer3A_Start(void);
-
-/** Timer3A_Stop() **
- * Stop the Clock (TIMER 3A)
- */
-void Timer3A_Stop(void);
-
-/** Timer3A_Arm() **
- * Enable interrupts from Timer3A.
- */
-void Timer3A_Arm(void);
-
-/** Timer3A_Disarm() **
- * Disable interrupts from Timer3A.
- */
-void Timer3A_Disarm(void);
-
-/** Timer3A_Period() **
- * Acknowledge a Timer3A interrupt
- */
-void Timer3A_Acknowledge(void);
-
-
-/** Timer3A_Period() **
- * Reset the period on Timer3A
- */
-void Timer3A_Period(uint32_t period);
+/******************* Timer3 Methods ****************************/
+void inline Timer3_Start(void);
+void inline Timer3_Stop(void);
+void inline Timer3_Arm(void);
+void inline Timer3_Disarm(void);
+void inline Timer3_Acknowledge(void);
+void inline Timer3_Period(uint32_t period);

@@ -3,6 +3,7 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "ST7735.h"
+#include "Serial.h"
 
 #define UART_FR_TXFF            0x00000020  // UART Transmit FIFO Full
 #define UART_FR_RXFE            0x00000010  // UART Receive FIFO Empty
@@ -23,9 +24,10 @@
 
 uint8_t cameraBuff[CAMERA_BUFFER_SIZE+1];
 static uint8_t bufferLen = 0;
-static uint8_t serialNum = 0;
+static uint8_t serialNum = 1;
 
 
+static void DelayWait1ms(uint32_t n);
 static void UART_Init(void);
 char UART_InChar(void);
 void UART_OutChar(char data);
@@ -35,31 +37,38 @@ uint8_t readResponse(uint8_t numbytes, uint8_t timeout);
 void printBuff(void);
 int reset(void);
 
-int motionDetectInit(void) {
+int MotionDetect_Init(void) {
 	UART_Init();
-	return reset();
+	Serial_OutString("VC0706 Camera Initialization\n\r");
+	
+	if (reset()) {
+		Serial_OutString("Camera found\n\r");
+	} else {
+		Serial_OutString("Camera not found?\n\r");
+		return 0;
+	}
+	return 1;
 }
 
 static void flush(void) {
 	readResponse(100,10);
 }
 
- int reset(void) {
-	flush();  // flush the response
+int reset(void) {
+  	flush();  // flush the FIFO; cameraBuff will contain useless data
 	uint8_t args[] = {0x00};
 	uint8_t argn = 1;
-   uint8_t respLen = 5; 
+	uint8_t respLen = 5; 
+	while(1) sendCommand(VC0706_RESET, args, argn);
+	// get reply
+	if (readResponse(respLen, 200)!=respLen) 
+	return 0;
+//	printBuff();
 	
-   sendCommand(VC0706_RESET, args, argn);
-   // get reply
-   if (readResponse(respLen, 200)!=respLen) 
-     return 0;
- 		printBuff();
-
-   if (!verifyResponse(VC0706_RESET))
- 		return 0;
-   return 1;
- }
+	if (!verifyResponse(VC0706_RESET))
+		return 0;
+	return 1;
+}
 
 char * getVersion(void) {
   uint8_t args[] = {0x00};
@@ -84,33 +93,36 @@ char * getVersion(void) {
 	and ARGN should be number of arguments + 1
 */
 void sendCommand(uint8_t cmd, uint8_t args[], uint8_t argn) {	
-	UART_OutChar(VC0706_REC_PRO_SIGN);
-	UART_OutChar(serialNum);
-	UART_OutChar(cmd);
-
-	for (uint8_t i=0; i<argn; i++) {
-	  UART_OutChar(args[i]);
-	}
+//	UART_OutChar(VC0706_REC_PRO_SIGN);
+//	UART_OutChar(serialNum);
+//	UART_OutChar(cmd);
+//	UART_OutChar(0x55);
+//	for (uint8_t i=0; i<argn; i++) {
+//	  UART_OutChar(args[i]);
+//	}
 }
 
 uint8_t readResponse(uint8_t numbytes, uint8_t timeout) {
-//	uint8_t counter = 0;
+	uint8_t counter = 0;
 	bufferLen = 0;
+	//Serial_OutUDec(timeout);
+	//Serial_OutString("\n\r");
+		// while ( (1)) {
+	while ((bufferLen != numbytes)) {
+		  //Serial_OutChar(UART2_DR_R&0xFF);
+		//Serial_OutUDec(1);
+		// if not receiving data within the time limit, return 
+		if ((UART2_FR_R&UART_FR_RXFE) != 0) { // receive buffer empty
+				counter++;
+				DelayWait1ms(1);  // delay
+				continue;
+		}
+				//Serial_OutUDec(2);
 
-//	while ((timeout != counter) && (bufferLen != numbytes)) {
-
-//		// if not receiving data within the time limit, return 
-//		if ((UART2_FR_R&UART_FR_RXFE) == 0) { // receive buffer empty
-//				counter++;
-//				// delay
-//				continue;
-//		}
-
-	while (bufferLen != numbytes) {
-		cameraBuff[bufferLen++] =	UART_InChar();
-		//ST7735_OutChar(cameraBuff[bufferLen-1]);
-		ST7735_OutChar('1');
-	}
+			cameraBuff[bufferLen++] =	UART2_DR_R&0xFF;
+		  Serial_OutChar(cameraBuff[bufferLen-1]);
+			counter = 0;
+	}	
 
 	return bufferLen;
 }
@@ -145,11 +157,11 @@ static void UART_Init(void){
   SYSCTL_RCGCGPIO_R |= 0x08;            // activate port D
   while((SYSCTL_PRGPIO_R&0x08) == 0){};
   UART2_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
-  UART2_IBRD_R = 32;                    // IBRD = int(80,000,000 / (16 * 38,400)) = int(130.2083)
-  UART2_FBRD_R = 35;                     // FBRD = int(0.2083 * 64 + 0.5) = 13
+  UART2_IBRD_R = 130;                    // IBRD = int(80,000,000 / (16 * 38,400)) = int(130.2083)
+  UART2_FBRD_R = 13;                     // FBRD = int(0.2083 * 64 + 0.5) = 13
                                         // 8 bit word length (no parity bits, one stop bit, FIFOs)
   UART2_LCRH_R = (UART_LCRH_WLEN_8|UART_LCRH_FEN);
-  UART2_CTL_R |= 0x301;                 // enable UART
+  UART2_CTL_R |= UART_CTL_UARTEN;                 // enable UART
   GPIO_PORTD_AFSEL_R |= 0xC0;           // enable alt funct on PD7-6
   GPIO_PORTD_DEN_R |= 0xC0;             // enable digital I/O on PD7-6
                                         // configure PD7-6 as UART
@@ -158,23 +170,6 @@ static void UART_Init(void){
 }
 
 
-
-//void UART_Init(void){ // should be called only once
-//	 SYSCTL_RCGCUART_R |= 0x02;            // activate UART2
-//  SYSCTL_RCGCGPIO_R |= 0x04;            // activate port D
-//  while((SYSCTL_PRGPIO_R&0x04) == 0){};
-//  UART1_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
-//  UART1_IBRD_R = 32;                    // IBRD = int(80,000,000 / (16 * 38,400)) = int(130.2083)
-//  UART1_FBRD_R = 35;                     // FBRD = int(0.2083 * 64 + 0.5) = 13
-//                                        // 8 bit word length (no parity bits, one stop bit, FIFOs)
-//  UART1_LCRH_R = 0x00000070;
-//  UART1_CTL_R |= 0x01;                 // enable UART
-//  GPIO_PORTC_AFSEL_R |= 0x30;           // enable alt funct on PD7-6
-//  GPIO_PORTC_DEN_R |= 0x30;             // enable digital I/O on PD7-6
-//                                        // configure PD7-6 as UART
-//  GPIO_PORTC_PCTL_R = (GPIO_PORTC_PCTL_R&0xFF00FFFF)+0x00220000;
-//  GPIO_PORTC_AMSEL_R &= ~0x30;          // disable analog functionality on PD
-//}
 
 
 //------------UART_InChar------------
@@ -193,22 +188,42 @@ char UART_InChar(void){
 void UART_OutChar(char data){
   while((UART2_FR_R&UART_FR_TXFF) != 0);
   UART2_DR_R = data;
+	//Serial_OutChar(UART2_DR_R);
+
+
 }
 
-int main(){
-	PLL_Init(Bus20MHz);       // 80  MHz
-	ST7735_InitR(INITR_REDTAB);
-	int a = motionDetectInit();
-	
-	//ST7735_OutUDec(a);
-	getVersion();
-	//printBuff();
-	
-	for (;;) {
-//			char in = UART_InChar();
-//		ST7735_OutChar(in);
-
-	}
-	
+void DelayWait1ms(uint32_t n){
+	uint32_t volatile time;
+  while(n){
+    time = 72724*2/91;  // 10msec
+    while(time){
+      time--;
+    }
+    n--;
+  }
 }
+
+
+//int main(){
+//	PLL_Init(Bus80MHz);       // 80  MHz
+//	ST7735_InitR(INITR_REDTAB);
+//	Serial_Init();
+//	
+//	int a = motionDetectInit();
+//	
+//	// char * reply = getVersion();
+//	// if (reply == 0) {
+//	// 	Serial_OutString("Failed to get version\n");
+//	// } else {
+//	// 	Serial_OutString("reply\n");
+//	// }
+//	
+//	for (;;) {
+////			char in = UART_InChar();
+////		ST7735_OutChar(in);
+
+//	}
+//	
+//}
 
