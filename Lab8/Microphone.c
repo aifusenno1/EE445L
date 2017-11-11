@@ -30,7 +30,7 @@ uint32_t voiceVal;
 
 void Microphone_Init() {
 	ADC0_InitSWTriggerSeq3_Ch11();
-	Timer1_Init(Microphone_Sample, 1813); // 80,000,000/44,100 = 1814 clock cycles / sample
+	Timer1A_Init(Microphone_Sample, 1813); // 80,000,000/44,100 = 1814 clock cycles / sample
 }
 
 static void Microphone_Sample() {

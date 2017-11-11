@@ -244,7 +244,7 @@
       <Focus>0</Focus>
       <ColumnNumber>40</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>65</TopLine>
+      <TopLine>66</TopLine>
       <CurrentLine>67</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ST7735.c</PathWithFileName>
@@ -260,7 +260,7 @@
       <Focus>0</Focus>
       <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>4</TopLine>
+      <TopLine>8</TopLine>
       <CurrentLine>38</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\fixed.c</PathWithFileName>
@@ -276,7 +276,7 @@
       <Focus>0</Focus>
       <ColumnNumber>2</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>99</TopLine>
+      <TopLine>100</TopLine>
       <CurrentLine>128</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Lab1.c</PathWithFileName>

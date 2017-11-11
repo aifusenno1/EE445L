@@ -41,7 +41,7 @@ static void (*Task2)(void);   // user function
 static void (*Task3)(void);   // user function
 
 
-void Timer1_Init(void(*task)(void), uint32_t period){
+void Timer1A_Init(void(*task)(void), uint32_t period){
 	  long sr = StartCritical(); 
 
   SYSCTL_RCGCTIMER_R |= 0x02;   // 0) activate TIMER1
@@ -68,7 +68,7 @@ void Timer1_Init(void(*task)(void), uint32_t period){
 //          period in units (1/clockfreq), 32 bits
 // Outputs: none
  */
-void Timer2_Init(void(*task)(void), uint32_t period){
+void Timer2A_Init(void(*task)(void), uint32_t period){
 	
   long sr = StartCritical(); 
 	volatile uint32_t delay;
@@ -98,7 +98,7 @@ void Timer2_Init(void(*task)(void), uint32_t period){
 //          period in units (1/clockfreq), 32 bits
 // Outputs: none
  */
-void Timer3_Init(void(*task)(void), uint32_t period){
+void Timer3A_Init(void(*task)(void), uint32_t period){
 	long sr;
   sr = StartCritical(); 
 	volatile uint32_t delay;
@@ -120,18 +120,18 @@ NVIC_PRI8_R = (NVIC_PRI8_R | 0x80000000); // priority 4
   EndCritical(sr);
 }
 
-void Timer1_Handler(void){
-  Timer1_Acknowledge();
+void Timer1A_Handler(void){
+  Timer1A_Acknowledge();
   (*Task1)();                // execute user task
 }
 
-void Timer2_Handler(void){
-  Timer2_Acknowledge();
+void Timer2A_Handler(void){
+  Timer2A_Acknowledge();
   (*Task2)();                // execute user task
 }
 
-void Timer3_Handler(void){
-   Timer3_Acknowledge();
+void Timer3A_Handler(void){
+   Timer3A_Acknowledge();
   (*Task3)();                // execute user task
 }
 
@@ -140,42 +140,42 @@ void Timer3_Handler(void){
 /** Timer1A_Start() **
  * Restart the Clock (TIMER 1
  */
-inline void Timer1_Start(){
+inline void Timer1A_Start(){
 	TIMER1_CTL_R |= TIMER_CTL_TAEN;
 }
 
 /** Timer1A_Stop() **
  * Stop the Clock (TIMER 1
  */
-inline void Timer1_Stop(){
+inline void Timer1A_Stop(){
 	TIMER1_CTL_R &= ~TIMER_CTL_TAEN;
 }
 
 /** Timer1_Arm() **
  * Enable interrupts from Timer1
  */
-inline void Timer1_Arm(){
+inline void Timer1A_Arm(){
 	NVIC_EN0_R = 1 << 21;
 }
 
 /** Timer1_Disarm() **
  * Disable interrupts from Timer1
  */
-inline void Timer1_Disarm(){
+inline void Timer1A_Disarm(){
 	NVIC_DIS0_R = 1 << 21;
 }
 
 /** Timer1_Acknowledge() **
  * Acknowledge a Timer1A interrupt
  */
-inline void Timer1_Acknowledge(){
+inline void Timer1A_Acknowledge(){
 	TIMER1_ICR_R = TIMER_ICR_TATOCINT; 
 }
 
 /** Timer1_Period() **
  * Reset the period on Timer1
  */
-inline void Timer1_Period(uint32_t period){
+inline void Timer1A_Period(uint32_t period){
 	TIMER1_TAILR_R = period - 1; 
 }
 
@@ -184,42 +184,42 @@ inline void Timer1_Period(uint32_t period){
 /**
  * Restart the Clock
  */
-inline void Timer2_Start(){
+inline void Timer2A_Start(){
 	TIMER2_CTL_R |= TIMER_CTL_TAEN;
 }
 
 /**
  * Stop the Clock 
  */
-inline void Timer2_Stop(){
+inline void Timer2A_Stop(){
 	TIMER2_CTL_R &= ~TIMER_CTL_TAEN;
 }
 
 /**
  * Enable interrupts from Timer2
  */
-inline void Timer2_Arm(){
+inline void Timer2A_Arm(){
 	NVIC_EN0_R = 1 << 23;
 }
 
 /*
  * Disable interrupts from Timer2
  */
-inline void Timer2_Disarm(){
+inline void Timer2A_Disarm(){
 	NVIC_DIS0_R = 1 << 23;
 }
 
 /** 
  * Acknowledge a Timer2 interrupt
  */
-inline void Timer2_Acknowledge(){
+inline void Timer2A_Acknowledge(){
 	TIMER2_ICR_R = TIMER_ICR_TATOCINT; 
 }
 
 /** Timer2_Period() **
  * Reset the period on Timer2
  */
-inline void Timer2_Period(uint32_t period){
+inline void Timer2A_Period(uint32_t period){
 	TIMER2_TAILR_R = period - 1; 
 }
 
@@ -228,41 +228,41 @@ inline void Timer2_Period(uint32_t period){
 /*
  * Restart the Clock
  */
-inline void Timer3_Start(){
+inline void Timer3A_Start(){
 	TIMER3_CTL_R |= TIMER_CTL_TAEN;
 }
 
 /*
  * Stop the Clock 
  */
-inline void Timer3_Stop(){
+inline void Timer3A_Stop(){
 	TIMER3_CTL_R &= ~TIMER_CTL_TAEN;
 }
 
 /*
  * Enable interrupts from Timer3.
  */
-inline void Timer3_Arm(){
+inline void Timer3A_Arm(){
 	NVIC_EN1_R = 1 << 3;
 }
 
 /*
  * Disable interrupts from Timer3.
  */
-inline void Timer3_Disarm(){
+inline void Timer3A_Disarm(){
 	NVIC_DIS1_R = 1 << 3;
 }
 
 /*
  * Acknowledge a Timer3 interrupt
  */
-inline void Timer3_Acknowledge(){
+inline void Timer3A_Acknowledge(){
 	TIMER3_ICR_R = TIMER_ICR_TATOCINT; 
 }
 
 /*
  * Reset the period on Timer3
  */
-inline void Timer3_Period(uint32_t period){
+inline void Timer3A_Period(uint32_t period){
 	TIMER3_TAILR_R = period - 1; 
 }

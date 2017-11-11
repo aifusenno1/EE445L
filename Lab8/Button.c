@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
-#include "SysTick.h"
 #include "ST7735.h"
 
 long StartCritical (void);    // previous I bit, disable interrupts
@@ -11,6 +10,19 @@ void EndCritical(long sr);    // restore I bit to previous value
 
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
+
+static void PortF_Init(void);
+static void EdgeInterrupt_Init(void);
+
+
+void ButtonInit(void) {
+	PortF_Init();
+	EdgeInterrupt_Init();
+	
+}
+
+
+
 
 static void Timer0Arm(void){
    TIMER0_CTL_R = 0x00000000;    // 1) disable TIMER0A during setup

@@ -406,19 +406,9 @@
           <GroupName>Source</GroupName>
           <Files>
             <File>
-              <FileName>ST7735.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ST7735.h</FilePath>
-            </File>
-            <File>
               <FileName>ST7735.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ST7735.c</FilePath>
-            </File>
-            <File>
-              <FileName>SysTick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SysTick.c</FilePath>
             </File>
             <File>
               <FileName>Speaker.c</FileName>
@@ -426,29 +416,14 @@
               <FilePath>.\Speaker.c</FilePath>
             </File>
             <File>
-              <FileName>Keypad.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Keypad.h</FilePath>
-            </File>
-            <File>
               <FileName>Monitor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Monitor.h</FilePath>
             </File>
             <File>
-              <FileName>Servo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Servo.h</FilePath>
-            </File>
-            <File>
               <FileName>Wifi.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>Button.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Button.h</FilePath>
             </File>
             <File>
               <FileName>Button.c</FileName>
@@ -459,11 +434,6 @@
               <FileName>PLL.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\PLL.c</FilePath>
-            </File>
-            <File>
-              <FileName>PLL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\PLL.h</FilePath>
             </File>
             <File>
               <FileName>Timer.c</FileName>
@@ -494,6 +464,16 @@
               <FileName>DAC.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\DAC.c</FilePath>
+            </File>
+            <File>
+              <FileName>Keypad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Keypad.c</FilePath>
+            </File>
+            <File>
+              <FileName>Servo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Servo.c</FilePath>
             </File>
           </Files>
         </Group>

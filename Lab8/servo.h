@@ -1,7 +1,3 @@
-// Keypad.h
-// Pan
-// Kaman
-
 
 
 //locks the door by turning the servo

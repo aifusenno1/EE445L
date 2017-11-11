@@ -1,13 +1,10 @@
 // Keypad.c
-// Pan
-// Kaman
 
+#include "Keypad.h"
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
-#include "SysTick.h"
 #include "ST7735.h" 
-//#include "Keypad.h"
 
 #define DATA_WIDTH 16
 
@@ -110,8 +107,4 @@ void keypadInit(void){
 }
 
 
-
-void EdgeInterrupt_Init(void){
-	
-}
 

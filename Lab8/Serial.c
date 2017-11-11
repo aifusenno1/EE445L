@@ -1,7 +1,6 @@
-// UART.c
+// Serial.c
 // Runs on LM4F120, TM4C123
 // Simple device driver for the UART.
-// Daniel Valvano
 // May 2, 2015
 
 /* This example accompanies the books

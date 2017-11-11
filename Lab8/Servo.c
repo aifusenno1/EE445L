@@ -1,8 +1,6 @@
-// Keypad.h
-// Pan
-// Kaman
+// Servo.h
 
-
+#include "Servo.h"
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #define PWM_0_GENA_ACTCMPAD_ONE 0x000000C0  // Set the output signal to 1
@@ -13,6 +11,14 @@
 #define SYSCTL_RCC_USEPWMDIV    0x00100000  // Enable PWM Clock Divisor
 #define SYSCTL_RCC_PWMDIV_M     0x000E0000  // PWM Unit Clock Divisor
 #define SYSCTL_RCC_PWMDIV_2     0x00000000  // /2
+
+void PWM0A_Init(uint16_t period, uint16_t duty);
+
+
+//initializes the port for PWM
+void servoInit(void){
+	PWM0A_Init(40000, 35000);
+}
 
 // period is 16-bit number of PWM clock cycles in one period (3<=period)
 // period for PB6 and PB7 must be the same
@@ -55,10 +61,7 @@ void doorLock(void){
 void doorUnlock(void){
 	PWM0A_Duty(35000);
 }
-//initializes the port for PWM
-void servoInit(void){
-	PWM0A_Init(40000, 35000);
-}
+
 
 
 

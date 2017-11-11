@@ -166,8 +166,8 @@ void Speaker_Init(void) {
 	melody_out = 0;
 	harmony_out = 0;
 	songEnd = 0;
-	Timer2_Init(&melody_handler, (*song.melody).note);
-	Timer3_Init(&harmony_handler, (*song.harmony).note);
+	Timer2A_Init(&melody_handler, (*song.melody).note);
+	Timer3A_Init(&harmony_handler, (*song.harmony).note);
 }
 
 
@@ -203,9 +203,9 @@ static void melody_handler(void) {
 		melody_note_duration = getNoteDuration(song.melody[melodyNoteIndex], song.tempo); 		// update the note duration
 		if (melodyNoteIndex >  song.melody_note_num) {
 			songEnd = 1; // Not entirely valid since harmony might still be playing, but should end soon if they have same number of bars
-			Timer2_Disarm();
+			Timer2A_Disarm();
 		}			
-		else Timer2_Period(song.melody[melodyNoteIndex].note);  // change the int period to the new note
+		else Timer2A_Period(song.melody[melodyNoteIndex].note);  // change the int period to the new note
 	}
 		PF3 ^= 0x08;
 }
@@ -240,9 +240,9 @@ static void harmony_handler(void) {
 		harmony_note_duration = getNoteDuration(song.harmony[harmonyNoteIndex], song.tempo); 		// update the note duration
 		if (harmonyNoteIndex >  song.harmony_note_num) {
 			songEnd = 1; // Not entirely valid since melody might still be playing, but should end soon if they have same number of bars
-			Timer3_Disarm();
+			Timer3A_Disarm();
 		}			
-		Timer3_Period(song.harmony[harmonyNoteIndex].note);  // change the int period to the new note
+		Timer3A_Period(song.harmony[harmonyNoteIndex].note);  // change the int period to the new note
 	}
 }
 
@@ -250,15 +250,15 @@ static void harmony_handler(void) {
   Start the music
 */
 void Music_Play(void){
-	Timer2_Arm();
-	Timer3_Arm();
+	Timer2A_Arm();
+	Timer3A_Arm();
 	musicPlaying = 1;
 
 }
 
 void Music_Pause(void){
-	Timer2_Disarm();
-	Timer3_Disarm();
+	Timer2A_Disarm();
+	Timer3A_Disarm();
 	musicPlaying = 0;
 }
 
@@ -273,8 +273,8 @@ void Music_Rewind(void) {
 	 harmonyInstrumentIndex = 0;
 	 harmonyNoteIndex = 0;
 	harmonyLasts = 0;
-			Timer2_Period((*song.melody).note);  // change the int period to the new note
-			Timer3_Period((*song.harmony).note);  // change the int period to the new note
+			Timer2A_Period((*song.melody).note);  // change the int period to the new note
+			Timer3A_Period((*song.harmony).note);  // change the int period to the new note
 
 		melody_out = 0;
 	harmony_out = 0;

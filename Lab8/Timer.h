@@ -21,30 +21,31 @@
  For more information about my classes, my research, and my books, see
  http://users.ece.utexas.edu/~valvano/
  */
+#include <stdint.h>
 
-void Timer1_Init(void(*task)(void), uint32_t period);
-void Timer2_Init(void(*task)(void), uint32_t period);
-void Timer3_Init(void(*task)(void), uint32_t period);
+void Timer1A_Init(void(*task)(void), uint32_t period);
+void Timer2A_Init(void(*task)(void), uint32_t period);
+void Timer3A_Init(void(*task)(void), uint32_t period);
 
 
-void inline Timer1_Start(void);
-void inline Timer1_Stop(void);
-void inline Timer1_Arm(void);
-void inline Timer1_Disarm(void);
-void inline Timer1_Acknowledge(void);
-void inline Timer1_Period(uint32_t period);
-/******************* Timer2 Methods ****************************/
-void inline Timer2_Start(void);
-void inline Timer2_Stop(void);
-void inline Timer2_Arm(void);
-void inline Timer2_Disarm(void);
-void inline Timer2_Acknowledge(void);
-void inline Timer2_Period(uint32_t period);
+void  Timer1A_Staart(void);
+void  Timer1A_Stop(void);
+void  Timer1A_Arm(void);
+void  Timer1A_Disarm(void);
+void  Timer1A_Acknowledge(void);
+void  Timer1A_Period(uint32_t period);
+/******************* Timer2A Methods ****************************/
+void  Timer2A_Start(void);
+void  Timer2A_Stop(void);
+void  Timer2A_Arm(void);
+void  Timer2A_Disarm(void);
+void  Timer2A_Acknowledge(void);
+void  Timer2A_Period(uint32_t period);
 
-/******************* Timer3 Methods ****************************/
-void inline Timer3_Start(void);
-void inline Timer3_Stop(void);
-void inline Timer3_Arm(void);
-void inline Timer3_Disarm(void);
-void inline Timer3_Acknowledge(void);
-void inline Timer3_Period(uint32_t period);
+/******************* Timer3A Methods ****************************/
+void  Timer3A_Start(void);
+void  Timer3A_Stop(void);
+void  Timer3A_Arm(void);
+void  Timer3A_Disarm(void);
+void  Timer3A_Acknowledge(void);
+void  Timer3A_Period(uint32_t period);
