@@ -1,4 +1,4 @@
-// Serial.h
+// UART.h
 // LM4F120, TM4C123, TM4C1294
 // Simple device driver for the UART.
 // Daniel Valvano
@@ -35,36 +35,34 @@
 #define DEL  0x7F
 
 
-//------------Serial_Init------------
+//------------UART_Init------------
 // Initialize the UART for 115,200 baud rate (assuming 16 MHz bus clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
 // Input: none
 // Output: none
-void Serial_Init(void);
+void UART_Init(void);
 
-//------------Serial_InChar------------
+//------------UART_InChar------------
 // Wait for new serial port input
 // Input: none
 // Output: ASCII code for key typed
-char Serial_InChar(void);
+char UART_InChar(void);
 
-//------------Serial_OutChar------------
+//------------UART_OutChar------------
 // Output 8-bit to serial port
 // Input: letter is an 8-bit ASCII character to be transferred
 // Output: none
-void Serial_OutChar(char data);
+void UART_OutChar(char data);
 
-//------------Serial_OutString------------
+//------------UART_OutString------------
 // Output String (NULL termination)
 // Input: pointer to a NULL-terminated string to be transferred
 // Output: none
-void Serial_OutString(char *pt);
+void UART_OutString(char *pt);
 
-//-----------------------Serial_OutUDec-----------------------
+//-----------------------UART_OutUDec-----------------------
 // Output a 32-bit number in unsigned decimal format
 // Input: 32-bit number to be transferred
 // Output: none
 // Variable format 1-10 digits with no space before or after
-void Serial_OutUDec(uint32_t n);
-
-void Serial_OutUHex(uint32_t number);
+void UART_OutUDec(uint32_t n);

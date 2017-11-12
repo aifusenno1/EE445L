@@ -1,6 +1,7 @@
-// Serial.c
+// UART.c
 // Runs on LM4F120, TM4C123
 // Simple device driver for the UART.
+// Daniel Valvano
 // May 2, 2015
 
 /* This example accompanies the books
@@ -26,7 +27,7 @@
 // U0Tx (VCP transmit) connected to PA1
 
 #include <stdint.h>
-#include "Serial.h"
+#include "UART.h"
 #include "../inc/tm4c123gh6pm.h"
 
 
@@ -36,12 +37,12 @@
 #define UART_LCRH_FEN           0x00000010  // UART Enable FIFOs
 #define UART_CTL_UARTEN         0x00000001  // UART Enable
 
-//------------Serial_Init------------
+//------------UART_Init------------
 // Initialize the UART for 115,200 baud rate (assuming 80 MHz bus clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
 // Input: none
 // Output: none
-void Serial_Init(void){
+void UART_Init(void){
   SYSCTL_RCGCUART_R |= 0x01;            // activate UART0
   SYSCTL_RCGCGPIO_R |= 0x01;            // activate port A
   UART0_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
@@ -57,67 +58,44 @@ void Serial_Init(void){
   GPIO_PORTA_AMSEL_R &= ~0x03;          // disable analog functionality on PA
 }
 
-//------------Serial_InChar------------
+//------------UART_InChar------------
 // Wait for new serial port input
 // Input: none
 // Output: ASCII code for key typed
-char Serial_InChar(void){
+char UART_InChar(void){
   while((UART0_FR_R&UART_FR_RXFE) != 0);
   return((char)(UART0_DR_R&0xFF));
 }
-//------------Serial_OutChar------------
+//------------UART_OutChar------------
 // Output 8-bit to serial port
 // Input: letter is an 8-bit ASCII character to be transferred
 // Output: none
-void Serial_OutChar(char data){
+void UART_OutChar(char data){
   while((UART0_FR_R&UART_FR_TXFF) != 0);
   UART0_DR_R = data;
 }
 
-//------------Serial_OutString------------
+//------------UART_OutString------------
 // Output String (NULL termination)
 // Input: pointer to a NULL-terminated string to be transferred
 // Output: none
-void Serial_OutString(char *pt){
+void UART_OutString(char *pt){
   while(*pt){
-    Serial_OutChar(*pt);
+    UART_OutChar(*pt);
     pt++;
   }
 }
-//-----------------------Serial_OutUDec-----------------------
+//-----------------------UART_OutUDec-----------------------
 // Output a 32-bit number in unsigned decimal format
 // Input: 32-bit number to be transferred
 // Output: none
 // Variable format 1-10 digits with no space before or after
-void Serial_OutUDec(uint32_t n){
+void UART_OutUDec(uint32_t n){
 // This function uses recursion to convert decimal number
 //   of unspecified length as an ASCII string
   if(n >= 10){
-    Serial_OutUDec(n/10);
+    UART_OutUDec(n/10);
     n = n%10;
   }
-  Serial_OutChar(n+'0'); /* n is between 0 and 9 */
+  UART_OutChar(n+'0'); /* n is between 0 and 9 */
 }
-
-//--------------------------Serial_OutUHex----------------------------
-// Output a 32-bit number in unsigned hexadecimal format
-// Input: 32-bit number to be transferred
-// Output: none
-// Variable format 1 to 8 digits with no space before or after
-void Serial_OutUHex(uint32_t number){
-// This function uses recursion to convert the number of
-//   unspecified length as an ASCII string
-  if(number >= 0x10){
-    Serial_OutUHex(number/0x10);
-    Serial_OutUHex(number%0x10);
-  }
-  else{
-    if(number < 0xA){
-      Serial_OutChar(number+'0');
-     }
-    else{
-      Serial_OutChar((number-0x0A)+'A');
-    }
-  }
-}
-
