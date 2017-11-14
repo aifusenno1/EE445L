@@ -3,24 +3,17 @@
 // Provide a function that initializes Timer0A to trigger ADC
 // SS3 conversions and request an interrupt when the conversion
 // is complete.
-// Daniel Valvano
-// May 3, 2015
 
-/* This example accompanies the book
-   "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
-   ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2015
-
- Copyright 2015 by Jonathan W. Valvano, valvano@mail.utexas.edu
-    You may use, edit, run or distribute this file
-    as long as the above copyright notice remains
- THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
- OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
- VALVANO SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL,
- OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
- For more information about my classes, my research, and my books, see
- http://users.ece.utexas.edu/~valvano/
+/*
+List three ways you could use to initiate the ADC conversion process.
+1. Triggered by the processor
+2. Analog comparator
+3. Continuous sampling
+What is the way to know when the conversion process has been completed?
+A: Once the process is completed, a bit in ADCRIS (ADC Raw Interrupt Status) will be set.
  */
+
+
 
 // center of X-ohm potentiometer connected to PE3/AIN0
 // bottom of X-ohm potentiometer connected to ground
@@ -30,6 +23,9 @@
 #include "ADCT0ATrigger.h"
 #include "PLL.h"
 #include "UART.h"
+#include "ST7735.h"
+#include "calib.h"
+#include "fixed.h"
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -37,6 +33,10 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
+extern volatile uint32_t ADCvalue;
+
+uint16_t ADC_to_temp(uint32_t ADCvalue);
+void print_screen(uint16_t temp);
 
 //debug code
 //
@@ -49,7 +49,8 @@ int main(void){
   PLL_Init(Bus80MHz);                      // 80 MHz system clock
   SYSCTL_RCGCGPIO_R |= 0x00000020;         // activate port F
 	  UART_Init();              // initialize UART device
-  ADC0_InitTimer0ATriggerSeq3(9, 80000); // ADC channel 0, 10 Hz sampling
+	  ST7735_InitR(INITR_REDTAB);
+  ADC0_InitTimer0ATriggerSeq3(9, 20000000); // ADC channel 0, 40 Hz sampling
   GPIO_PORTF_DIR_R |= 0x04;                // make PF2 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x04;             // disable alt funct on PF2
   GPIO_PORTF_DEN_R |= 0x04;                // enable digital I/O on PF2
@@ -57,10 +58,42 @@ int main(void){
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;                  // disable analog functionality on PF
   GPIO_PORTF_DATA_R &= ~0x04;              // turn off LED
+	
   EnableInterrupts();
   while(1){
     WaitForInterrupt();
     GPIO_PORTF_DATA_R ^= 0x04;             // toggle LED
+		UART_OutUDec(ADCvalue);
+		UART_OutString("\t");
+	  uint16_t temp = ADC_to_temp(ADCvalue);
+		print_screen(temp);
+		UART_OutString("\n\r");
   }
+}
+
+uint16_t ADC_to_temp(uint32_t ADCvalue) {
+	// if out of range, return the maximum or minimun number
+	if (ADCvalue > ADCdata[TABLE_SIZE-2]) return Temperature[TABLE_SIZE-1];
+	if (ADCvalue < ADCdata[1]) return Temperature[0];
+	for (int i=1;i<TABLE_SIZE;i++) {
+		if (ADCvalue >= ADCdata[i] && ADCvalue <= ADCdata[i+1]) {
+			// Only one value need to be explicitly upconverted
+			 uint16_t temp = (int)(ADCvalue - ADCdata[i]) * (Temperature[i+1] - Temperature[i]) / (ADCdata[i+1] - ADCdata[i]) + Temperature[i]; 
+//		  	UART_OutUDec(ADCvalue);
+//				UART_OutString("\t");
+//				UART_OutUDec(temp);
+//				UART_OutString("\n\r");
+			return temp;
+		}
+	}
+	return 0;  // never reached
+}
+
+void print_screen(uint16_t temp) {
+				ST7735_SetCursor(0,0);
+				ST7735_OutString("Temp = ");
+				ST7735_sDecOut3(temp);
+				ST7735_OutString(" C");
+
 }
 

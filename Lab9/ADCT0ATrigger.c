@@ -263,9 +263,9 @@ volatile uint32_t ADCvalue;
 void ADC0Seq3_Handler(void){
   ADC0_ISC_R = 0x08;          // acknowledge ADC sequence 3 completion
   ADCvalue = ADC0_SSFIFO3_R;  // 12-bit result
-	if (i < 100) {
-		i++;
-		UART_OutString("\n\r");
-    UART_OutUDec(ADCvalue);
-	}
+//	if (i < 100) {
+//		i++;
+//		UART_OutString("\n\r");
+//    UART_OutUDec(ADCvalue);
+//	}
 }
