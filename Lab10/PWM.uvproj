@@ -421,11 +421,6 @@
               <FilePath>.\Motor.c</FilePath>
             </File>
             <File>
-              <FileName>PWMtest.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\PWMtest.c</FilePath>
-            </File>
-            <File>
               <FileName>Switch.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Switch.c</FilePath>
@@ -434,6 +429,16 @@
               <FileName>ST7735.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ST7735.c</FilePath>
+            </File>
+            <File>
+              <FileName>Main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Main.c</FilePath>
+            </File>
+            <File>
+              <FileName>Tach.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Tach.c</FilePath>
             </File>
           </Files>
         </Group>
