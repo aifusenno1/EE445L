@@ -50,7 +50,7 @@ int main(void){
   SYSCTL_RCGCGPIO_R |= 0x00000020;         // activate port F
 	  UART_Init();              // initialize UART device
 	  ST7735_InitR(INITR_REDTAB);
-  ADC0_InitTimer0ATriggerSeq3(9, 20000000); // ADC channel 0, 40 Hz sampling
+  ADC0_InitTimer0ATriggerSeq3(9, 2000000); // ADC channel 0, 40 Hz sampling
   GPIO_PORTF_DIR_R |= 0x04;                // make PF2 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x04;             // disable alt funct on PF2
   GPIO_PORTF_DEN_R |= 0x04;                // enable digital I/O on PF2
