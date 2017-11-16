@@ -36,7 +36,9 @@ void WaitForInterrupt(void);  // low power mode
 extern volatile uint32_t ADCvalue;
 
 uint16_t ADC_to_temp(uint32_t ADCvalue);
-void print_screen(uint16_t temp);
+void print_screen(uint16_t temp, uint32_t ADCvalue);
+void draw_data(uint16_t temp);
+
 
 //debug code
 //
@@ -50,7 +52,7 @@ int main(void){
   SYSCTL_RCGCGPIO_R |= 0x00000020;         // activate port F
 	  UART_Init();              // initialize UART device
 	  ST7735_InitR(INITR_REDTAB);
-  ADC0_InitTimer0ATriggerSeq3(9, 20000000); // ADC channel 0, 40 Hz sampling
+  ADC0_InitTimer0ATriggerSeq3(9, 2000000); // ADC channel 0, 40 Hz sampling
   GPIO_PORTF_DIR_R |= 0x04;                // make PF2 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x04;             // disable alt funct on PF2
   GPIO_PORTF_DEN_R |= 0x04;                // enable digital I/O on PF2
@@ -58,18 +60,32 @@ int main(void){
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;                  // disable analog functionality on PF
   GPIO_PORTF_DATA_R &= ~0x04;              // turn off LED
-	
-  EnableInterrupts();
+	ST7735_DrawString(0,3,"40 C", ST7735_YELLOW);
+	ST7735_DrawString(0,15,"10 C", ST7735_YELLOW);
+	EnableInterrupts();
   while(1){
     WaitForInterrupt();
     GPIO_PORTF_DATA_R ^= 0x04;             // toggle LED
 		UART_OutUDec(ADCvalue);
 		UART_OutString("\t");
 	  uint16_t temp = ADC_to_temp(ADCvalue);
-		print_screen(temp);
+		print_screen(temp, ADCvalue);
+		draw_data(temp);
 		UART_OutString("\n\r");
   }
 }
+
+int plotX = 0;
+void draw_data(uint16_t temp) {
+		int plotY = 149 - ((temp - 1000) *100 / 3000);
+		ST7735_DrawPixel(plotX, plotY,ST7735_BLUE);
+		plotX++;
+	  if (plotX == 128) {
+			plotX = 0;
+			ST7735_FillRect(0,50,128,100, ST7735_BLACK);
+		}
+}
+
 
 uint16_t ADC_to_temp(uint32_t ADCvalue) {
 	// if out of range, return the maximum or minimun number
@@ -89,11 +105,14 @@ uint16_t ADC_to_temp(uint32_t ADCvalue) {
 	return 0;  // never reached
 }
 
-void print_screen(uint16_t temp) {
+void print_screen(uint16_t temp, uint32_t ADCvalue) {
 				ST7735_SetCursor(0,0);
 				ST7735_OutString("Temp = ");
 				ST7735_sDecOut3(temp);
 				ST7735_OutString(" C");
+						ST7735_SetCursor(0,1);
+				ST7735_OutString("ADC value = ");
+				ST7735_OutUDec(ADCvalue);
 
 }
 
