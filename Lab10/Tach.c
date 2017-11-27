@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "Tach.h"
 #include "../inc/tm4c123gh6pm.h"
+#include "ST7735.h"
 
 #define PF2                     (*((volatile uint32_t *)0x40025010))
 #define TIMER_TAMR_TACMR        0x00000004  // GPTM TimerA Capture Mode
@@ -55,8 +56,20 @@ void Tach_Init(void) {
 
 }
 
+void Timer1A_Handler(void){
+  PF2 = PF2^0x04;  // toggle PF2
+  PF2 = PF2^0x04;  // toggle PF2
+  TIMER0_ICR_R = TIMER_ICR_CAECINT;// acknowledge timer0A capture match
+  Period = (First - TIMER0_TAR_R)&0xFFFFFF;// 24 bits, 12.5ns resolution
+  First = TIMER0_TAR_R;            // setup for next
+  Done = 1;
+  PF2 = PF2^0x04;  // toggle PF2
+}
+
 uint32_t getMeasure(void) {
-	
+	ST7735_SetCursor(0,0);
+	ST7735_OutString("RPS = ");
+	ST7735_OutUDec(80000000/Period);
 	return 1;
 }
 

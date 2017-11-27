@@ -29,12 +29,31 @@
 #include "PWM.h"
 #include "Motor.h"
 #include "Switch.h"
+#include "ST7735.h"
+#include "Tach.h"
 
 void WaitForInterrupt(void);  // low power mode
 
+
+int plotX = 0;
+void draw_data(uint16_t temp) {
+		int plotY = 149 - ((temp - 1000) *100 / 3000);
+		ST7735_DrawPixel(plotX, plotY,ST7735_BLUE);
+		plotX++;
+	  if (plotX == 128) {
+			plotX = 0;
+			ST7735_FillRect(0,50,128,100, ST7735_BLACK);
+		}
+}
+
+
 int main(void){
   PLL_Init(Bus80MHz);               // bus clock at 80 MHz
-  PWM0A_Init(40000, 35000);         // initialize PWM0, 1000 Hz, 75% duty
+	ST7735_InitR(INITR_REDTAB);
+	//Button_Init();
+	PWM_Init();
+	PWM_Duty(30000);
+  //PWM0A_Init(40000, 30000);         // initialize PWM0, 1000 Hz, 75% duty
 //  PWM0_Duty(4000);    // 10%
 //  PWM0_Duty(10000);   // 25%
 //  PWM0_Duty(30000);   // 75%
@@ -43,7 +62,17 @@ int main(void){
   //PWM0B_Init(1000, 900);          // initialize PWM0, 40000 Hz, 90% duty
 //  PWM0_Init(1000, 100);          // initialize PWM0, 40000 Hz, 10% duty
 //  PWM0_Init(40, 20);             // initialize PWM0, 1 MHz, 50% duty
+	
+	
+//		ST7735_SetCursor(0,0);
+//		ST7735_OutString("Temp = ");
+//		ST7735_sDecOut3(temp);
+//		ST7735_OutString(" C");
+//		ST7735_SetCursor(0,1);
+//		ST7735_OutString("ADC value = ");
+//		ST7735_OutUDec(ADCvalue);
   while(1){
     WaitForInterrupt();
+		int i = getMeasure();
   }
 }
