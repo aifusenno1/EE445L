@@ -56,7 +56,6 @@ int main(void){
 	PWM_Init();
 	Tach_Init();
 	PWM_Duty(30000);
-
   EnableInterrupts();
 
 	//Button_Init();
