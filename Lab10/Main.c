@@ -70,8 +70,9 @@ int main(void){
 //  PWM0_Init(1000, 100);          // initialize PWM0, 40000 Hz, 10% duty
 //  PWM0_Init(40, 20);             // initialize PWM0, 1 MHz, 50% duty
 	
-
+		
   while(1){
     WaitForInterrupt();
+		
   }
 }

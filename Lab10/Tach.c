@@ -31,14 +31,12 @@ void Tach_Init(void) {
                                    // configure PB6 as T1CCP1
   GPIO_PORTB_PCTL_R = (GPIO_PORTB_PCTL_R&0xFF0FFFFF)+0x00700000;
   GPIO_PORTB_AMSEL_R &= ~0x20;     // disable analog functionality on PB5
-	
-  GPIO_PORTF_DIR_R |= 0x04;        // make PF2 out (PF2 built-in blue LED)
+	GPIO_PORTF_DIR_R |= 0x04;        // make PF2 out (PF2 built-in blue LED)
   GPIO_PORTF_AFSEL_R &= ~0x04;     // disable alt funct on PF2
   GPIO_PORTF_DEN_R |= 0x04;        // enable digital I/O on PF2
                                    // configure PF2 as GPIO
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;          // disable analog functionality on PF
-
   TIMER1_CTL_R &= ~TIMER_CTL_TAEN; // disable timer1A during setup
   TIMER1_CFG_R = TIMER_CFG_16_BIT; // configure for 16-bit timer mode
                                    // configure for 24-bit capture mode
@@ -66,12 +64,13 @@ void Timer1A_Handler(void){
   First = TIMER1_TAR_R;            // setup for next
   Done = 1;
   PF2 = PF2^0x04;  // toggle PF2
+	ST7735_OutString("aaaaasdfas = ");
 }
 
 uint32_t getMeasure(void) {
 	ST7735_SetCursor(0,0);
 	ST7735_OutString("RPS = ");
-	ST7735_OutUDec(80000000/Period);
+	ST7735_OutUDec(80000000/(4*Period));
 	return 1;
 }
 
