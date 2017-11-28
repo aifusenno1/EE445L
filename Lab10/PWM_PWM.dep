@@ -19,13 +19,16 @@ I (C:\Applications\Keil\ARM\ARMCC\include\stdio.h)(0x51C86E14)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (ST7735.h)(0x5A0DB5D7)
 I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
-F (.\Main.c)(0x5A0DB5D7)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (.\Main.c)(0x5A1C967C)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (PLL.h)(0x5A0DB5D6)
 I (PWM.h)(0x5A0DB5D6)
 I (Motor.h)(0x5A0DB5D6)
 I (Switch.h)(0x5A0DB5D7)
-F (.\Tach.c)(0x5A0DBED7)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\tach.o --omf_browse .\tach.crf --depend .\tach.d)
+I (ST7735.h)(0x5A0DB5D7)
+I (Tach.h)(0x5A1C911A)
+F (.\Tach.c)(0x5A1C961C)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\tach.o --omf_browse .\tach.crf --depend .\tach.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
-I (Tach.h)(0x5A0DBEDA)
+I (Tach.h)(0x5A1C911A)
 I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
+I (ST7735.h)(0x5A0DB5D7)
