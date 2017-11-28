@@ -440,6 +440,11 @@
               <FileType>1</FileType>
               <FilePath>.\Tach.c</FilePath>
             </File>
+            <File>
+              <FileName>fixed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\fixed.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

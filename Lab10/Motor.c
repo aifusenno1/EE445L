@@ -27,6 +27,9 @@
 #include <stdint.h>
 #include "../inc/tm4c123gh6pm.h"
 #include "Motor.h"
+#include "Tach.h"
+
+#define PF2                     (*((volatile uint32_t *)0x40025010))
 #define PWM_0_GENA_ACTCMPAD_ONE 0x000000C0  // Set the output signal to 1
 #define PWM_0_GENA_ACTLOAD_ZERO 0x00000008  // Set the output signal to 0
 #define PWM_0_GENB_ACTCMPBD_ONE 0x00000C00  // Set the output signal to 1
@@ -36,6 +39,10 @@
 #define SYSCTL_RCC_PWMDIV_M     0x000E0000  // PWM Unit Clock Divisor
 #define SYSCTL_RCC_PWMDIV_2     0x00000000  // /2
 
+uint32_t speed;	// in 0.1 rps
+int32_t desiredSpeed;	// in 0.1 rps
+int32_t E; // speed error in 0.1 rps
+int32_t U;  // duty cycle 40 to 39960
 
 // period is 16-bit number of PWM clock cycles in one period (3<=period)
 // period for PB6 and PB7 must be the same
@@ -100,8 +107,50 @@ void PWM0B_Duty(uint16_t duty){
 }
 
 
-void PWM_Init(void){
-	PWM0B_Init(40000,0);
+/** Timer2A_Init() **
+ * Activate TIMER2A to countdown for period seconds
+ * Initializes Timer2A for period interrupts
+// Inputs:  task is a pointer to a user function
+//          period in units (1/clockfreq), 32 bits
+// Outputs: none
+ */
+void Timer2A_Init(uint32_t period){
+	
+	volatile uint32_t delay;
+  SYSCTL_RCGCTIMER_R |= 0x04;   // 0) activate TIMER2
+	delay = SYSCTL_RCGCTIMER_R;   // allow time to finish activating
+	TIMER2_CTL_R = ~TIMER_CTL_TAEN;    // 1) disable TIMER2A during setup
+	TIMER2_CFG_R = 0;    // 2) configure for 32-bit mode
+	TIMER2_TAPR_R = 0;            // 5) bus clock resolution
+	TIMER2_TAMR_R = TIMER_TAMR_TAMR_PERIOD;   // 3) configure for periodic mode, default down-count settings
+	TIMER2_TAILR_R = period-1;    	// 4) reload value
+	TIMER2_IMR_R = TIMER_IMR_TATOIM;// arm timeout interrupt
+	TIMER2_ICR_R = TIMER_ICR_TATOCINT;    // 6) clear TIMER2A timeout flag
+
+	// Timer 2 interupts
+  NVIC_PRI5_R = (NVIC_PRI5_R&0x00FFFFFF); // clear priority
+	NVIC_PRI5_R = (NVIC_PRI5_R | 0x80000000); // priority 4
+  NVIC_EN0_R = 1 << 23;              // enable interrupt 23 in NVIC
+	TIMER2_CTL_R = 0x00000001;    // 10) enable
+}
+
+#define coeff 10
+void Timer2A_Handler() {
+	TIMER2_ICR_R = 0x01;
+	speed = getSpeed();
+	E = desiredSpeed - speed;
+	U = U + (E*coeff)/64;	// discrete integral
+	if (U<100) U=100;
+	if (U>39900) U=39900;
+	PWM_Duty(U);
+
+}
+
+
+void Motor_Init(void){
+	PWM0B_Init(40000,20000);
+	desiredSpeed = 200;
+	Timer2A_Init(500000/10); // 10x the max interrupt frequency of Timer0A    *2 makes it more accurate
 }
 
 void PWM_Duty(uint16_t duty){

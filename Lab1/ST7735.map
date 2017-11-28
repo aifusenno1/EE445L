@@ -773,21 +773,21 @@ Memory Map of the image
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000000   Code   RO          399  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000284   0x00000004   Code   RO          662    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x00000288   0x00000004   Code   RO          665    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x0000028c   0x00000000   Code   RO          667    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x0000028c   0x00000000   Code   RO          669    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x0000028c   0x00000008   Code   RO          670    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x00000294   0x00000000   Code   RO          672    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x00000294   0x00000000   Code   RO          674    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x00000294   0x00000004   Code   RO          663    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x00000298   0x00000024   Code   RO          692    .text               mc_w.l(init.o)
+    0x00000284   0x00000000   Code   RO          393  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000284   0x00000004   Code   RO          656    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000288   0x00000004   Code   RO          659    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000028c   0x00000000   Code   RO          661    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000028c   0x00000000   Code   RO          663    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000028c   0x00000008   Code   RO          664    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000294   0x00000000   Code   RO          666    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000294   0x00000000   Code   RO          668    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000294   0x00000004   Code   RO          657    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x00000298   0x00000024   Code   RO          686    .text               mc_w.l(init.o)
     0x000002bc   0x00000020   Code   RO           34    i.Delay1ms          st7735.o
-    0x000002dc   0x00000020   Code   RO          345    i.DelayWait10ms     lab1.o
+    0x000002dc   0x00000020   Code   RO          342    i.DelayWait10ms     lab1.o
     0x000002fc   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
-    0x00000378   0x00000028   Code   RO          346    i.Pause             lab1.o
-    0x000003a0   0x00000084   Code   RO          347    i.PortF_Init        lab1.o
+    0x00000378   0x00000028   Code   RO          343    i.Pause             lab1.o
+    0x000003a0   0x00000084   Code   RO          344    i.PortF_Init        lab1.o
     0x00000424   0x00000018   Code   RO           40    i.ST7735_Color565   st7735.o
     0x0000043c   0x000000f4   Code   RO           43    i.ST7735_DrawCharS  st7735.o
     0x00000530   0x00000048   Code   RO           46    i.ST7735_DrawPixel  st7735.o
@@ -804,16 +804,16 @@ Memory Map of the image
     0x0000092c   0x00000058   Code   RO          311    i.ST7735_XYplotInit  fixed.o
     0x00000984   0x000000c4   Code   RO          312    i.ST7735_sDecOut3   fixed.o
     0x00000a48   0x000000d8   Code   RO          313    i.ST7735_uBinOut8   fixed.o
-    0x00000b20   0x00000010   Code   RO          403    i.__0printf$bare    mc_w.l(printfb.o)
-    0x00000b30   0x0000000e   Code   RO          704    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x00000b3e   0x00000002   Code   RO          705    i.__scatterload_null  mc_w.l(handlers.o)
-    0x00000b40   0x0000000e   Code   RO          706    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x00000b4e   0x00000022   Code   RO          410    i._printf_core      mc_w.l(printfb.o)
+    0x00000b20   0x00000010   Code   RO          397    i.__0printf$bare    mc_w.l(printfb.o)
+    0x00000b30   0x0000000e   Code   RO          698    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x00000b3e   0x00000002   Code   RO          699    i.__scatterload_null  mc_w.l(handlers.o)
+    0x00000b40   0x0000000e   Code   RO          700    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x00000b4e   0x00000022   Code   RO          404    i._printf_core      mc_w.l(printfb.o)
     0x00000b70   0x00000056   Code   RO           68    i.commandList       st7735.o
     0x00000bc6   0x00000002   PAD
     0x00000bc8   0x00000184   Code   RO           69    i.commonInit        st7735.o
     0x00000d4c   0x00000010   Code   RO           73    i.fputc             st7735.o
-    0x00000d5c   0x00000130   Code   RO          348    i.main              lab1.o
+    0x00000d5c   0x00000130   Code   RO          345    i.main              lab1.o
     0x00000e8c   0x00000012   Code   RO           74    i.pushColor         st7735.o
     0x00000e9e   0x00000002   PAD
     0x00000ea0   0x00000074   Code   RO           75    i.setAddrWindow     st7735.o
@@ -821,8 +821,8 @@ Memory Map of the image
     0x00000f44   0x00000020   Code   RO           77    i.writedata         st7735.o
     0x00000f64   0x000007e2   Data   RO           79    .constdata          st7735.o
     0x00001746   0x00000002   PAD
-    0x00001748   0x000008e0   Data   RO          351    .constdata          lab1.o
-    0x00002028   0x00000020   Data   RO          702    Region$$Table       anon$$obj.o
+    0x00001748   0x000008e0   Data   RO          348    .constdata          lab1.o
+    0x00002028   0x00000020   Data   RO          696    Region$$Table       anon$$obj.o
 
 
     Execution Region ER_RW (Base: 0x20000000, Size: 0x00000040, Max: 0xffffffff, ABSOLUTE)
@@ -831,7 +831,7 @@ Memory Map of the image
 
     0x20000000   0x0000002c   Data   RW           80    .data               st7735.o
     0x2000002c   0x00000010   Data   RW          314    .data               fixed.o
-    0x2000003c   0x00000004   Data   RW          676    .data               mc_w.l(stdout.o)
+    0x2000003c   0x00000004   Data   RW          670    .data               mc_w.l(stdout.o)
 
 
     Execution Region ER_ZI (Base: 0x20000040, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
@@ -850,12 +850,12 @@ Image component sizes
 
        668         58          0         16          0       2784   fixed.o
        508        128       2272          0          0       2722   lab1.o
-       124          6          0          0          0       4667   pll.o
-      1854        208       2018         44          0      15015   st7735.o
+       124          6          0          0          0       4647   pll.o
+      1854        208       2018         44          0      14567   st7735.o
        644        620          0          0       1024        704   startup.o
 
     ----------------------------------------------------------------------
-      3804       1020       4324         60       1024      25892   Object Totals
+      3804       1020       4324         60       1024      25424   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          6          0          2          0          0          0   (incl. Padding)
 
@@ -896,8 +896,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      3940       1044       4324         64       1024      24708   Grand Totals
-      3940       1044       4324         64       1024      24708   ELF Image Totals
+      3940       1044       4324         64       1024      24240   Grand Totals
+      3940       1044       4324         64       1024      24240   ELF Image Totals
       3940       1044       4324         64          0          0   ROM Totals
 
 ==============================================================================

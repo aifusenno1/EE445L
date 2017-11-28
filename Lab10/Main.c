@@ -31,6 +31,7 @@
 #include "Switch.h"
 #include "ST7735.h"
 #include "Tach.h"
+#include "fixed.h"
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -38,10 +39,25 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
+
+// delay for 1 ms
+// modified the code from valvano ware, not sure if it's actually 1 ms
+void DelayWait1ms(uint32_t n){
+	uint32_t volatile time;
+	while(n){
+		time = 72724*2/91;  // 1msec
+		while(time){
+			time--;
+		}
+		n--;
+	}
+}
+
+
 int plotX = 0;
-void draw_data(uint16_t temp) {
-		int plotY = 149 - ((temp - 1000) *100 / 3000);
-		ST7735_DrawPixel(plotX, plotY,ST7735_BLUE);
+void draw_data(uint16_t temp, int color) {
+		int plotY = 149 - ((temp) *100 / 550);
+		ST7735_DrawPixel(plotX, plotY,color);
 		plotX++;
 	  if (plotX == 128) {
 			plotX = 0;
@@ -49,16 +65,26 @@ void draw_data(uint16_t temp) {
 		}
 }
 
+void print_screen(void) {
+		ST7735_SetCursor(0,0);
+		ST7735_OutString("Desired RPS = ");
+		ST7735_sDecOut3(desiredSpeed);
+		ST7735_SetCursor(0,1);
+		ST7735_OutString("True RPS = ");
+		ST7735_sDecOut3(getSpeed());
 
+}
 int main(void){
   PLL_Init(Bus80MHz);               // bus clock at 80 MHz
 	ST7735_InitR(INITR_REDTAB);
-	PWM_Init();
+	Motor_Init();
 	Tach_Init();
-	PWM_Duty(30000);
+	Button_Init();
+	
+		ST7735_DrawString(0,3,"55 RPS", ST7735_YELLOW);
+	ST7735_DrawString(0,15,"0 RPS", ST7735_YELLOW);
   EnableInterrupts();
 
-	//Button_Init();
   //PWM0A_Init(40000, 30000);         // initialize PWM0, 1000 Hz, 75% duty
 //  PWM0_Duty(4000);    // 10%
 //  PWM0_Duty(10000);   // 25%
@@ -71,7 +97,12 @@ int main(void){
 	
 		
   while(1){
-    WaitForInterrupt();
-		
+	  WaitForInterrupt();
+		DelayWait1ms(1000);
+    print_screen();
+		draw_data(getSpeed(), ST7735_BLUE);
+		draw_data(desiredSpeed,ST7735_RED );
+
+
   }
 }

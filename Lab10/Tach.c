@@ -58,19 +58,24 @@ void Tach_Init(void) {
 }
 
 void Timer0A_Handler(void){
-  PF2 = PF2^0x04;  // toggle PF2
+	PF2 = PF2^0x04;  // toggle PF2
   PF2 = PF2^0x04;  // toggle PF2
   TIMER0_ICR_R = TIMER_ICR_CAECINT;// acknowledge timer0A capture match
+	uint32_t cur = TIMER0_TBR_R;
+
+	if(First < cur){
+		First = First + 0x00FFFFFF;
+	}
   Period = (First - TIMER0_TAR_R)&0xFFFFFF;// 24 bits, 12.5ns resolution
   First = TIMER0_TAR_R;            // setup for next
   Done = 1;
-  PF2 = PF2^0x04;  // toggle PF2
+	PF2 = PF2^0x04;  // toggle PF2
 }
 
-uint32_t getMeasure(void) {
-	ST7735_SetCursor(0,0);
-	ST7735_OutString("RPS = ");
-	ST7735_OutUDec(80000000/(4*Period));
-	return 1;
+// fixed-point
+// resolution = 0.1
+uint32_t getSpeed(void) {
+	uint32_t speed = 800000000/(4*Period);
+	return speed;
 }
 
