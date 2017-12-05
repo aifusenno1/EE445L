@@ -152,7 +152,7 @@ struct Note sos_harmony[] = {
 
 
 
-struct Song song = {196, sos_melody, Wave, SOS_MELODY_NOTE_NUM, sos_harmony, Wave, SOS_HARMONY_NOTE_NUM};
+struct Song song = {196, majorscale_melody, Trumpet, MAJORSCALE_MELODY_NOTE_NUM, majorscale_harmony, Trumpet, MAJORSCALE_HARMONY_NOTE_NUM};
 // struct Song song = {10, majorscale_melody, Wave, 8, majorscale_harmony, Wave, 8};
 
 static const unsigned short *instruments[NUMBER_OF_INSTRUMENTS] = {Wave, Trumpet, Flute, Guitar, Oboe};

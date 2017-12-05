@@ -36,7 +36,7 @@ I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (Tach.h)(0x5A1CC635)
 I (../inc/tm4c123gh6pm.h)(0x5388B4CA)
 I (ST7735.h)(0x5A0DB5D7)
-F (.\fixed.c)(0x5A1CC7F8)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\fixed.o --omf_browse .\fixed.crf --depend .\fixed.d)
+F (.\fixed.c)(0x5A221B73)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Applications\Keil\ARM\RV31\INC-I C:\Applications\Keil\ARM\CMSIS\Include-I C:\Applications\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\fixed.o --omf_browse .\fixed.crf --depend .\fixed.d)
 I (C:\Applications\Keil\ARM\ARMCC\include\stdint.h)(0x51C86E14)
 I (ST7735.h)(0x5A0DB5D7)
 I (fixed.h)(0x59B804EB)

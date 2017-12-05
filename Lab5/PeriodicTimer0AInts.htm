@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\PeriodicTimer0AInts.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\PeriodicTimer0AInts.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Thu Oct 12 16:01:12 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Mon Dec 04 03:31:01 2017
 <BR><P>
 <H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -784,23 +784,22 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[2b]"></a>GPIOPortF_Handler</STRONG> (Thumb, 224 bytes, Stack size 8 bytes, switch.o(i.GPIOPortF_Handler))
+<P><STRONG><a name="[2b]"></a>GPIOPortF_Handler</STRONG> (Thumb, 182 bytes, Stack size 8 bytes, switch.o(i.GPIOPortF_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = GPIOPortF_Handler &rArr; Music_ChangeIntrument &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawString
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Clear
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
+<BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Clear
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Pause
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_ChangeIntrument
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer0Arm
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_ChangeIntrument
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer0Arm
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
 </UL>
-<P><STRONG><a name="[99]"></a>Music_ChangeIntrument</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, music.o(i.Music_ChangeIntrument))
+<P><STRONG><a name="[98]"></a>Music_ChangeIntrument</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, music.o(i.Music_ChangeIntrument))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = Music_ChangeIntrument &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawString
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawString
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Clear
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
@@ -823,27 +822,27 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer3A_Disarm
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Disarm
 </UL>
-<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
+<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
 </UL>
 
-<P><STRONG><a name="[97]"></a>Music_Play</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, music.o(i.Music_Play))
+<P><STRONG><a name="[96]"></a>Music_Play</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, music.o(i.Music_Play))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Music_Play
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer3A_Arm
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Arm
 </UL>
-<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
+<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
 </UL>
 
-<P><STRONG><a name="[98]"></a>Music_Rewind</STRONG> (Thumb, 108 bytes, Stack size 8 bytes, music.o(i.Music_Rewind))
+<P><STRONG><a name="[97]"></a>Music_Rewind</STRONG> (Thumb, 108 bytes, Stack size 8 bytes, music.o(i.Music_Rewind))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Music_Rewind &rArr; getNoteDuration
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer3A_Period
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Period
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getNoteDuration
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Pause
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
@@ -854,7 +853,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_ChangeIntrument
+<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_ChangeIntrument
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
 </UL>
 
@@ -874,7 +873,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillRect
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawPixel
 </UL>
-<BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawString
+<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawString
 </UL>
 
 <P><STRONG><a name="[a7]"></a>ST7735_DrawPixel</STRONG> (Thumb, 64 bytes, Stack size 24 bytes, st7735.o(i.ST7735_DrawPixel))
@@ -886,13 +885,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawCharS
 </UL>
 
-<P><STRONG><a name="[96]"></a>ST7735_DrawString</STRONG> (Thumb, 86 bytes, Stack size 32 bytes, st7735.o(i.ST7735_DrawString))
+<P><STRONG><a name="[9a]"></a>ST7735_DrawString</STRONG> (Thumb, 86 bytes, Stack size 32 bytes, st7735.o(i.ST7735_DrawString))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawCharS
 </UL>
-<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_ChangeIntrument
-<LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
+<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_ChangeIntrument
 </UL>
 
 <P><STRONG><a name="[a8]"></a>ST7735_FillRect</STRONG> (Thumb, 164 bytes, Stack size 32 bytes, st7735.o(i.ST7735_FillRect))
@@ -939,7 +937,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a1]"></a>Timer2A_Arm</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, timer.o(i.Timer2A_Arm))
-<BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
+<BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
 </UL>
 
 <P><STRONG><a name="[9f]"></a>Timer2A_Disarm</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, timer.o(i.Timer2A_Disarm))
@@ -966,7 +964,7 @@ Global Symbols
 
 <P><STRONG><a name="[a3]"></a>Timer2A_Period</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, timer.o(i.Timer2A_Period))
 <BR><BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;melody_handler
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
 </UL>
 
 <P><STRONG><a name="[b4]"></a>Timer3A_Acknowledge</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, timer.o(i.Timer3A_Acknowledge))
@@ -974,7 +972,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a2]"></a>Timer3A_Arm</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, timer.o(i.Timer3A_Arm))
-<BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
+<BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Play
 </UL>
 
 <P><STRONG><a name="[a0]"></a>Timer3A_Disarm</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, timer.o(i.Timer3A_Disarm))
@@ -1001,7 +999,7 @@ Global Symbols
 
 <P><STRONG><a name="[a4]"></a>Timer3A_Period</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, timer.o(i.Timer3A_Period))
 <BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;harmony_handler
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
 </UL>
 
 <P><STRONG><a name="[8b]"></a>main</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, main.o(i.main))
@@ -1023,7 +1021,7 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[9a]"></a>Timer0Arm</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, switch.o(i.Timer0Arm))
+<P><STRONG><a name="[99]"></a>Timer0Arm</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, switch.o(i.Timer0Arm))
 <BR><BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
 </UL>
 
@@ -1039,7 +1037,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Init
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;melody_handler
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;harmony_handler
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Music_Rewind
 </UL>
 
 <P><STRONG><a name="[80]"></a>harmony_handler</STRONG> (Thumb, 228 bytes, Stack size 16 bytes, music.o(i.harmony_handler))

@@ -27,7 +27,7 @@ static int32_t xMin, xMax, yMin, yMax; // the coordinate for drawing
 /****************ST7735_sDecOut3***************
  converts fixed point number to LCD
  format signed 32-bit with resolution 0.1
- range -9.999 to +9.999
+ range -99.9 to +99.9
  Inputs:  signed 32-bit integer part of fixed-point number
  Outputs: none
  send exactly 6 characters to the LCD 
