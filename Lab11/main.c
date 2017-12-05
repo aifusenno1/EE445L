@@ -205,7 +205,7 @@ int main(void){
 	Servo_Init();
 	Serial_Init();
 	Button_Init();
-	DAC_Init();
+	//DAC_Init();
 	MotionDetect_Init();
 	EnableInterrupts();
 

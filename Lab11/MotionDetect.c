@@ -174,7 +174,7 @@ int motionDetected(void) {
 int counter = 0;
 void handler() {
 	counter++;
-	if (counter == 1){
+	if (counter == 100){
 		TIMER0_CTL_R &= ~TIMER_CTL_TBEN;    // 1) disable TIMER3A during setup
 		TVoff();
 		counter = 0;
@@ -192,8 +192,9 @@ int TVon() {
 	if (!verifyResponse(VC0706_TVOUT_CTRL))
 	return 0;
 	
-	Timer0B_Init( handler,800000);
-	
+	//Timer0B_Init( handler,800000);
+		Timer2A_Init(&handler, 8000000);
+
 	return 1;
 }
 

@@ -131,7 +131,7 @@ void Timer0B_Init(void(*task)(void), uint32_t period){
 TIMER0_CTL_R &= ~TIMER_CTL_TBEN;    // 1) disable TIMER3A during setup
 	TIMER0_CFG_R = 0;    // 2) configure for 32-bit mode
 	TIMER0_TBPR_R = 0;            // 5) bus clock resolution
-TIMER0_TBMR_R = TIMER_TBMR_TBMR_PERIOD;
+TIMER0_TBMR_R = 0x00000002;
 	TIMER0_TBILR_R = period - 1;    	// 4) reload value
 	TIMER0_IMR_R = TIMER_IMR_TBTOIM;// arm timeout interrupt
 	TIMER0_ICR_R = TIMER_ICR_TBTOCINT;    // 6) clear TIMER3A timeout flag
@@ -145,7 +145,7 @@ NVIC_PRI5_R = (NVIC_PRI5_R | 0x00000080); // priority 4
 
 
 void Timer0B_Handler(void){
-  TIMER0_IMR_R &= ~TIMER_IMR_TBTOIM;    // disarm timeout interrupt
+	TIMER0_ICR_R = TIMER_ICR_TBTOCINT; 
   (*Task0B)();
 }
 
