@@ -39,6 +39,7 @@ void WaitForInterrupt(void);  // low power mode
 static void (*Task1)(void);   // user function
 static void (*Task2)(void);   // user function
 static void (*Task3)(void);   // user function
+static void (*Task0B)(void);   // user function
 
 
 void Timer1A_Init(void(*task)(void), uint32_t period){
@@ -118,6 +119,34 @@ NVIC_PRI8_R = (NVIC_PRI8_R | 0x80000000); // priority 4
   NVIC_EN1_R = 1 << 3;              // enable interrupt 35 in NVIC
 	TIMER3_CTL_R = 0x00000001;    // 10) enable
   EndCritical(sr);
+}
+
+void Timer0B_Init(void(*task)(void), uint32_t period){
+	long sr;
+  sr = StartCritical(); 
+	volatile uint32_t delay;
+	SYSCTL_RCGCTIMER_R |= 0x08;   // 0) activate Timer3
+	delay = SYSCTL_RCGCTIMER_R;   // allow time to finish activating
+	Task0B = task;          // user function
+TIMER0_CTL_R &= ~TIMER_CTL_TBEN;    // 1) disable TIMER3A during setup
+	TIMER0_CFG_R = 0;    // 2) configure for 32-bit mode
+	TIMER0_TBPR_R = 0;            // 5) bus clock resolution
+TIMER0_TBMR_R = TIMER_TBMR_TBMR_PERIOD;
+	TIMER0_TBILR_R = period - 1;    	// 4) reload value
+	TIMER0_IMR_R = TIMER_IMR_TBTOIM;// arm timeout interrupt
+	TIMER0_ICR_R = TIMER_ICR_TBTOCINT;    // 6) clear TIMER3A timeout flag
+	// Timer 3 interupts
+  NVIC_PRI5_R = (NVIC_PRI5_R&0xFFFFFF00); // clear priority
+NVIC_PRI5_R = (NVIC_PRI5_R | 0x00000080); // priority 4
+  NVIC_EN0_R = 1 << 20;              // enable interrupt 35 in NVIC
+	TIMER0_CTL_R |= TIMER_CTL_TBEN;    // 10) enable
+  EndCritical(sr);
+}
+
+
+void Timer0B_Handler(void){
+  TIMER0_IMR_R &= ~TIMER_IMR_TBTOIM;    // disarm timeout interrupt
+  (*Task0B)();
 }
 
 void Timer1A_Handler(void){

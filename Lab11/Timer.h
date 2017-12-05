@@ -26,9 +26,10 @@
 void Timer1A_Init(void(*task)(void), uint32_t period);
 void Timer2A_Init(void(*task)(void), uint32_t period);
 void Timer3A_Init(void(*task)(void), uint32_t period);
+void Timer0B_Init(void(*task)(void), uint32_t period);
 
 
-void  Timer1A_Staart(void);
+void  Timer1A_Start(void);
 void  Timer1A_Stop(void);
 void  Timer1A_Arm(void);
 void  Timer1A_Disarm(void);

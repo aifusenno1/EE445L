@@ -4,13 +4,13 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "ST7735.h"
-
+#include "MotionDetect.h"
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 
 volatile static unsigned long last4, last0;      // previous
 extern uint8_t curStage;
-
+int timeron = 0;
 static void PortF_Init(void);
 static void EdgeInterrupt_Init(void);
 
@@ -25,7 +25,7 @@ void Button_Init(void) {
 
 
 static void Timer0Arm(void){
-   TIMER0_CTL_R = 0x00000000;    // 1) disable TIMER0A during setup
+   TIMER0_CTL_R &= ~0x00000001;    // 1) disable TIMER0A during setup
    TIMER0_CFG_R = 0x00000000;    // 2) configure for 32-bit mode
    TIMER0_TAMR_R = 0x0000001;    // 3) 1-SHOT mode
    TIMER0_TAILR_R = 800000;      // 4) 10ms reload value
@@ -36,7 +36,7 @@ static void Timer0Arm(void){
    // interrupts enabled in the main program after all devices initialized
    // vector number 35, interrupt number 19
    NVIC_EN0_R = 1<<19;           // 9) enable IRQ 19 in NVIC
-   TIMER0_CTL_R = 0x00000001;    // 10) enable TIMER0A
+   TIMER0_CTL_R |= 0x00000001;    // 10) enable TIMER0A
 }
 // Interrupt 10 ms after rising edge of PF4
 void Timer0A_Handler(void){
@@ -45,12 +45,13 @@ void Timer0A_Handler(void){
    last0 = PF0 & 0x01;
    GPIO_PORTF_ICR_R = 0x11; // (e) acknowledge interrupt
    GPIO_PORTF_IM_R |= 0x11; // (f) re-arm interrupt on PF4 & PF0
-   NVIC_PRI7_R = (NVIC_PRI7_R&0xFF00FFFF)|0x00A00000; // (g) priority 5
+   NVIC_PRI7_R = (NVIC_PRI7_R&0xFF00FFFF)|0x00400000; // (g) priority 5
    NVIC_EN0_R = 0x40000000;      // (h) enable interrupt 30 in NVIC
    
 }
 
 void GPIOPortF_Handler(void){
+
    if (GPIO_PORTF_RIS_R&0x10) { // PF4 is pressed
       GPIO_PORTF_IM_R &= ~0x10;     // disarm interrupt on PF4
       if(last4){    // 0x10 means it was previously released; negative logic
@@ -63,7 +64,7 @@ void GPIOPortF_Handler(void){
       GPIO_PORTF_IM_R &= ~0x01;     // disarm interrupt on PF0
       long sr;
       if(last0){    // 0x01 means it was previously released; negative logic
-
+				TVon();
       }
 
    }

@@ -62,9 +62,9 @@ void WaitForInterrupt(void);  // low power mode
 
 
 void State_Handler(void){
-	long sr = StartCritical();
+	//long sr = StartCritical();
 //      int tempTime = time;
-//      //GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R^0x04; // toggle PF2
+//      GPIO_PORTF_DATA_R = GPIO_PORTF_DATA_R^0x04; // toggle PF2
 //      
 //      time = updateTime(secFlag, time);
 //      alarm = checkForAlarm(time);
@@ -179,10 +179,21 @@ void State_Handler(void){
 					 inFour = 1;
          break;
       }		
-      EndCritical(sr); 
+      //EndCritical(sr); 
 }
 
-
+// delay for 1 ms
+// modified the code from valvano ware, not sure if it's actually 1 ms
+void DelayWait1ms(uint32_t n){
+	uint32_t volatile time;
+	while(n){
+		time = 72724*2/91;  // 1msec
+		while(time){
+			time--;
+		}
+		n--;
+	}
+}
 
 int main(void){ 
   PLL_Init(Bus80MHz);              // bus clock at 80 MHz
@@ -192,11 +203,15 @@ int main(void){
 	Microphone_Init();
 	Keypad_Init();
 	Servo_Init();
-	//MotionDetect_Init();
 	Serial_Init();
+	Button_Init();
 	DAC_Init();
+	MotionDetect_Init();
 	EnableInterrupts();
-   
+
+	setMotionDetect(1);
+	getMotionDetect()? ST7735_OutString("ON\n") : ST7735_OutString("OFF\n");
+	TVoff();
    while(1){
 	    State_Handler(); 
    }

@@ -11,6 +11,8 @@ timeout = 200 for ReadResponse is strictly required, observed from testing
 #include "PLL.h"
 #include "ST7735.h"
 #include "Serial.h"
+#include "Timer.h"
+
 
 #define UART_FR_TXFF            0x00000020  // UART Transmit FIFO Full
 #define UART_FR_RXFE            0x00000010  // UART Receive FIFO Empty
@@ -50,13 +52,13 @@ Initialize the Camera
 */
 int MotionDetect_Init(void) {
 	UART_Init();
-	Serial_OutString("VC0706 Camera Initialization\n\r");
-	if (reset()) {
-		Serial_OutString("Camera found\n\r");
-	} else {
-		Serial_OutString("Camera not found?\n\r");
-		return 0;
-	}
+	//Serial_OutString("VC0706 Camera Initialization\n\r");
+//	if (reset()) {
+//		 //ST7735_OutString("Camera found\n\r");
+//	} else {
+//		// ST7735_OutString("Camera not found?\n\r");
+//		return 0;
+//	}
 	return 1;
 }
 
@@ -72,9 +74,9 @@ int reset(void) {
 	sendCommand(VC0706_RESET, args, argn);
 	// get reply
 	if (readResponse(respLen, 200)!=respLen) 
-	return 0;
+		return 0;
 	if (!verifyResponse(VC0706_RESET))
-	return 0;
+		return 0;
 	return 1;
 }
 
@@ -83,20 +85,27 @@ enable/disable motion control
 mainly for internal usage
 */
 int setMotionStatus(uint8_t x, uint8_t d1, uint8_t d2) {
+
 	flush();  // flush the FIFO; cameraBuff will contain useless data
-	ST7735_OutString("After Flush\n");
-	ST7735_OutUDec(bufferLen);
+	//ST7735_OutString("After Flush\n");
 	uint8_t args[] = {0x03, x,d1,d2};
 	uint8_t respLen = 5; 
 	
 	sendCommand(VC0706_MOTION_CTRL, args, sizeof(args));
-	
+	//ST7735_OutString("sent\n");
+
 	// get reply
 	int reply = readResponse(respLen, 200);
+	//ST7735_OutString("got response\n");
+
 	if (reply!=respLen)
-	return 0;
-	if (!verifyResponse(VC0706_MOTION_CTRL))
-	return 0;
+		return 0;
+	if (!verifyResponse(VC0706_MOTION_CTRL)) {
+		ST7735_OutString(" fail ");
+		ST7735_OutUDec(cameraBuff[0]); 
+				return 0;
+	}
+
 	return 1;
 }
 
@@ -107,18 +116,21 @@ disable: 0
 */
 int setMotionDetect(uint8_t flag) {
 	if (! setMotionStatus(VC0706_MOTIONCONTROL, VC0706_UARTMOTION, VC0706_ACTIVATEMOTION))
-	return 0;  
-	flush();  // flush the FIFO; cameraBuff will contain useless data
-	
+		return 0;  
+	//ST7735_OutString("After\n");
+	readResponse(100,50);  // flush the FIFO; cameraBuff will contain useless data
 	uint8_t args[] = {0x01,flag};
 	uint8_t respLen = 5; 
 	sendCommand(VC0706_COMM_MOTION_CTRL, args, sizeof(args));
 	// get reply
 	int reply = readResponse(respLen, 200);
 	if (reply !=respLen)
-	return 0;
-	if (!verifyResponse(VC0706_COMM_MOTION_CTRL))
-	return 0;
+		return 0;
+	if (!verifyResponse(VC0706_COMM_MOTION_CTRL)) {
+		ST7735_OutString(" fail2 ");
+		ST7735_OutUDec(cameraBuff[0]); 
+			return 0;
+	}
 	return 1;
 }
 
@@ -127,16 +139,19 @@ Check if motion detection is on or off
 returns the status 1 for On and 0 for OFF
 */
 int getMotionDetect(void) {
-	flush();  // flush the FIFO; cameraBuff will contain useless data
+	//ST7735_OutString("before flush\n");
+	readResponse(100,50);  // flush the FIFO; cameraBuff will contain useless data
 	uint8_t args[] = {0x0};
 	uint8_t respLen = 6; 
-	
+
 	sendCommand(VC0706_COMM_MOTION_STATUS, args, sizeof(args));
+	//ST7735_OutString("sent\n");
+
 	// get reply
 	if (readResponse(respLen, 200)!=respLen) 
-	return 0;
+		return 0;
 	if (!verifyResponse(VC0706_COMM_MOTION_STATUS))
-	return 0;
+		return 0;
 	return cameraBuff[5];
 }
 
@@ -146,16 +161,28 @@ no need for sending command, camera sends message whenever it detects motion (an
 */
 int motionDetected(void) {
 	uint8_t respLen = 4;
-	if (readResponse(respLen, 200) != respLen) {
+	if (readResponse(respLen, 100) != respLen) {
 		return 0;
 	}
-	if (! verifyResponse(VC0706_COMM_MOTION_DETECTED))
-	return 0;
+	if (! verifyResponse(VC0706_COMM_MOTION_DETECTED)) {
+		ST7735_OutUDec(cameraBuff[0]); 
+		return 0;
+	}
 	return 1;
 }
 
+int counter = 0;
+void handler() {
+	counter++;
+	if (counter == 1){
+		TIMER0_CTL_R &= ~TIMER_CTL_TBEN;    // 1) disable TIMER3A during setup
+		TVoff();
+		counter = 0;
+	}
+}
+
 int TVon() {
-	flush();
+	readResponse(100,50);  // flush the FIFO; cameraBuff will contain useless data
 	uint8_t args[] = {0x1, 0x1};
 	uint8_t respLen = 5;
 	sendCommand(VC0706_TVOUT_CTRL, args, sizeof(args));
@@ -164,10 +191,15 @@ int TVon() {
 	return 0;
 	if (!verifyResponse(VC0706_TVOUT_CTRL))
 	return 0;
+	
+	Timer0B_Init( handler,800000);
+	
 	return 1;
 }
+
+
 int TVoff() {
-	flush();
+	readResponse(100,50);  // flush the FIFO; cameraBuff will contain useless data
 	uint8_t args[] = {0x1, 0x0};
 	uint8_t respLen = 5;
 	
@@ -175,9 +207,9 @@ int TVoff() {
 	
 	// get reply
 	if (readResponse(respLen, 200)!=respLen) 
-	return 0;
+		return 0;
 	if (!verifyResponse(VC0706_TVOUT_CTRL))
-	return 0;
+		return 0;
 	return 1;
 }
 
@@ -203,18 +235,21 @@ static uint8_t readResponse(uint8_t numbytes, uint8_t timeout) {
 	
 	while ((counter != timeout)&&(bufferLen != numbytes)) {
 		// if not receiving data within the time limit, return 
-		if ((UART1_FR_R&UART_FR_RXFE) != 0) { // receive buffer empty
+		if ((UART6_FR_R&UART_FR_RXFE) != 0) { // receive buffer empty
 			counter++;
-			DelayWait1ms(5);  // delay
+			DelayWait1ms(3);  // delay
 			continue;
 		}
 		
-		cameraBuff[bufferLen++] =	UART1_DR_R&0xFF;
+		cameraBuff[bufferLen++] =	UART6_DR_R&0xFF;
 		counter = 0;
 	}
-	//	ST7735_OutUDec(bufferLen);
-	//  ST7735_OutString("\n");
-	
+	//ST7735_OutUDec(counter);
+		//ST7735_OutString(" ");
+
+	//ST7735_OutUDec(bufferLen);
+
+	//ST7735_OutString("\n");
 	return bufferLen;
 }
 
@@ -224,7 +259,7 @@ static int verifyResponse(uint8_t cmd) {
 		cameraBuff[2] != cmd ||
 		cameraBuff[3] != 0x0
 	)  // status bit == 0 is right, others are wrong
-	return 0;
+		return 0;
 	return 1;
 }
 
@@ -232,19 +267,18 @@ static int verifyResponse(uint8_t cmd) {
 prints cameraBuff to serial port
 */
 static void printBuff() {
-	for (uint8_t i=0; i<bufferLen; i++) {
-		//Serial_OutChar(cameraBuff[i]);
-		Serial_OutUHex(cameraBuff[i]);
-		Serial_OutString(" ");
-	}
-	Serial_OutString("\n\r");
+//	for (uint8_t i=0; i<bufferLen; i++) {
+//		Serial_OutUHex(cameraBuff[i]);
+//		Serial_OutString(" ");
+//	}
+//	Serial_OutString("\n\r");
 }
 
 /*
 flush the receive FIFO
 */
 static void flush(void) {
-	readResponse(100,200);
+	readResponse(100,150);
 }
 
 //------------UART_Init------------
@@ -253,41 +287,23 @@ static void flush(void) {
 // Input: none
 // Output: none
 // NOTE: currently using PD6 and PD7 (UART2) will change to PD4 and PD5 (UART6)
-//static void UART_Init(void){
-//  SYSCTL_RCGCUART_R |= 0x04;            // activate UART2
-//  SYSCTL_RCGCGPIO_R |= 0x08;            // activate port D
-//  while((SYSCTL_PRGPIO_R&0x08) == 0){};
-//  UART2_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
-//  UART2_IBRD_R = 130;                    // IBRD = int(80,000,000 / (16 * 38,400)) = int(130.2083)
-//  UART2_FBRD_R = 13;                     // FBRD = int(0.2083 * 64 + 0.5) = 13
-//                                        // 8 bit word length (no parity bits, one stop bit, FIFOs)
-//  UART2_LCRH_R = (UART_LCRH_WLEN_8|UART_LCRH_FEN);
-//  UART2_CTL_R |= UART_CTL_UARTEN;                 // enable UART
-//  GPIO_PORTD_AFSEL_R |= 0xC0;           // enable alt funct on PD7-6
-//  GPIO_PORTD_DEN_R |= 0xC0;             // enable digital I/O on PD7-6
-//                                        // configure PD7-6 as UART
-//  GPIO_PORTD_PCTL_R = (GPIO_PORTD_PCTL_R&0x00FFFFFF)+0x11000000;
-//  GPIO_PORTD_AMSEL_R &= ~0xC0;          // disable analog functionality on PD
-//}
-
-
-// used UART1 instead and it works. Not sure if this is the solution but will keep this for testing
-static void UART_Init() {
-	SYSCTL_RCGCUART_R |= 0x02;            // activate UART2
-	SYSCTL_RCGCGPIO_R |= 0x04;            // activate port D
-	while((SYSCTL_PRGPIO_R&0x04) == 0){};
-	UART1_CTL_R &= ~0x01;      // disable UART
-	UART1_IBRD_R = 130;                    // IBRD = int(80,000,000 / (16 * 38,400)) = int(130.2083)
-	UART1_FBRD_R = 13;                     // FBRD = int(0.2083 * 64 + 0.5) = 13
-	// 8 bit word length (no parity bits, one stop bit, FIFOs)
-	UART1_LCRH_R = 0x70;
-	UART1_CTL_R |= 0x01;  
-	GPIO_PORTC_AFSEL_R |= 0x30;           // enable alt funct on PD7-6
-	GPIO_PORTC_DEN_R |= 0x30;             // enable digital I/O on PD7-6
-	// configure PD7-6 as UART
-	GPIO_PORTC_PCTL_R = (GPIO_PORTC_PCTL_R&0xFF00FFFF)+0x00220000;
-	GPIO_PORTC_AMSEL_R &= ~0x30;
+static void UART_Init(void){
+  SYSCTL_RCGCUART_R |= 0x40;            // activate UART6
+  SYSCTL_RCGCGPIO_R |= 0x08;            // activate port D
+  while((SYSCTL_PRGPIO_R&0x08) == 0){};
+  UART6_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
+  UART6_IBRD_R = 130;                    // IBRD = int(80,000,000 / (16 * 38,400)) = int(130.2083)
+  UART6_FBRD_R = 13;                     // FBRD = int(0.2083 * 64 + 0.5) = 13
+                                        // 8 bit word length (no parity bits, one stop bit, FIFOs)
+  UART6_LCRH_R = (UART_LCRH_WLEN_8|UART_LCRH_FEN);
+  UART6_CTL_R |= UART_CTL_UARTEN;                 // enable UART
+  GPIO_PORTD_AFSEL_R |= 0x30;           // enable alt funct on PD5-4
+  GPIO_PORTD_DEN_R |= 0x30;             // enable digital I/O on PD7-6
+                                        // configure PD7-6 as UART
+  GPIO_PORTD_PCTL_R = (GPIO_PORTD_PCTL_R&0xFF00FFFF)+0x00110000;
+  GPIO_PORTD_AMSEL_R &= ~0x30;          // disable analog functionality on PD
 }
+
 
 
 //------------UART_OutChar------------
@@ -295,10 +311,10 @@ static void UART_Init() {
 // Input: letter is an 8-bit ASCII character to be transferred
 // Output: none
 void UART_OutChar(uint8_t data){
-	while((UART1_FR_R&UART_FR_TXFF) != 0);
-	UART1_DR_R = data;
-	Serial_OutUHex(data);
-	Serial_OutString(" ");
+	while((UART6_FR_R&UART_FR_TXFF) != 0);
+	UART6_DR_R = data;
+	//Serial_OutUHex(data);
+	//Serial_OutString(" ");
 }
 
 // delay for 1 ms
