@@ -24,6 +24,8 @@
 #include "Keypad.h"
 #include "Servo.h"
 #include "main.h"
+#include "Alarm.h"
+#include "SysTick.h"
 
 
 
@@ -38,6 +40,7 @@ stage stages[5] = {
 	 {{"Save", "Exit"}, {0, 0, 0}, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0}		              // stage 3: alarm tripped 
 };
 
+extern int alarm;
 
 
 void DisableInterrupts(void); // Disable interrupts
@@ -48,10 +51,13 @@ void WaitForInterrupt(void);  // low power mode
 
 			uint8_t curStage = 0;
 			int count = 0;
+			int guessCount = 0;
 			int set[4] = {0,0,0,0};
 			char guess[4] = {'_', '_', '_', '_'};
 			int pins[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
 			int detecting = 0;
+			int inThree = 0;
+			int inFour = 0;
 
 
 
@@ -72,14 +78,23 @@ void State_Handler(void){
 					Landing screen which prompts the user to enter a 4 digit passcode
 					*/
 				case 0:
+						 // Initial Display
+					ST7735_FillScreen(ST7735_BLACK);
+					ST7735_SetCursor(0,3);
+					ST7735_OutString("  Set your password:\n\n\n\n");
+					ST7735_OutString("       * * * *");
 						while(count < 4){
 							getPins(pins);
 							if(pins[0] || pins[1] || pins[2] || pins[3] || pins[4] || pins[5] ||
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
-										set[count] = num;
-										count++;
+										if(validPins(num)){
+											set[count] = num;
+											ST7735_SetCursor(7 + 2 * count, 7);
+											ST7735_OutUDec(num);
+											count++;
+										}
 									}
 								}
 						}
@@ -90,6 +105,7 @@ void State_Handler(void){
 						
 						
          case 1:
+					 curStage = 2;
 					if(detecting == 0){
 						ST7735_FillScreen(ST7735_BLACK);
 						ST7735_SetCursor(0,3);
@@ -107,23 +123,25 @@ void State_Handler(void){
 					ST7735_OutString("   Enter Password:\n\n\n\n");
 					ST7735_OutString("     _ _ _ _");
 				 
-					while(count < 4){
+					while(guessCount < 4){
 							getPins(pins);
 							if(pins[0] || pins[1] || pins[2] || pins[3] || pins[4] || pins[5] ||
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
-										guess[count] = num + 48;
-										count++;
-										ST7735_SetCursor(0,7);
-										ST7735_OutString("     ");
-										ST7735_OutChar(guess[0]);
-										ST7735_OutString(" ");
-										ST7735_OutChar(guess[1]);
-										ST7735_OutString(" ");
-										ST7735_OutChar(guess[2]);
-										ST7735_OutString(" ");
-										ST7735_OutChar(guess[3]);
+										if(validPins(num)){
+											guess[guessCount] = num + 48;
+											guessCount++;
+											ST7735_SetCursor(0,7);
+											ST7735_OutString("     ");
+											ST7735_OutChar(guess[0]);
+											ST7735_OutString(" ");
+											ST7735_OutChar(guess[1]);
+											ST7735_OutString(" ");
+											ST7735_OutChar(guess[2]);
+											ST7735_OutString(" ");
+											ST7735_OutChar(guess[3]);
+										}
 									}
 								}
 						}
@@ -137,19 +155,28 @@ void State_Handler(void){
 				 
 				 
          case 3:
-					 ST7735_FillScreen(ST7735_BLACK);
-					ST7735_SetCursor(0,3);
+					if(inThree){
+						 break;
+					 }
+					ST7735_FillScreen(ST7735_BLACK);
+					ST7735_SetCursor(0,5);
 					ST7735_OutString("   Welcome Home\n\n\n\n");
-				 doorUnlock();
+					inThree = 1;
+					 doorUnlock();
          break;
 				 
 				 
 				 case 4:
+					 if(inFour){
+						 break;
+					 }
 					 ST7735_FillScreen(ST7735_BLACK);
 					ST7735_SetCursor(0,3);
 					ST7735_OutString("   INTRUDER ALERT\n\n\n\n");
 					ST7735_OutString("    WEAPONS ONLINE");
-				 Music_Play();	//alarm
+				 //Music_Play();	//alarm
+					 alarm = 1;			//alarm
+					 inFour = 1;
          break;
       }		
       EndCritical(sr); 
@@ -160,6 +187,8 @@ void State_Handler(void){
 int main(void){ 
   PLL_Init(Bus80MHz);              // bus clock at 80 MHz
   ST7735_InitR(INITR_REDTAB);
+	PortD_Init();
+	SysTick_Init();
 	Microphone_Init();
 	Keypad_Init();
 	Servo_Init();
@@ -167,12 +196,6 @@ int main(void){
 	Serial_Init();
 	DAC_Init();
 	EnableInterrupts();
-   
-	 // Initial Display
-  ST7735_FillScreen(ST7735_BLACK);
-	ST7735_SetCursor(0,3);
-	ST7735_OutString("  Set your password:\n\n\n\n");
-	ST7735_OutString("       * * * *");
    
    while(1){
 	    State_Handler(); 

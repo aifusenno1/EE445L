@@ -4,6 +4,8 @@
 //RETURNS: boolean stating if the attempted passcode equals the saved code
 int isPassCode(int attempt);
 
+int validPins(int current);
+
 void setPassCode(int code);
 
 void getPins(int* pins);

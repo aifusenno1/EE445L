@@ -1,6 +1,6 @@
 .\button.o: Button.c
 .\button.o: button.h
-.\button.o: C:\Applications\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\button.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
 .\button.o: tm4c123gh6pm.h
 .\button.o: PLL.h
 .\button.o: SysTick.h
