@@ -67,8 +67,8 @@ static long harmony_note_duration;
 #define MAJORSCALE_MELODY_NOTE_NUM 8
 #define MAJORSCALE_HARMONY_NOTE_NUM 8
 struct Note majorscale_melody[] = {
-	{F4, quarter}, {F4, quarter}, {F4, quarter}, {F4, quarter},
-	{F4, quarter}, {F4, quarter}, {F4, quarter}, {F4, quarter}
+	{F2, quarter}, {F3, quarter}, {F4, quarter}, {F5, quarter},
+	{F6, quarter}, {F4, quarter}, {F4, quarter}, {F4, quarter}
 };
 
 struct Note majorscale_harmony[] = {
@@ -77,6 +77,9 @@ struct Note majorscale_harmony[] = {
 		{C4, quarter}, {D4, quarter}, {E4, quarter}, {F4, quarter},
 	{G4, quarter}, {A4, quarter}, {B4, quarter}, {C5, quarter}
 };
+
+
+//struct Note test1[] = {};
 
 #define SOS_MELODY_NOTE_NUM 180
 #define SOS_HARMONY_NOTE_NUM 173
@@ -152,8 +155,8 @@ struct Note sos_harmony[] = {
 
 
 
-struct Song song = {196, sos_melody, Wave, SOS_MELODY_NOTE_NUM, sos_harmony, Wave, SOS_HARMONY_NOTE_NUM};
-// struct Song song = {10, majorscale_melody, Wave, 8, majorscale_harmony, Wave, 8};
+//struct Song song = {196, sos_melody, Wave, SOS_MELODY_NOTE_NUM, sos_harmony, Wave, SOS_HARMONY_NOTE_NUM};
+struct Song song = {10, majorscale_melody, Wave, 8, majorscale_harmony, Wave, 8};
 
 static const unsigned short *instruments[NUMBER_OF_INSTRUMENTS] = {Wave, Trumpet, Flute, Guitar, Oboe};
 static char *instrumentText[NUMBER_OF_INSTRUMENTS] = {"Wave", "Trumpet", "Flute", "Guitar", "Oboe"};
@@ -172,7 +175,7 @@ void Music_Init(void) {
 	harmony_out = 0;
 	songEnd = 0;
 	Timer2A_Init(&melody_handler, (*song.melody).note);
-	Timer3A_Init(&harmony_handler, (*song.harmony).note);
+	//Timer3A_Init(&harmony_handler, (*song.harmony).note);
 }
 
 
@@ -197,7 +200,7 @@ static void melody_handler(void) {
 	}
 			
 	uint16_t output = (melody_out + harmony_out) / 4;
-	DAC_Out(output);
+	DAC_Out(output*10);
 	
 	if (melodyLasts >= melody_note_duration) {  // this note has been played long enough
 		// move on to the next note

@@ -48,10 +48,13 @@ void WaitForInterrupt(void);  // low power mode
 
 			uint8_t curStage = 0;
 			int count = 0;
+			int guessCount = 0;
 			int set[4] = {0,0,0,0};
 			char guess[4] = {'_', '_', '_', '_'};
 			int pins[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
 			int detecting = 0;
+			int inThree = 0;
+			int inFour = 0;
 
 
 
@@ -72,6 +75,11 @@ void State_Handler(void){
 					Landing screen which prompts the user to enter a 4 digit passcode
 					*/
 				case 0:
+						 // Initial Display
+					ST7735_FillScreen(ST7735_BLACK);
+					ST7735_SetCursor(0,3);
+					ST7735_OutString("  Set your password:\n\n\n\n");
+					ST7735_OutString("       * * * *");
 						while(count < 4){
 							getPins(pins);
 							if(pins[0] || pins[1] || pins[2] || pins[3] || pins[4] || pins[5] ||
@@ -79,7 +87,12 @@ void State_Handler(void){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
 										set[count] = num;
+										ST7735_SetCursor(7 + 2 * count, 7);
+										ST7735_OutUDec(num);
 										count++;
+										for(int i = 0; i < 1000000; i++){
+											i += 1;
+										}
 									}
 								}
 						}
@@ -90,6 +103,7 @@ void State_Handler(void){
 						
 						
          case 1:
+					 curStage = 2;
 					if(detecting == 0){
 						ST7735_FillScreen(ST7735_BLACK);
 						ST7735_SetCursor(0,3);
@@ -107,14 +121,14 @@ void State_Handler(void){
 					ST7735_OutString("   Enter Password:\n\n\n\n");
 					ST7735_OutString("     _ _ _ _");
 				 
-					while(count < 4){
+					while(guessCount < 4){
 							getPins(pins);
 							if(pins[0] || pins[1] || pins[2] || pins[3] || pins[4] || pins[5] ||
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
-										guess[count] = num + 48;
-										count++;
+										guess[guessCount] = num + 48;
+										guessCount++;
 										ST7735_SetCursor(0,7);
 										ST7735_OutString("     ");
 										ST7735_OutChar(guess[0]);
@@ -124,6 +138,9 @@ void State_Handler(void){
 										ST7735_OutChar(guess[2]);
 										ST7735_OutString(" ");
 										ST7735_OutChar(guess[3]);
+										for(int i = 0; i < 1000000; i++){
+											i += 1;
+										}
 									}
 								}
 						}
@@ -137,19 +154,27 @@ void State_Handler(void){
 				 
 				 
          case 3:
-					 ST7735_FillScreen(ST7735_BLACK);
-					ST7735_SetCursor(0,3);
+					if(inThree){
+						 break;
+					 }
+					ST7735_FillScreen(ST7735_BLACK);
+					ST7735_SetCursor(0,5);
 					ST7735_OutString("   Welcome Home\n\n\n\n");
-				 doorUnlock();
+					inThree = 1;
+					 doorUnlock();
          break;
 				 
 				 
 				 case 4:
+					 if(inFour){
+						 break;
+					 }
 					 ST7735_FillScreen(ST7735_BLACK);
 					ST7735_SetCursor(0,3);
 					ST7735_OutString("   INTRUDER ALERT\n\n\n\n");
 					ST7735_OutString("    WEAPONS ONLINE");
 				 Music_Play();	//alarm
+					 inFour = 1;
          break;
       }		
       EndCritical(sr); 
@@ -167,12 +192,6 @@ int main(void){
 	Serial_Init();
 	DAC_Init();
 	EnableInterrupts();
-   
-	 // Initial Display
-  ST7735_FillScreen(ST7735_BLACK);
-	ST7735_SetCursor(0,3);
-	ST7735_OutString("  Set your password:\n\n\n\n");
-	ST7735_OutString("       * * * *");
    
    while(1){
 	    State_Handler(); 

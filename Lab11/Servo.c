@@ -17,7 +17,7 @@ void PWM0A_Init(uint16_t period, uint16_t duty);
 
 //initializes the port for PWM
 void Servo_Init(void){
-	PWM0A_Init(40000, 35000);
+	PWM0A_Init(40000, 0);
 }
 
 // period is 16-bit number of PWM clock cycles in one period (3<=period)
@@ -59,7 +59,10 @@ void doorLock(void){
 }
 //unlocks the door by turning the servo
 void doorUnlock(void){
-	PWM0A_Duty(35000);
+	PWM0A_Duty(39000);
+											for(int i = 0; i < 1500000; i++){
+										}
+	PWM0A_Duty(0);
 }
 
 
