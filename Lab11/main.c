@@ -24,6 +24,8 @@
 #include "Keypad.h"
 #include "Servo.h"
 #include "main.h"
+#include "Alarm.h"
+#include "SysTick.h"
 
 
 
@@ -38,6 +40,7 @@ stage stages[5] = {
 	 {{"Save", "Exit"}, {0, 0, 0}, 2, {ST7735_WHITE,ST7735_WHITE,ST7735_YELLOW,ST7735_WHITE,ST7735_WHITE}, 0}		              // stage 3: alarm tripped 
 };
 
+extern int alarm;
 
 
 void DisableInterrupts(void); // Disable interrupts
@@ -86,12 +89,11 @@ void State_Handler(void){
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
-										set[count] = num;
-										ST7735_SetCursor(7 + 2 * count, 7);
-										ST7735_OutUDec(num);
-										count++;
-										for(int i = 0; i < 1000000; i++){
-											i += 1;
+										if(validPins(num)){
+											set[count] = num;
+											ST7735_SetCursor(7 + 2 * count, 7);
+											ST7735_OutUDec(num);
+											count++;
 										}
 									}
 								}
@@ -127,19 +129,18 @@ void State_Handler(void){
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
-										guess[guessCount] = num + 48;
-										guessCount++;
-										ST7735_SetCursor(0,7);
-										ST7735_OutString("     ");
-										ST7735_OutChar(guess[0]);
-										ST7735_OutString(" ");
-										ST7735_OutChar(guess[1]);
-										ST7735_OutString(" ");
-										ST7735_OutChar(guess[2]);
-										ST7735_OutString(" ");
-										ST7735_OutChar(guess[3]);
-										for(int i = 0; i < 1000000; i++){
-											i += 1;
+										if(validPins(num)){
+											guess[guessCount] = num + 48;
+											guessCount++;
+											ST7735_SetCursor(0,7);
+											ST7735_OutString("     ");
+											ST7735_OutChar(guess[0]);
+											ST7735_OutString(" ");
+											ST7735_OutChar(guess[1]);
+											ST7735_OutString(" ");
+											ST7735_OutChar(guess[2]);
+											ST7735_OutString(" ");
+											ST7735_OutChar(guess[3]);
 										}
 									}
 								}
@@ -173,7 +174,8 @@ void State_Handler(void){
 					ST7735_SetCursor(0,3);
 					ST7735_OutString("   INTRUDER ALERT\n\n\n\n");
 					ST7735_OutString("    WEAPONS ONLINE");
-				 Music_Play();	//alarm
+				 //Music_Play();	//alarm
+					 alarm = 1;			//alarm
 					 inFour = 1;
          break;
       }		
@@ -185,6 +187,8 @@ void State_Handler(void){
 int main(void){ 
   PLL_Init(Bus80MHz);              // bus clock at 80 MHz
   ST7735_InitR(INITR_REDTAB);
+	PortD_Init();
+	SysTick_Init();
 	Microphone_Init();
 	Keypad_Init();
 	Servo_Init();

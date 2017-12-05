@@ -10,6 +10,17 @@
 
 int lockCode;
 
+int oldPin = 0;
+
+int validPins(int current){
+	if(current == oldPin){
+		oldPin = current;
+		return 0;
+	}
+	oldPin = current;
+	return 1;
+}
+
 void ShortWait(uint32_t n){uint32_t volatile time;
   while(n){
     time = 7272*2/91;  // 11msec
