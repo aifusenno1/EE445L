@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\FinalProject.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\FinalProject.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Tue Dec 05 10:40:01 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Tue Dec 05 12:04:26 2017
 <BR><P>
 <H3>Maximum Stack Usage =        216 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -13,11 +13,11 @@ __rt_entry_main &rArr; main &rArr; setMotionDetect &rArr; setMotionStatus &rArr;
 Functions with no stack information
 </H3><UL>
  <LI><a href="#[81]">Reset_Handler</a>
- <LI><a href="#[f5]">DisableInterrupts</a>
- <LI><a href="#[cd]">EnableInterrupts</a>
- <LI><a href="#[c1]">StartCritical</a>
- <LI><a href="#[c2]">EndCritical</a>
- <LI><a href="#[f6]">WaitForInterrupt</a>
+ <LI><a href="#[f4]">DisableInterrupts</a>
+ <LI><a href="#[cc]">EnableInterrupts</a>
+ <LI><a href="#[c0]">StartCritical</a>
+ <LI><a href="#[c1]">EndCritical</a>
+ <LI><a href="#[f5]">WaitForInterrupt</a>
  <LI><a href="#[92]">__user_initial_stackheap</a>
 </UL>
 </UL>
@@ -573,82 +573,82 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
 </UL>
 
-<P><STRONG><a name="[d2]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<P><STRONG><a name="[d1]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[d3]"></a>__scatterload_null</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<P><STRONG><a name="[d2]"></a>__scatterload_null</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[d4]"></a>__decompress</STRONG> (Thumb, 90 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
+<P><STRONG><a name="[d3]"></a>__decompress</STRONG> (Thumb, 90 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
 
-<P><STRONG><a name="[d5]"></a>__decompress1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
+<P><STRONG><a name="[d4]"></a>__decompress1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
 
-<P><STRONG><a name="[d6]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
+<P><STRONG><a name="[d5]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
 
 <P><STRONG><a name="[89]"></a>__rt_lib_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit.o(.ARM.Collect$$libinit$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_li
 </UL>
 
-<P><STRONG><a name="[d7]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002C))
+<P><STRONG><a name="[d6]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002C))
 
-<P><STRONG><a name="[d8]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002A))
+<P><STRONG><a name="[d7]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002A))
 
-<P><STRONG><a name="[d9]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
+<P><STRONG><a name="[d8]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
 
-<P><STRONG><a name="[da]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
+<P><STRONG><a name="[d9]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
 
-<P><STRONG><a name="[db]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
+<P><STRONG><a name="[da]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
 
-<P><STRONG><a name="[dc]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
+<P><STRONG><a name="[db]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
 
-<P><STRONG><a name="[dd]"></a>__rt_lib_init_fp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000002))
+<P><STRONG><a name="[dc]"></a>__rt_lib_init_fp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000002))
 
-<P><STRONG><a name="[de]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
+<P><STRONG><a name="[dd]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
 
-<P><STRONG><a name="[df]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
+<P><STRONG><a name="[de]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
 
-<P><STRONG><a name="[e0]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000008))
+<P><STRONG><a name="[df]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000008))
 
-<P><STRONG><a name="[e1]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000F))
+<P><STRONG><a name="[e0]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000F))
 
-<P><STRONG><a name="[e2]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000011))
+<P><STRONG><a name="[e1]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000011))
 
-<P><STRONG><a name="[e3]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
+<P><STRONG><a name="[e2]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
 
-<P><STRONG><a name="[e4]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
+<P><STRONG><a name="[e3]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
 
-<P><STRONG><a name="[e5]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
+<P><STRONG><a name="[e4]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
 
-<P><STRONG><a name="[e6]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
+<P><STRONG><a name="[e5]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
 
-<P><STRONG><a name="[e7]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000031))
+<P><STRONG><a name="[e6]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000031))
 
-<P><STRONG><a name="[e8]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
+<P><STRONG><a name="[e7]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
 
-<P><STRONG><a name="[e9]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
+<P><STRONG><a name="[e8]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
 
-<P><STRONG><a name="[ea]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000A))
+<P><STRONG><a name="[e9]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000A))
 
 <P><STRONG><a name="[8e]"></a>__rt_lib_shutdown</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown.o(.ARM.Collect$$libshutdown$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
 </UL>
 
-<P><STRONG><a name="[eb]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000006))
+<P><STRONG><a name="[ea]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000006))
 
-<P><STRONG><a name="[ec]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000E))
+<P><STRONG><a name="[eb]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000E))
 
-<P><STRONG><a name="[ed]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
+<P><STRONG><a name="[ec]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
 
-<P><STRONG><a name="[ee]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000009))
+<P><STRONG><a name="[ed]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000009))
 
-<P><STRONG><a name="[ef]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000003))
+<P><STRONG><a name="[ee]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000003))
 
-<P><STRONG><a name="[f0]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000B))
+<P><STRONG><a name="[ef]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000B))
 
 <P><STRONG><a name="[84]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry.o(.ARM.Collect$$rtentry$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[f1]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000002))
+<P><STRONG><a name="[f0]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000002))
 
 <P><STRONG><a name="[86]"></a>__rt_entry_sh</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry4.o(.ARM.Collect$$rtentry$$00000004))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
@@ -661,7 +661,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init
 </UL>
 
-<P><STRONG><a name="[f2]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000009))
+<P><STRONG><a name="[f1]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[8a]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
 <BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
@@ -671,7 +671,7 @@ Global Symbols
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f3]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
+<P><STRONG><a name="[f2]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
 
 <P><STRONG><a name="[93]"></a>__rt_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit.o(.ARM.Collect$$rtexit$$00000000))
 <BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -681,39 +681,39 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
 </UL>
 
-<P><STRONG><a name="[f4]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
+<P><STRONG><a name="[f3]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
 
 <P><STRONG><a name="[8f]"></a>__rt_exit_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
-<P><STRONG><a name="[f5]"></a>DisableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<P><STRONG><a name="[f4]"></a>DisableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
 
-<P><STRONG><a name="[cd]"></a>EnableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<P><STRONG><a name="[cc]"></a>EnableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c1]"></a>StartCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<P><STRONG><a name="[c0]"></a>StartCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer1A_Init
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
 </UL>
 
-<P><STRONG><a name="[c2]"></a>EndCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<P><STRONG><a name="[c1]"></a>EndCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer1A_Init
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
 </UL>
 
-<P><STRONG><a name="[f6]"></a>WaitForInterrupt</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<P><STRONG><a name="[f5]"></a>WaitForInterrupt</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
 
 <P><STRONG><a name="[92]"></a>__user_initial_stackheap</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[f7]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[f6]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[f8]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[f7]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[f9]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[f8]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
 <P><STRONG><a name="[87]"></a>__user_setup_stackheap</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
@@ -731,23 +731,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[fa]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[f9]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[91]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[fb]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[fa]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[90]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[fc]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[fb]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[fd]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[fc]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[fe]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
+<P><STRONG><a name="[fd]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
 <P><STRONG><a name="[94]"></a>Button_Init</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, button.o(i.Button_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Button_Init &rArr; PortF_Init
@@ -758,20 +758,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c3]"></a>Delay1ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, st7735.o(i.Delay1ms))
+<P><STRONG><a name="[c2]"></a>Delay1ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, st7735.o(i.Delay1ms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Delay1ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commonInit
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commandList
 </UL>
 
-<P><STRONG><a name="[c7]"></a>DelayWait10ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, keypad.o(i.DelayWait10ms))
+<P><STRONG><a name="[c6]"></a>DelayWait10ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, keypad.o(i.DelayWait10ms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = DelayWait10ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getPins
 </UL>
 
-<P><STRONG><a name="[2b]"></a>GPIOPortF_Handler</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, button.o(i.GPIOPortF_Handler))
+<P><STRONG><a name="[2b]"></a>GPIOPortF_Handler</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, button.o(i.GPIOPortF_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48 + Unknown Stack Size
 <LI>Call Chain = GPIOPortF_Handler &rArr; TVon &rArr; sendCommand
 </UL>
@@ -806,20 +806,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c9]"></a>PLL_Init</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, pll.o(i.PLL_Init))
+<P><STRONG><a name="[c8]"></a>PLL_Init</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, pll.o(i.PLL_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c4]"></a>PWM0A_Duty</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, servo.o(i.PWM0A_Duty))
-<BR><BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorUnlock
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorLock
+<P><STRONG><a name="[c3]"></a>PWM0A_Duty</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, servo.o(i.PWM0A_Duty))
+<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorUnlock
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorLock
 </UL>
 
 <P><STRONG><a name="[b3]"></a>PWM0A_Init</STRONG> (Thumb, 158 bytes, Stack size 0 bytes, servo.o(i.PWM0A_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[ca]"></a>PortD_Init</STRONG> (Thumb, 94 bytes, Stack size 0 bytes, alarm.o(i.PortD_Init))
+<P><STRONG><a name="[c9]"></a>PortD_Init</STRONG> (Thumb, 94 bytes, Stack size 0 bytes, alarm.o(i.PortD_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -905,8 +905,8 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
-<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
 </UL>
 
 <P><STRONG><a name="[b0]"></a>ST7735_OutUDec</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, st7735.o(i.ST7735_OutUDec))
@@ -917,8 +917,8 @@ Global Symbols
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawCharS
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
-<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
 </UL>
 
 <P><STRONG><a name="[ad]"></a>ST7735_SetCursor</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, st7735.o(i.ST7735_SetCursor))
@@ -926,7 +926,7 @@ Global Symbols
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
 </UL>
 
-<P><STRONG><a name="[cc]"></a>Serial_Init</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, serial.o(i.Serial_Init))
+<P><STRONG><a name="[cb]"></a>Serial_Init</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, serial.o(i.Serial_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -938,22 +938,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c8]"></a>ShortWait</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, keypad.o(i.ShortWait))
+<P><STRONG><a name="[c7]"></a>ShortWait</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, keypad.o(i.ShortWait))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ShortWait
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getPins
 </UL>
 
-<P><STRONG><a name="[b4]"></a>State_Handler</STRONG> (Thumb, 732 bytes, Stack size 8 bytes, main.o(i.State_Handler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = State_Handler &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
+<P><STRONG><a name="[b4]"></a>State_Handler</STRONG> (Thumb, 892 bytes, Stack size 8 bytes, main.o(i.State_Handler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<LI>Call Chain = State_Handler &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorUnlock
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorLock
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorUnlock
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorLock
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;whichPin
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;validPins
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPassCode
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isPassCode
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPassCode
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isPassCode
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getPins
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVon
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_SetCursor
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutUDec
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutString
@@ -963,19 +964,19 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 152 bytes, Stack size 0 bytes, systick.o(i.SysTick_Handler))
+<P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 174 bytes, Stack size 0 bytes, systick.o(i.SysTick_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
 </UL>
-<P><STRONG><a name="[cb]"></a>SysTick_Init</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, systick.o(i.SysTick_Init))
+<P><STRONG><a name="[ca]"></a>SysTick_Init</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, systick.o(i.SysTick_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bc]"></a>TVoff</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, motiondetect.o(i.TVoff))
+<P><STRONG><a name="[bb]"></a>TVoff</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, motiondetect.o(i.TVoff))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = TVoff &rArr; sendCommand
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;handler
@@ -985,12 +986,13 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 40 + Unknown Stack Size
 <LI>Call Chain = TVon &rArr; sendCommand
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2A_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
+<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
+<LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
 </UL>
 
 <P><STRONG><a name="[20]"></a>Timer0A_Handler</STRONG> (Thumb, 78 bytes, Stack size 0 bytes, button.o(i.Timer0A_Handler))
@@ -1010,8 +1012,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16 + Unknown Stack Size
 <LI>Call Chain = Timer1A_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartCritical
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndCritical
+<BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartCritical
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndCritical
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Microphone_Init
 </UL>
@@ -1021,12 +1023,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
 </UL>
-<P><STRONG><a name="[c0]"></a>Timer2A_Init</STRONG> (Thumb, 108 bytes, Stack size 24 bytes, timer.o(i.Timer2A_Init))
+<P><STRONG><a name="[bf]"></a>Timer2A_Init</STRONG> (Thumb, 108 bytes, Stack size 24 bytes, timer.o(i.Timer2A_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
 <LI>Call Chain = Timer2A_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartCritical
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndCritical
+<BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartCritical
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EndCritical
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVon
 </UL>
@@ -1036,18 +1038,18 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
 </UL>
-<P><STRONG><a name="[b9]"></a>doorLock</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, servo.o(i.doorLock))
+<P><STRONG><a name="[b8]"></a>doorLock</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, servo.o(i.doorLock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = doorLock
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM0A_Duty
+<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM0A_Duty
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
 </UL>
 
-<P><STRONG><a name="[bb]"></a>doorUnlock</STRONG> (Thumb, 30 bytes, Stack size 4 bytes, servo.o(i.doorUnlock))
+<P><STRONG><a name="[ba]"></a>doorUnlock</STRONG> (Thumb, 30 bytes, Stack size 4 bytes, servo.o(i.doorUnlock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = doorUnlock
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM0A_Duty
+<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM0A_Duty
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
 </UL>
@@ -1062,12 +1064,12 @@ Global Symbols
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutUDec
 </UL>
 
-<P><STRONG><a name="[c6]"></a>getMotionDetect</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, motiondetect.o(i.getMotionDetect))
+<P><STRONG><a name="[c5]"></a>getMotionDetect</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, motiondetect.o(i.getMotionDetect))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = getMotionDetect &rArr; sendCommand
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1075,8 +1077,8 @@ Global Symbols
 <P><STRONG><a name="[b5]"></a>getPins</STRONG> (Thumb, 392 bytes, Stack size 20 bytes, keypad.o(i.getPins))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = getPins &rArr; ShortWait
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShortWait
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayWait10ms
+<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShortWait
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayWait10ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
 </UL>
@@ -1084,11 +1086,11 @@ Global Symbols
 <P><STRONG><a name="[80]"></a>handler</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, motiondetect.o(i.handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = handler &rArr; TVoff &rArr; sendCommand
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> motiondetect.o(i.TVon)
 </UL>
-<P><STRONG><a name="[ba]"></a>isPassCode</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, keypad.o(i.isPassCode))
+<P><STRONG><a name="[b9]"></a>isPassCode</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, keypad.o(i.isPassCode))
 <BR><BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
 </UL>
 
@@ -1096,19 +1098,19 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
 <LI>Call Chain = main &rArr; setMotionDetect &rArr; setMotionStatus &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortD_Init
+<BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PortD_Init
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Keypad_Init
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Microphone_Init
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_Init
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableInterrupts
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_Init
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableInterrupts
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionDetect_Init
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Button_Init
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutString
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
@@ -1116,37 +1118,33 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[ce]"></a>setMotionDetect</STRONG> (Thumb, 98 bytes, Stack size 24 bytes, motiondetect.o(i.setMotionDetect))
+<P><STRONG><a name="[cd]"></a>setMotionDetect</STRONG> (Thumb, 98 bytes, Stack size 24 bytes, motiondetect.o(i.setMotionDetect))
 <BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = setMotionDetect &rArr; setMotionStatus &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutUDec
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutString
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[d1]"></a>setMotionStatus</STRONG> (Thumb, 94 bytes, Stack size 32 bytes, motiondetect.o(i.setMotionStatus))
+<P><STRONG><a name="[d0]"></a>setMotionStatus</STRONG> (Thumb, 94 bytes, Stack size 32 bytes, motiondetect.o(i.setMotionStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = setMotionStatus &rArr; ST7735_OutString &rArr; ST7735_OutChar &rArr; ST7735_DrawString &rArr; ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flush
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyResponse
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flush
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutUDec
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_OutString
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
 </UL>
 
-<P><STRONG><a name="[b8]"></a>setPassCode</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, keypad.o(i.setPassCode))
-<BR><BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
-</UL>
-
-<P><STRONG><a name="[b7]"></a>validPins</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, keypad.o(i.validPins))
+<P><STRONG><a name="[b7]"></a>setPassCode</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, keypad.o(i.setPassCode))
 <BR><BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;State_Handler
 </UL>
 
@@ -1160,7 +1158,7 @@ Local Symbols
 <P><STRONG><a name="[ab]"></a>commandList</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, st7735.o(i.commandList))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = commandList &rArr; Delay1ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
+<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writedata
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writecommand
 </UL>
@@ -1171,7 +1169,7 @@ Local Symbols
 <P><STRONG><a name="[aa]"></a>commonInit</STRONG> (Thumb, 340 bytes, Stack size 8 bytes, st7735.o(i.commonInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = commonInit &rArr; commandList &rArr; Delay1ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
+<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay1ms
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;commandList
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
@@ -1223,58 +1221,58 @@ Local Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPortF_Handler
 </UL>
 
-<P><STRONG><a name="[cf]"></a>DelayWait1ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, motiondetect.o(i.DelayWait1ms))
+<P><STRONG><a name="[ce]"></a>DelayWait1ms</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, motiondetect.o(i.DelayWait1ms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = DelayWait1ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
 </UL>
 
 <P><STRONG><a name="[a0]"></a>UART_Init</STRONG> (Thumb, 132 bytes, Stack size 0 bytes, motiondetect.o(i.UART_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotionDetect_Init
 </UL>
 
-<P><STRONG><a name="[d0]"></a>UART_OutChar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, motiondetect.o(i.UART_OutChar))
-<BR><BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
+<P><STRONG><a name="[cf]"></a>UART_OutChar</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, motiondetect.o(i.UART_OutChar))
+<BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendCommand
 </UL>
 
-<P><STRONG><a name="[c5]"></a>flush</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, motiondetect.o(i.flush))
+<P><STRONG><a name="[c4]"></a>flush</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, motiondetect.o(i.flush))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = flush &rArr; readResponse &rArr; DelayWait1ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readResponse
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
 </UL>
 
-<P><STRONG><a name="[bd]"></a>readResponse</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, motiondetect.o(i.readResponse))
+<P><STRONG><a name="[bc]"></a>readResponse</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, motiondetect.o(i.readResponse))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = readResponse &rArr; DelayWait1ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayWait1ms
+<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DelayWait1ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flush
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flush
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVon
 </UL>
 
-<P><STRONG><a name="[be]"></a>sendCommand</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, motiondetect.o(i.sendCommand))
+<P><STRONG><a name="[bd]"></a>sendCommand</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, motiondetect.o(i.sendCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = sendCommand
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
+<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_OutChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVon
 </UL>
 
-<P><STRONG><a name="[bf]"></a>verifyResponse</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, motiondetect.o(i.verifyResponse))
-<BR><BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
+<P><STRONG><a name="[be]"></a>verifyResponse</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, motiondetect.o(i.verifyResponse))
+<BR><BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionStatus
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setMotionDetect
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getMotionDetect
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVoff
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TVon
 </UL>
 

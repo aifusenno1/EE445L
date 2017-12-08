@@ -58,7 +58,8 @@ void WaitForInterrupt(void);  // low power mode
 			int detecting = 0;
 			int inThree = 0;
 			int inFour = 0;
-
+			int attempts = 0;
+			int doorBell = 0;
 
 
 void State_Handler(void){
@@ -89,11 +90,14 @@ void State_Handler(void){
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
 									if(num < 10 && num >= 0){
-										if(validPins(num)){
+										//if(validPins(num)){
 											set[count] = num;
 											ST7735_SetCursor(7 + 2 * count, 7);
 											ST7735_OutUDec(num);
 											count++;
+										//}
+										for(int i = 0; i < 100000; i++){
+											
 										}
 									}
 								}
@@ -112,24 +116,29 @@ void State_Handler(void){
 						ST7735_OutString("     Password set\n\n\n\n");
 						ST7735_OutString("   Motion Detecting");
 						detecting = 1;
-						doorLock();
+						//doorLock();
+						attempts = 0;
 					}
          break;
 				 
 				 
          case 2:
+					 doorLock();
 					ST7735_FillScreen(ST7735_BLACK);
 					ST7735_SetCursor(0,3);
 					ST7735_OutString("   Enter Password:\n\n\n\n");
 					ST7735_OutString("     _ _ _ _");
+				 inThree = 0;
+				 inFour = 0;
 				 
 					while(guessCount < 4){
 							getPins(pins);
 							if(pins[0] || pins[1] || pins[2] || pins[3] || pins[4] || pins[5] ||
 								pins[6] || pins[7] || pins[8] || pins[9] || pins[10] || pins[11]){
 									int num = whichPin(pins);			//determine which number is pressed
+									TVon();
 									if(num < 10 && num >= 0){
-										if(validPins(num)){
+										//if(validPins(num)){
 											guess[guessCount] = num + 48;
 											guessCount++;
 											ST7735_SetCursor(0,7);
@@ -141,15 +150,36 @@ void State_Handler(void){
 											ST7735_OutChar(guess[2]);
 											ST7735_OutString(" ");
 											ST7735_OutChar(guess[3]);
+										//}
+										for(int i = 0; i < 100000; i++){
+											
 										}
 									}
 								}
 						}
+//							ST7735_SetCursor(0,10);
+//							ST7735_OutString("Attempts Left: ");
+//							ST7735_OutUDec(3 - attempts);
 					if(isPassCode((guess[0]-48) * 1000 + (guess[1]-48) * 100 + (guess[2]-48) * 10 + (guess[3]-48))){
-						curStage = 3;
+							curStage = 3;
+							guess[0] = '_';
+							guess[1] = '_';
+							guess[2] = '_';
+							guess[3] = '_';		
+						guessCount = 0;
 					}
 					else{
-						curStage = 4;
+						attempts++;
+						if(attempts < 3){
+							guess[0] = '_';
+							guess[1] = '_';
+							guess[2] = '_';
+							guess[3] = '_';		
+							guessCount = 0;
+						}
+						else{
+							curStage = 4;
+						}
 					}
          break;
 				 
@@ -163,6 +193,12 @@ void State_Handler(void){
 					ST7735_OutString("   Welcome Home\n\n\n\n");
 					inThree = 1;
 					 doorUnlock();
+					 for(int j = 0; j < 100; j++){
+					 										for(int i = 0; i < 100000; i++){
+											
+										}
+									}
+					 curStage = 2;
          break;
 				 
 				 
@@ -177,6 +213,18 @@ void State_Handler(void){
 				 //Music_Play();	//alarm
 					 alarm = 1;			//alarm
 					 inFour = 1;
+					 for(int j = 0; j < 100; j++){
+					 										for(int i = 0; i < 100000; i++){
+											
+										}
+									}
+					 curStage = 2;
+							guess[0] = '_';
+							guess[1] = '_';
+							guess[2] = '_';
+							guess[3] = '_';		
+									guessCount = 0;
+									
          break;
       }		
       //EndCritical(sr); 

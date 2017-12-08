@@ -57,12 +57,16 @@ void SysTick_Init(void){
 static int count = 0;
 int secFlag = 0;
 static int numToggle = 0;
-extern int alarm, inAlarm;
+extern int alarm, inAlarm, doorBell;
 
 // Interrupt service routine
 // Executed every 12.5ns*(period)
 void SysTick_Handler(void){
    count++;
+	 if(doorBell){
+		 numToggle = 900;
+		 doorBell = 0;
+	 }
    if(count == 100){
       count = 0;
       secFlag = 1;

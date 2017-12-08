@@ -13,6 +13,7 @@ extern uint8_t curStage;
 int timeron = 0;
 static void PortF_Init(void);
 static void EdgeInterrupt_Init(void);
+extern int alarm, doorBell;
 
 
 void Button_Init(void) {
@@ -65,6 +66,8 @@ void GPIOPortF_Handler(void){
       long sr;
       if(last0){    // 0x01 means it was previously released; negative logic
 				TVon();
+				alarm = 1;
+				doorBell = 1;
       }
 
    }
