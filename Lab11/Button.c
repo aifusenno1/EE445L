@@ -5,6 +5,7 @@
 #include "PLL.h"
 #include "ST7735.h"
 #include "MotionDetect.h"
+#include "Alarm.h"
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 
@@ -13,8 +14,7 @@ extern uint8_t curStage;
 int timeron = 0;
 static void PortF_Init(void);
 static void EdgeInterrupt_Init(void);
-extern int alarm, doorBell;
-
+int doorBell;
 
 void Button_Init(void) {
 	PortF_Init();

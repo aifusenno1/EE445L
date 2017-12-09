@@ -416,16 +416,6 @@
               <FilePath>.\Speaker.c</FilePath>
             </File>
             <File>
-              <FileName>Monitor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Monitor.h</FilePath>
-            </File>
-            <File>
-              <FileName>Wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Wifi.h</FilePath>
-            </File>
-            <File>
               <FileName>Button.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Button.c</FilePath>

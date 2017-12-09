@@ -14,7 +14,7 @@ int alarmTime = (6 * 3600) + 10;
 int alarm = 0;
 int inAlarm = 0;
 
-void PortD_Init(void){
+void Alarm_Init(void){
    SYSCTL_RCGCGPIO_R |= 0x08;        // 1) activate port D
    while((SYSCTL_PRGPIO_R&0x08)==0){};   // allow time for clock to stabilize
    // 2) no need to unlock PD3-0

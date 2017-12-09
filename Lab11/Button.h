@@ -8,3 +8,4 @@
 
 void Button_Init(void); 
 
+extern int doorBell;
